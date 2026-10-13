@@ -4,7 +4,7 @@ import requests
 from datetime import datetime
 import time
 
-IP_CLP = '20.1.3.1'
+IP_CLP = '20.1.1.1'
 RACK = 0
 SLOT = 1
 
