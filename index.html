@@ -16,9 +16,9 @@
             --text-light: #94a3b8;
             --primary: #3b82f6;
             --water: #0ea5e9;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
+            --success: #10b981; /* VERDE */
+            --danger: #ef4444;  /* VERMELHO */
+            --warning: #f59e0b; /* LARANJA */
             --purple: #8b5cf6;
         }
 
@@ -36,10 +36,9 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             overflow: hidden;
-            /* Impede a tela de balançar no desktop */
         }
 
-        /* ================= SIDEBAR E MENU HAMBÚRGUER ================= */
+        /* SIDEBAR */
         .sidebar {
             width: 250px;
             background-color: var(--sidebar-bg);
@@ -53,7 +52,6 @@
         .sidebar-header {
             display: flex;
             justify-content: center;
-            /* Centraliza no desktop */
             align-items: center;
             padding: 20px;
             border-bottom: 1px solid #334155;
@@ -63,7 +61,6 @@
             font-size: 20px;
         }
 
-        /* Botão hambúrguer escondido no PC */
         .hamburger {
             display: none;
             background: none;
@@ -87,22 +84,21 @@
             border-left: 4px solid transparent;
         }
 
-        .menu-item:hover {
+        .menu-item:hover,
+        .menu-item.active {
             background-color: var(--sidebar-hover);
         }
 
         .menu-item.active {
-            background-color: var(--sidebar-hover);
             border-left-color: var(--primary);
             font-weight: bold;
         }
 
-        /* ================= CONTEÚDO PRINCIPAL ================= */
+        /* MAIN CONTENT */
         .main-content {
             flex: 1;
             padding: 30px;
             padding-bottom: 70px;
-            /* Espaço extra para o rodapé não cobrir o conteúdo final */
             overflow-y: auto;
             overflow-x: hidden;
             min-width: 0;
@@ -161,7 +157,24 @@
             transition: 0.2s;
             font-weight: 500;
         }
+        
+        /* TÍTULOS DE SEÇÃO */
+        .section-title {
+            font-size: 16px;
+            color: var(--text-main);
+            margin: 25px 0 15px 0;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e2e8f0;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-title:first-child {
+            margin-top: 0;
+        }
 
+        /* CARDS */
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -174,6 +187,7 @@
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
         }
 
         .card h3 {
@@ -187,39 +201,22 @@
         .card .value {
             font-size: 24px;
             font-weight: bold;
+            transition: color 0.3s ease;
         }
 
-        .text-blue {
-            color: var(--primary);
-        }
+        .text-blue { color: var(--primary); }
+        .text-water { color: var(--water); }
+        .text-success { color: var(--success); }
+        .text-orange { color: var(--warning); }
+        .text-red { color: var(--danger); } 
 
-        .text-water {
-            color: var(--water);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-orange {
-            color: var(--warning);
-        }
-
-        .text-red {
-            color: var(--danger);
-        }
-
-        .text-purple {
-            color: var(--purple);
-        }
-
+        /* GRÁFICOS */
         .charts-container {
             background: var(--card-bg);
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             width: 100%;
-            max-width: 100%;
         }
 
         .chart-header {
@@ -275,13 +272,12 @@
             border-color: var(--primary);
         }
 
-        /* ================= ESTILOS DA TABELA (CONGELANDO COLUNAS) ================= */
+        /* TABELA */
         .table-wrapper {
             display: none;
             max-height: 400px;
             overflow-y: auto;
             overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
             white-space: nowrap;
             margin-bottom: 10px;
             border: 1px solid #e2e8f0;
@@ -322,7 +318,6 @@
             background-color: #f8fafc;
         }
 
-        /* Congelar Data (1ª Coluna) e Hora (2ª Coluna) */
         th:nth-child(1),
         td:nth-child(1) {
             position: sticky;
@@ -347,12 +342,11 @@
             border-right: 2px solid #94a3b8;
         }
 
-        /* ================= RODAPÉ FIXO ================= */
+        /* FOOTER */
         .footer {
             position: fixed;
             bottom: 0;
             left: 250px;
-            /* Inicia após a sidebar no desktop */
             width: calc(100vw - 250px);
             background-color: var(--sidebar-bg);
             color: var(--text-light);
@@ -369,13 +363,11 @@
             font-weight: 600;
         }
 
-        /* ================= MEDIA QUERIES (MOBILE) ================= */
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
             }
 
-            /* Header da Sidebar passa para o topo do celular */
             .sidebar {
                 width: 100%;
                 height: auto;
@@ -387,15 +379,10 @@
                 padding: 15px 20px;
             }
 
-            .sidebar h2 {
-                font-size: 18px;
-            }
-
             .hamburger {
                 display: block;
             }
 
-            /* Nav-items vira um Menu Dropdown */
             .nav-items {
                 display: none;
                 position: absolute;
@@ -417,11 +404,9 @@
                 padding: 15px 20px;
             }
 
-            /* Ajustes do Título e Conteúdo */
             .main-content {
                 padding: 15px;
                 padding-bottom: 70px;
-                /* espaço para o rodapé mobile */
             }
 
             .header {
@@ -429,10 +414,6 @@
                 align-items: flex-start;
                 gap: 15px;
                 margin-bottom: 20px;
-            }
-
-            .header h1 {
-                font-size: 22px;
             }
 
             .header-controls {
@@ -445,32 +426,17 @@
                 width: 100%;
             }
 
-            /* Cards grid */
             .cards-grid {
                 grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
                 gap: 10px;
             }
 
-            .card {
-                padding: 15px;
-            }
-
-            .card .value {
-                font-size: 20px;
-            }
-
-            /* Controles do Gráfico */
-            .chart-header {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 15px;
-            }
-
+            .chart-header,
             .chart-controls {
                 flex-direction: column;
                 align-items: stretch;
-                width: 100%;
                 gap: 10px;
+                width: 100%;
             }
 
             .select-filtro {
@@ -478,16 +444,11 @@
                 margin: 0;
             }
 
-            .view-toggle-btns {
-                width: 100%;
-            }
-
             .btn-toggle {
                 flex: 1;
                 text-align: center;
             }
 
-            /* Tabela Mobile */
             table {
                 font-size: 13px;
             }
@@ -497,18 +458,6 @@
                 padding: 8px;
             }
 
-            th:nth-child(1),
-            td:nth-child(1) {
-                min-width: 85px;
-            }
-
-            th:nth-child(2),
-            td:nth-child(2) {
-                left: 85px;
-                min-width: 60px;
-            }
-
-            /* Rodapé Mobile */
             .footer {
                 left: 0;
                 width: 100vw;
@@ -524,7 +473,6 @@
     <div class="sidebar">
         <div class="sidebar-header">
             <h2>Painel Industrial</h2>
-            <!-- Botão Hambúrguer que executa a função toggleMenu() -->
             <button class="hamburger" onclick="toggleMenu()">☰</button>
         </div>
         <div class="nav-items" id="navItems">
@@ -545,56 +493,63 @@
 
         <!-- ================= TELA DE TEMPERATURAS ================= -->
         <div id="view-temperaturas" class="view-section active">
-
+            
+            <!-- SETOR: TEMPERATURA AMBIENTE -->
+            <h2 class="section-title">Temperatura Ambiente</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <h3>CMS</h3>
-                    <div class="value text-orange"><span id="rt-cms">--</span> °C</div>
+                    <h3>CMS <small style="font-size:10px; color:#94a3b8">(SP: 10°C)</small></h3>
+                    <div class="value text-blue"><span id="rt-cms">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>ENVASE CMS</h3>
+                    <h3>ENVASE CMS <small style="font-size:10px; color:#94a3b8">(SP: 10°C)</small></h3>
                     <div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Sala Cortes 1</h3>
+                    <h3>Sala Cortes 1 <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Sala Cortes 2</h3>
+                    <h3>Sala Cortes 2 <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Abast. IQF</h3>
+                    <h3>Abast. IQF <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
                     <div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Emb. Prim. IQF</h3>
+                    <h3>Emb. Prim. IQF <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Frango Inteiro</h3>
+                    <h3>Frango Inteiro <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
                     <div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Temperados</h3>
+                    <h3>Temperados <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
                     <div class="value text-blue"><span id="rt-temperados">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Chillers</h3>
+                    <h3>Chillers <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-chillers">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Miúdos</h3>
+                    <h3>Miúdos <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-miudos">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Padronização</h3>
+                    <h3>Padronização <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div>
                 </div>
                 <div class="card">
-                    <h3>Paletização</h3>
+                    <h3>Paletização <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
                     <div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div>
                 </div>
+            </div>
+
+            <!-- SETOR: CHILLERS -->
+            <h2 class="section-title">Chillers</h2>
+            <div class="cards-grid">
                 <div class="card">
                     <h3>Chil. Condicionais</h3>
                     <div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div>
@@ -647,6 +602,11 @@
                     <h3>Chiller Pé 2</h3>
                     <div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div>
                 </div>
+            </div>
+
+            <!-- SETOR: ABASTECIMENTO -->
+            <h2 class="section-title">Abastecimento</h2>
+            <div class="cards-grid" style="margin-bottom: 30px;">
                 <div class="card">
                     <h3>Abast. Pré-Chiller</h3>
                     <div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div>
@@ -668,7 +628,7 @@
                     <div class="value text-blue"><span id="rt-saida-placas">--</span> °C</div>
                 </div>
             </div>
-
+            
             <div class="charts-container">
                 <div class="chart-header">
                     <h3>Histórico de Temperaturas</h3>
@@ -714,9 +674,7 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="wrapper-graf-temp" class="chart-wrapper"><canvas id="graficoTemp"></canvas></div>
-
                 <div id="wrapper-tab-temp" class="table-wrapper">
                     <table>
                         <thead>
@@ -758,7 +716,6 @@
                         <tbody id="tbody-temp"></tbody>
                     </table>
                 </div>
-
                 <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
                     antigas...</button>
             </div>
@@ -776,7 +733,6 @@
                     <div class="value text-red">R$ <span id="rt-custo-total">--</span></div>
                 </div>
             </div>
-
             <div class="charts-container">
                 <div class="chart-header">
                     <h3>Histórico de Tensão e Potência</h3>
@@ -795,9 +751,7 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="wrapper-graf-energia" class="chart-wrapper"><canvas id="graficoEnergia"></canvas></div>
-
                 <div id="wrapper-tab-energia" class="table-wrapper">
                     <table>
                         <thead>
@@ -813,7 +767,6 @@
                         <tbody id="tbody-energia"></tbody>
                     </table>
                 </div>
-
                 <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
                     antigas...</button>
             </div>
@@ -862,17 +815,32 @@
                     <h3>Pé 2</h3>
                     <div class="value text-water"><span id="rt-agua-pe2">--</span> m³</div>
                 </div>
+                <div class="card">
+                    <h3>Chuveiro Final</h3>
+                    <div class="value text-water"><span id="rt-agua-chuveiro-final">--</span> m³</div>
+                </div>
+                <div class="card">
+                    <h3>Tanque Escalda</h3>
+                    <div class="value text-water"><span id="rt-agua-tanque-escalda">--</span> m³</div>
+                </div>
             </div>
-
             <div class="charts-container">
                 <div class="chart-header">
-                    <h3>Consumo de Água por Setor</h3>
+                    <h3>Consumo de Água (Pulso 2 Horas)</h3>
                     <div class="chart-controls">
                         <select id="filtroAgua" class="select-filtro" onchange="desenharGraficos()">
-                            <option value="todos">Todos os Hidrômetros</option>
-                            <option value="chillers">Setor Chillers</option>
-                            <option value="miudos">Setor Miúdos</option>
-                            <option value="pes">Setor Pés</option>
+                            <option value="pre_chiller">Pré-Chiller</option>
+                            <option value="chiller1">Chiller 1</option>
+                            <option value="chiller2">Chiller 2</option>
+                            <option value="condicionais">Condicionais</option>
+                            <option value="coracao">Coração</option>
+                            <option value="figado">Fígado</option>
+                            <option value="moela">Moela</option>
+                            <option value="cabeca">Cabeça</option>
+                            <option value="pe1">Pé 1</option>
+                            <option value="pe2">Pé 2</option>
+                            <option value="chuveiro_final">Chuveiro Final</option>
+                            <option value="tanque_escalda">Tanque Escalda</option>
                         </select>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-agua"
@@ -882,39 +850,36 @@
                         </div>
                     </div>
                 </div>
-
                 <div id="wrapper-graf-agua" class="chart-wrapper"><canvas id="graficoAgua"></canvas></div>
-
                 <div id="wrapper-tab-agua" class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>Data</th>
                                 <th>Hora</th>
-                                <th>Pré-Chiller</th>
-                                <th>Chiller 1</th>
-                                <th>Chiller 2</th>
-                                <th>Condicionais</th>
-                                <th>Coração</th>
-                                <th>Fígado</th>
-                                <th>Moela</th>
-                                <th>Cabeça</th>
-                                <th>Pé 1</th>
-                                <th>Pé 2</th>
+                                <th>Pré-Chiller (m³)</th>
+                                <th>Chil. 1 (m³)</th>
+                                <th>Chil. 2 (m³)</th>
+                                <th>Condicionais (m³)</th>
+                                <th>Coração (m³)</th>
+                                <th>Fígado (m³)</th>
+                                <th>Moela (m³)</th>
+                                <th>Cabeça (m³)</th>
+                                <th>Pé 1 (m³)</th>
+                                <th>Pé 2 (m³)</th>
+                                <th>Chuveiro (m³)</th>
+                                <th>Tanq. Escalda (m³)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-agua"></tbody>
                     </table>
                 </div>
-
                 <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
                     antigas...</button>
             </div>
         </div>
-
     </div>
 
-    <!-- ================= RODAPÉ FIXO ================= -->
     <div class="footer">
         produzido por <strong>FERNANDO MACIEL</strong>
     </div>
@@ -924,21 +889,21 @@
         const TARIFA_KWH = 0.85;
 
         let graficoTempObj = null; let graficoEnergiaObj = null; let graficoAguaObj = null;
-        let dadosAcumulados = {}; let ultimaChave = null; const LIMITE_POR_LOTE = 20;
+        let dadosAcumulados = {}; let ultimaChave = null; const LIMITE_POR_LOTE = 50;
 
-        window.onload = () => { document.getElementById('dataBusca').valueAsDate = new Date(); buscarHistorico(true); };
+        window.onload = () => {
+            document.getElementById('dataBusca').valueAsDate = new Date();
+            buscarHistorico(true);
+            buscarTempoReal();
+            setInterval(buscarTempoReal, 5000);
+        };
 
-        // ================= FUNÇÕES DO MENU HAMBÚRGUER =================
-        function toggleMenu() {
-            document.getElementById('navItems').classList.toggle('open');
-        }
+        function toggleMenu() { document.getElementById('navItems').classList.toggle('open'); }
 
         function trocarAba(aba, elemento) {
             document.getElementById('navItems').classList.remove('open');
-
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             elemento.classList.add('active');
-
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`view-${aba}`).classList.add('active');
 
@@ -952,24 +917,111 @@
             document.getElementById(`btn-tab-${aba}`).classList.remove('active');
             document.getElementById(`btn-${tipo === 'grafico' ? 'graf' : 'tab'}-${aba}`).classList.add('active');
 
-            const wrapperGraf = document.getElementById(`wrapper-graf-${aba}`);
-            const wrapperTab = document.getElementById(`wrapper-tab-${aba}`);
-
             if (tipo === 'grafico') {
-                wrapperGraf.classList.remove('hidden');
-                wrapperTab.classList.remove('active');
+                document.getElementById(`wrapper-graf-${aba}`).classList.remove('hidden');
+                document.getElementById(`wrapper-tab-${aba}`).classList.remove('active');
             } else {
-                wrapperGraf.classList.add('hidden');
-                wrapperTab.classList.add('active');
+                document.getElementById(`wrapper-graf-${aba}`).classList.add('hidden');
+                document.getElementById(`wrapper-tab-${aba}`).classList.add('active');
             }
         }
 
+        // Nova função para pintar os cards de verde ou vermelho baseado no setpoint
+        function atualizarComSetpoint(id, valor, setpoint) {
+            const span = document.getElementById(id);
+            if(!span) return;
+            const divPai = span.parentElement;
+            
+            span.innerText = valor !== undefined && valor !== null ? valor.toFixed(1) : '--';
+            
+            // Remove as cores antigas para evitar sobreposição
+            divPai.classList.remove('text-blue', 'text-success', 'text-danger', 'text-orange', 'text-red');
+            
+            if (valor !== undefined && valor !== null) {
+                if (valor <= setpoint) {
+                    divPai.classList.add('text-success'); // Verde (Abaixo ou igual ao Setpoint)
+                } else {
+                    divPai.classList.add('text-red');  // Vermelho (Acima do Setpoint)
+                }
+            } else {
+                divPai.classList.add('text-blue'); // Se não tiver leitura, fica azul
+            }
+        }
+
+        // ================= TEMPO REAL =================
+        async function buscarTempoReal() {
+            try {
+                const res = await fetch(`${FIREBASE_URL}/tempo_real.json`);
+                const dados = await res.json();
+
+                if (dados) {
+                    // Com Setpoint de 10°C
+                    atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
+                    atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
+                    
+                    // Com Setpoint de 12°C
+                    atualizarComSetpoint('rt-salaCortes1', dados.temp_salaCortes1, 12);
+                    atualizarComSetpoint('rt-salaCortes2', dados.temp_salaCortes2, 12);
+                    atualizarComSetpoint('rt-embprimariaiqf', dados.temp_embprimariaiqf, 12);
+                    atualizarComSetpoint('rt-chillers', dados.temp_chillers, 12);
+                    atualizarComSetpoint('rt-miudos', dados.temp_miudos, 12);
+                    atualizarComSetpoint('rt-padronizacao', dados.temp_padronizacao, 12);
+                    atualizarComSetpoint('rt-paletizacao', dados.temp_paletizacao, 12);
+                    
+                    // Com Setpoint de 13°C
+                    atualizarComSetpoint('rt-abastiqf', dados.temp_abastiqf, 13);
+                    atualizarComSetpoint('rt-frangointeiro', dados.temp_frangointeiro, 13);
+                    atualizarComSetpoint('rt-temperados', dados.temp_temperados, 13);
+
+                    // Restante das temperaturas (Sem verificação de Setpoint)
+                    document.getElementById('rt-chiller-condicionais').innerText = dados.temp_chiller_condicionais?.toFixed(1) || '--';
+                    document.getElementById('rt-pre-chiller-entrada').innerText = dados.temp_pre_chiller_entrada?.toFixed(1) || '--';
+                    document.getElementById('rt-pre-chiller-saida').innerText = dados.temp_pre_chiller_saida?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller1-entrada').innerText = dados.temp_chiller1_entrada?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller1-saida').innerText = dados.temp_chiller1_saida?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller2-entrada').innerText = dados.temp_chiller2_entrada?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller2-saida').innerText = dados.temp_chiller2_saida?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-coracao').innerText = dados.temp_chiller_coracao?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-figado').innerText = dados.temp_chiller_figado?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-moela').innerText = dados.temp_chiller_moela?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-cabeca').innerText = dados.temp_chiller_cabeca?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-pe1').innerText = dados.temp_chiller_pe1?.toFixed(1) || '--';
+                    document.getElementById('rt-chiller-pe2').innerText = dados.temp_chiller_pe2?.toFixed(1) || '--';
+                    document.getElementById('rt-abast-pre-chiller').innerText = dados.temp_abast_pre_chiller?.toFixed(1) || '--';
+                    document.getElementById('rt-retmac-pre-chiller').innerText = dados.temp_retmac_pre_chiller?.toFixed(1) || '--';
+                    document.getElementById('rt-abast-chiller2').innerText = dados.temp_abast_chiller2?.toFixed(1) || '--';
+                    document.getElementById('rt-retmac-chiller2').innerText = dados.temp_retmac_chiller2?.toFixed(1) || '--';
+                    document.getElementById('rt-saida-placas').innerText = dados.temp_saida_placas?.toFixed(1) || '--';
+
+                    // Painéis superiores leem o Total de Água
+                    document.getElementById('rt-agua-pre-chiller').innerText = dados.agua_pre_chiller?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-chiller1').innerText = dados.agua_chiller1?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-chiller2').innerText = dados.agua_chiller2?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-condicionais').innerText = dados.agua_condicionais?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-coracao').innerText = dados.agua_coracao?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-figado').innerText = dados.agua_figado?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-moela').innerText = dados.agua_moela?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-cabeca').innerText = dados.agua_cabeca?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-pe1').innerText = dados.agua_pe1?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-pe2').innerText = dados.agua_pe2?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-chuveiro-final').innerText = dados.agua_chuveiro_final?.toFixed(1) || '--';
+                    document.getElementById('rt-agua-tanque-escalda').innerText = dados.agua_tanque_escalda?.toFixed(1) || '--';
+                }
+            } catch (e) { }
+        }
+
+        // ================= HISTÓRICO =================
         async function buscarHistorico(novaBusca) {
             const data = document.getElementById('dataBusca').value;
             if (novaBusca) { dadosAcumulados = {}; ultimaChave = null; }
 
-            let url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&limitToFirst=${LIMITE_POR_LOTE}`;
-            if (ultimaChave) url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&startAt=%22${ultimaChave}%22&limitToFirst=${LIMITE_POR_LOTE + 1}`;
+            // Trocamos limitToFirst por limitToLast para sempre puxar os MAIS RECENTES do dia
+            let url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&limitToLast=${LIMITE_POR_LOTE}`;
+            
+            // Se estiver carregando mais dados antigos (paginação)
+            if (ultimaChave) {
+                url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&endAt=%22${ultimaChave}%22&limitToLast=${LIMITE_POR_LOTE + 1}`;
+            }
 
             try {
                 const res = await fetch(url);
@@ -977,126 +1029,55 @@
 
                 if (dadosLote && Object.keys(dadosLote).length > 0) {
                     const chaves = Object.keys(dadosLote).sort();
-                    if (ultimaChave && chaves[0] === ultimaChave) { chaves.shift(); delete dadosLote[ultimaChave]; }
-
+                    
+                    // Remove o último registro para não duplicar na junção das páginas
+                    if (ultimaChave && chaves[chaves.length - 1] === ultimaChave) { 
+                        chaves.pop(); 
+                        delete dadosLote[ultimaChave]; 
+                    }
+                    
                     if (chaves.length > 0) {
-                        ultimaChave = chaves[chaves.length - 1];
+                        // O horário mais velho dessa leva vira a referência para buscar mais depois
+                        ultimaChave = chaves[0];
                         Object.assign(dadosAcumulados, dadosLote);
                         desenharGraficos();
                         preencherTabelas(data);
                     }
                 }
-            } catch (e) { console.error("Erro", e); }
+            } catch (e) { console.error("Erro no histórico:", e); }
         }
-
         function preencherTabelas(data) {
             const horas = Object.keys(dadosAcumulados).sort((a, b) => b.localeCompare(a));
-
             let htmlTemp = '', htmlEnergia = '', htmlAgua = '';
-            let consumoDiarioKwh = 0; // Variável para acumular a energia do dia
-
+            let consumoDiarioKwh = 0;
             const dataFormatada = data.split('-').reverse().join('/');
-
-            if (horas.length > 0) {
-                const maisRec = dadosAcumulados[horas[0]];
-
-                // --- Temperaturas (30 Cards) ---
-                document.getElementById('rt-cms').innerText = maisRec.temp_cms?.toFixed(1) || '--';
-                document.getElementById('rt-envaseCms').innerText = maisRec.temp_envaseCms?.toFixed(1) || '--';
-                document.getElementById('rt-salaCortes1').innerText = maisRec.temp_salaCortes1?.toFixed(1) || '--';
-                document.getElementById('rt-salaCortes2').innerText = maisRec.temp_salaCortes2?.toFixed(1) || '--';
-                document.getElementById('rt-abastiqf').innerText = maisRec.temp_abastiqf?.toFixed(1) || '--';
-                document.getElementById('rt-embprimariaiqf').innerText = maisRec.temp_embprimariaiqf?.toFixed(1) || '--';
-                document.getElementById('rt-frangointeiro').innerText = maisRec.temp_frangointeiro?.toFixed(1) || '--';
-                document.getElementById('rt-temperados').innerText = maisRec.temp_temperados?.toFixed(1) || '--';
-                document.getElementById('rt-chillers').innerText = maisRec.temp_chillers?.toFixed(1) || '--';
-                document.getElementById('rt-miudos').innerText = maisRec.temp_miudos?.toFixed(1) || '--';
-                document.getElementById('rt-padronizacao').innerText = maisRec.temp_padronizacao?.toFixed(1) || '--';
-                document.getElementById('rt-paletizacao').innerText = maisRec.temp_paletizacao?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-condicionais').innerText = maisRec.temp_chiller_condicionais?.toFixed(1) || '--';
-                document.getElementById('rt-pre-chiller-entrada').innerText = maisRec.temp_pre_chiller_entrada?.toFixed(1) || '--';
-                document.getElementById('rt-pre-chiller-saida').innerText = maisRec.temp_pre_chiller_saida?.toFixed(1) || '--';
-                document.getElementById('rt-chiller1-entrada').innerText = maisRec.temp_chiller1_entrada?.toFixed(1) || '--';
-                document.getElementById('rt-chiller1-saida').innerText = maisRec.temp_chiller1_saida?.toFixed(1) || '--';
-                document.getElementById('rt-chiller2-entrada').innerText = maisRec.temp_chiller2_entrada?.toFixed(1) || '--';
-                document.getElementById('rt-chiller2-saida').innerText = maisRec.temp_chiller2_saida?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-coracao').innerText = maisRec.temp_chiller_coracao?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-figado').innerText = maisRec.temp_chiller_figado?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-moela').innerText = maisRec.temp_chiller_moela?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-cabeca').innerText = maisRec.temp_chiller_cabeca?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-pe1').innerText = maisRec.temp_chiller_pe1?.toFixed(1) || '--';
-                document.getElementById('rt-chiller-pe2').innerText = maisRec.temp_chiller_pe2?.toFixed(1) || '--';
-                document.getElementById('rt-abast-pre-chiller').innerText = maisRec.temp_abast_pre_chiller?.toFixed(1) || '--';
-                document.getElementById('rt-retmac-pre-chiller').innerText = maisRec.temp_retmac_pre_chiller?.toFixed(1) || '--';
-                document.getElementById('rt-abast-chiller2').innerText = maisRec.temp_abast_chiller2?.toFixed(1) || '--';
-                document.getElementById('rt-retmac-chiller2').innerText = maisRec.temp_retmac_chiller2?.toFixed(1) || '--';
-                document.getElementById('rt-saida-placas').innerText = maisRec.temp_saida_placas?.toFixed(1) || '--';
-
-                // --- Água (10 Cards) ---
-                document.getElementById('rt-agua-pre-chiller').innerText = maisRec.agua_pre_chiller?.toFixed(1) || '--';
-                document.getElementById('rt-agua-chiller1').innerText = maisRec.agua_chiller1?.toFixed(1) || '--';
-                document.getElementById('rt-agua-chiller2').innerText = maisRec.agua_chiller2?.toFixed(1) || '--';
-                document.getElementById('rt-agua-condicionais').innerText = maisRec.agua_condicionais?.toFixed(1) || '--';
-                document.getElementById('rt-agua-coracao').innerText = maisRec.agua_coracao?.toFixed(1) || '--';
-                document.getElementById('rt-agua-figado').innerText = maisRec.agua_figado?.toFixed(1) || '--';
-                document.getElementById('rt-agua-moela').innerText = maisRec.agua_moela?.toFixed(1) || '--';
-                document.getElementById('rt-agua-cabeca').innerText = maisRec.agua_cabeca?.toFixed(1) || '--';
-                document.getElementById('rt-agua-pe1').innerText = maisRec.agua_pe1?.toFixed(1) || '--';
-                document.getElementById('rt-agua-pe2').innerText = maisRec.agua_pe2?.toFixed(1) || '--';
-            }
 
             horas.forEach(h => {
                 const d = dadosAcumulados[h];
 
-                // === CÁLCULO DE KWH DO DIA ===
-                // Pega as potências (evitando NaN se o dado vier vazio)
-                let p1 = d.ccm1_potencia || 0;
-                let p2 = d.ccm2_potencia || 0;
-                let p3 = d.qgbt1_potencia || 0;
-                let p4 = d.qgbt2_potencia || 0;
-                let potenciaTotalInstantanea = p1 + p2 + p3 + p4;
+                let p1 = d.ccm1_potencia || 0; let p2 = d.ccm2_potencia || 0;
+                let p3 = d.qgbt1_potencia || 0; let p4 = d.qgbt2_potencia || 0;
+                consumoDiarioKwh += ((p1 + p2 + p3 + p4) * (1 / 60));
 
-                // Fração de hora: O dado é salvo a cada 5 minutos (5 min / 60 min = 0.0833 horas)
-                // Energia (kWh) = Potência (kW) * Tempo (h)
-                consumoDiarioKwh += (potenciaTotalInstantanea * (5 / 60));
-
-                // Tabela Temperatura
                 htmlTemp += `<tr>
-                    <td>${dataFormatada}</td>
-                    <td>${h}</td>
-                    <td>${d.temp_cms?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_envaseCms?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_salaCortes1?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_salaCortes2?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_abastiqf?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_embprimariaiqf?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_frangointeiro?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_temperados?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chillers?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_miudos?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_padronizacao?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_paletizacao?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_condicionais?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_pre_chiller_entrada?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_pre_chiller_saida?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller1_entrada?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller1_saida?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller2_entrada?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller2_saida?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_coracao?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_figado?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_moela?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_cabeca?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_pe1?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_chiller_pe2?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_abast_pre_chiller?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_retmac_pre_chiller?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_abast_chiller2?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_retmac_chiller2?.toFixed(1) || '-'}</td>
-                    <td>${d.temp_saida_placas?.toFixed(1) || '-'}</td>
+                    <td>${dataFormatada}</td><td>${h}</td>
+                    <td>${d.temp_cms?.toFixed(1) || '-'}</td><td>${d.temp_envaseCms?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_salaCortes1?.toFixed(1) || '-'}</td><td>${d.temp_salaCortes2?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_abastiqf?.toFixed(1) || '-'}</td><td>${d.temp_embprimariaiqf?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_frangointeiro?.toFixed(1) || '-'}</td><td>${d.temp_temperados?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chillers?.toFixed(1) || '-'}</td><td>${d.temp_miudos?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_padronizacao?.toFixed(1) || '-'}</td><td>${d.temp_paletizacao?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller_condicionais?.toFixed(1) || '-'}</td><td>${d.temp_pre_chiller_entrada?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_pre_chiller_saida?.toFixed(1) || '-'}</td><td>${d.temp_chiller1_entrada?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller1_saida?.toFixed(1) || '-'}</td><td>${d.temp_chiller2_entrada?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller2_saida?.toFixed(1) || '-'}</td><td>${d.temp_chiller_coracao?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller_figado?.toFixed(1) || '-'}</td><td>${d.temp_chiller_moela?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller_cabeca?.toFixed(1) || '-'}</td><td>${d.temp_chiller_pe1?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_chiller_pe2?.toFixed(1) || '-'}</td><td>${d.temp_abast_pre_chiller?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_retmac_pre_chiller?.toFixed(1) || '-'}</td><td>${d.temp_abast_chiller2?.toFixed(1) || '-'}</td>
+                    <td>${d.temp_retmac_chiller2?.toFixed(1) || '-'}</td><td>${d.temp_saida_placas?.toFixed(1) || '-'}</td>
                 </tr>`;
 
-                // Tabela Energia
                 htmlEnergia += `<tr>
                     <td>${dataFormatada}</td><td>${h}</td>
                     <td>${d.ccm1_tensao?.toFixed(1) || '-'}V / ${d.ccm1_potencia?.toFixed(1) || '-'}kW</td>
@@ -1105,41 +1086,70 @@
                     <td>${d.qgbt2_tensao?.toFixed(1) || '-'}V / ${d.qgbt2_potencia?.toFixed(1) || '-'}kW</td>
                 </tr>`;
 
-                // Tabela Água
-                htmlAgua += `<tr>
-                    <td>${dataFormatada}</td><td>${h}</td>
-                    <td>${d.agua_pre_chiller?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_chiller1?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_chiller2?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_condicionais?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_coracao?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_figado?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_moela?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_cabeca?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_pe1?.toFixed(1) || '-'}</td>
-                    <td>${d.agua_pe2?.toFixed(1) || '-'}</td>
-                </tr>`;
+                // Renderiza a linha de água APENAS se o dado do gatilho existir no minuto lido
+                if (d.agua_cons_pre_chiller !== undefined) {
+                    htmlAgua += `<tr>
+                        <td>${dataFormatada}</td><td>${h}</td>
+                        <td>${d.agua_cons_pre_chiller?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_chiller1?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_chiller2?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_condicionais?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_coracao?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_figado?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_moela?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_cabeca?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_pe1?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_pe2?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_chuveiro_final?.toFixed(1) || '-'}</td>
+                        <td>${d.agua_cons_tanque_escalda?.toFixed(1) || '-'}</td>
+                    </tr>`;
+                }
             });
 
-            // === CUSTO COPEL ===
-            // Tarifa Média Estimada da COPEL (Grupo A com impostos: PIS/COFINS/ICMS) = R$ 0,85
-            const tarifaCopel = 0.85;
-            const custoTotalDiario = consumoDiarioKwh * tarifaCopel;
-
-            // Insere os valores de energia nos Cards
             document.getElementById('rt-consumo-total').innerText = consumoDiarioKwh.toFixed(1);
-            document.getElementById('rt-custo-total').innerText = custoTotalDiario.toFixed(2).replace('.', ',');
+            document.getElementById('rt-custo-total').innerText = (consumoDiarioKwh * TARIFA_KWH).toFixed(2).replace('.', ',');
 
-            // Popula o HTML das tabelas
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
             document.getElementById('tbody-agua').innerHTML = htmlAgua;
         }
 
+        // ================= GRÁFICOS =================
         function desenharGraficos() {
-            // A lógica do Chart.js continua aqui futuramente
-        }
+            const horas = Object.keys(dadosAcumulados).sort();
+            const configPadrao = { responsive: true, maintainAspectRatio: false, spanGaps: true };
 
+            // Temperaturas
+            const filtroTemp = document.getElementById('filtroSetor').value;
+            const ctxTemp = document.getElementById('graficoTemp').getContext('2d');
+            if (graficoTempObj) graficoTempObj.destroy();
+            let dataTemp = [], labelTemp = 'Temperatura (°C)';
+            if (filtroTemp !== 'todos') {
+                labelTemp = document.querySelector(`#filtroSetor option[value="${filtroTemp}"]`).innerText;
+                dataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] || null);
+            } else {
+                labelTemp = "CMS (Referência)";
+                dataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms || null);
+            }
+            graficoTempObj = new Chart(ctxTemp, { type: 'line', data: { labels: horas, datasets: [{ label: labelTemp, data: dataTemp, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+
+            // Energia
+            const filtroEnergia = document.getElementById('filtroQuadro').value;
+            const ctxEnergia = document.getElementById('graficoEnergia').getContext('2d');
+            if (graficoEnergiaObj) graficoEnergiaObj.destroy();
+            const labelEnergia = document.querySelector(`#filtroQuadro option[value="${filtroEnergia}"]`).innerText;
+            const dataPotencia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] || null);
+            graficoEnergiaObj = new Chart(ctxEnergia, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelEnergia} Potência (kW)`, data: dataPotencia, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+
+            // Água (Gráfico usa as chaves agua_cons_)
+            const filtroAgua = document.getElementById('filtroAgua').value;
+            const ctxAgua = document.getElementById('graficoAgua').getContext('2d');
+            if (graficoAguaObj) graficoAguaObj.destroy();
+            const chaveAgua = `agua_cons_${filtroAgua}`;
+            const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
+            const dataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
+            graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelAgua} (m³)`, data: dataAgua, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+        }
     </script>
 </body>
 
