@@ -167,9 +167,15 @@ try:
 
             requests.put(f"{FIREBASE_URL}/acumulados_mes.json", json=acumulador_mensal)
 
-            # Salva histórico padrão (Temperatura, Energia, Utilidades e Hiperclorada)
-            dados_temp_energia = {k: v for k, v in dados.items() if not k.startswith("agua_") and k != "gatilho_2_horas"}
-            requests.patch(url_hist, json=dados_temp_energia)
+            # --- SALVA O HISTÓRICO DE MINUTO ---
+            dados_historico_minuto = {}
+            for k, v in dados.items():
+                if k.startswith("agua_cons_") or k == "gatilho_2_horas":
+                    continue
+                dados_historico_minuto[k] = v
+
+            requests.patch(url_hist, json=dados_historico_minuto)
+            print(f"[{hora_atual}] Histórico de 1 min salvo com sucesso.")
                 
             ultimo_salvamento_1min = agora
 
