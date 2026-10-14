@@ -9,11 +9,11 @@ RACK = 0
 SLOT = 1
 
 # --- DECLARAÇÃO DAS DBs ---
-DB_TEMP = 7       # Temperaturas
-DB_AGUA = 21      # Hidrômetros
-DB_UTILIDADES = 29 # Pressões (Utilidades)
-DB_ENERGIA = 34   # PACs (Quadros)
-DB_GATILHO = 23   # DB do Bit de Gatilho
+DB_TEMP = 7          # Temperaturas
+DB_AGUA = 21         # Hidrômetros
+DB_UTILIDADES = 29   # Pressões (Utilidades)
+DB_ENERGIA = 34      # PACs (Quadros)
+DB_DB23 = 23         # DB 23 (Contém Água Hiperclorada no offset 336 e Bit de Gatilho no offset 340)
 
 FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com'
 
@@ -48,8 +48,8 @@ def ler_dados_clp():
     dados_temp = plc.read_area(0x84, DB_TEMP, 0, 1048)
     dados_energia = plc.read_area(0x84, DB_ENERGIA, 0, 128)
     dados_agua = plc.read_area(0x84, DB_AGUA, 0, 750) 
-    dados_utilidades = plc.read_area(0x84, DB_UTILIDADES, 0, 438) # Lê até o maior offset (434 + 4 bytes)
-    dados_gatilho = plc.read_area(0x84, DB_GATILHO, 340, 1) 
+    dados_utilidades = plc.read_area(0x84, DB_UTILIDADES, 0, 438) # Lê até o offset 434 + 4 bytes
+    dados_db23 = plc.read_area(0x84, DB_DB23, 0, 344)             # Lê DB 23 cobrindo o offset 336 (Hiperclorada) e 340 (Gatilho)
     
     return {
         # --- TEMPERATURAS ---
@@ -126,9 +126,12 @@ def ler_dados_clp():
         "pressao_agua_potavel":      round(get_real(dados_utilidades, 426), 2),
         "pressao_agua_higienizacao": round(get_real(dados_utilidades, 430), 2),
         "pressao_agua_pressurizada": round(get_real(dados_utilidades, 434), 2),
+
+        # --- ÁGUA HIPERCLORADA (DB 23) ---
+        "agua_hiperclorada":         round(get_real(dados_db23, 336), 2),
         
-        # --- GATILHO ---
-        "gatilho_2_horas":          get_bool(dados_gatilho, 0, 0)
+        # --- GATILHO (DB 23) ---
+        "gatilho_2_horas":           get_bool(dados_db23, 340, 0)
     }
 
 ultimo_salvamento_1min = 0
@@ -142,7 +145,7 @@ try:
         gatilho_atual = dados["gatilho_2_horas"]
         
         # 1. Atualiza Tempo Real (A cada 5 segundos)
-        res_tr = requests.put(f"{FIREBASE_URL}/tempo_real.json", json=dados)
+        requests.put(f"{FIREBASE_URL}/tempo_real.json", json=dados)
             
         data_atual = hoje.strftime("%Y-%m-%d")
         hora_atual = hoje.strftime("%H:%M")
@@ -150,8 +153,6 @@ try:
 
         # 2. Salva Histórico e Acumulador (A cada 60 segundos)
         if agora - ultimo_salvamento_1min >= 60:
-            
-            # 2.1 ATUALIZA O ACUMULADOR MENSAL
             if hoje.day >= 12 and acumulador_mensal.get("ultimo_mes_reset") != hoje.month:
                 acumulador_mensal["abatedouro"] = 0.0
                 acumulador_mensal["sala"] = 0.0
@@ -166,7 +167,7 @@ try:
 
             requests.put(f"{FIREBASE_URL}/acumulados_mes.json", json=acumulador_mensal)
 
-            # 2.2 SALVA HISTÓRICO PADRÃO (Vai incluir Temp, Energia e UTILIDADES juntas)
+            # Salva histórico padrão (Temperatura, Energia, Utilidades e Hiperclorada)
             dados_temp_energia = {k: v for k, v in dados.items() if not k.startswith("agua_") and k != "gatilho_2_horas"}
             requests.patch(url_hist, json=dados_temp_energia)
                 

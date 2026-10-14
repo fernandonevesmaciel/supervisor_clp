@@ -371,33 +371,37 @@
 
         <!-- ================= TELA DE UTILIDADES ================= -->
         <div id="view-utilidades" class="view-section">
-            <h2 class="section-title">Pressões (DB 29)</h2>
+            <h2 class="section-title">Pressões e Utilidades (DB 29 e DB 23)</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <h3>Pressão de Ar <small style="font-size:10px; color:#94a3b8">(Offset 2)</small></h3>
+                    <h3>Pressão de Ar <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 2)</small></h3>
                     <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Rede Água Quente <small style="font-size:10px; color:#94a3b8">(Offset 422)</small></h3>
+                    <h3>Rede Água Quente <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 422)</small></h3>
                     <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Potável <small style="font-size:10px; color:#94a3b8">(Offset 426)</small></h3>
+                    <h3>Água Potável <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 426)</small></h3>
                     <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Higienização <small style="font-size:10px; color:#94a3b8">(Offset 430)</small></h3>
+                    <h3>Água Higienização <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 430)</small></h3>
                     <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Pressurizada <small style="font-size:10px; color:#94a3b8">(Offset 434)</small></h3>
+                    <h3>Água Pressurizada <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 434)</small></h3>
                     <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Água Hiperclorada <small style="font-size:10px; color:#94a3b8">(DB 23 - Off 336)</small></h3>
+                    <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> bar</div>
                 </div>
             </div>
 
             <div class="charts-container">
                 <div class="chart-header">
-                    <h3>Histórico de Pressões</h3>
+                    <h3>Histórico de Utilidades</h3>
                     <div class="chart-controls">
                         <select id="filtroUtilidades" class="select-filtro" onchange="desenharGraficos()">
                             <option value="pressao_ar">Pressão de Ar</option>
@@ -405,6 +409,7 @@
                             <option value="pressao_agua_potavel">Água Potável</option>
                             <option value="pressao_agua_higienizacao">Água Higienização</option>
                             <option value="pressao_agua_pressurizada">Água Pressurizada</option>
+                            <option value="agua_hiperclorada">Água Hiperclorada</option>
                         </select>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-utilidades" onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
@@ -417,7 +422,7 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>Data</th> <th>Hora</th> <th>Pr. Ar (bar)</th> <th>Água Quente (bar)</th> <th>Água Potável (bar)</th> <th>Higienização (bar)</th> <th>Pressurizada (bar)</th>
+                                <th>Data</th> <th>Hora</th> <th>Pr. Ar (bar)</th> <th>Água Quente (bar)</th> <th>Água Potável (bar)</th> <th>Higienização (bar)</th> <th>Pressurizada (bar)</th> <th>Hiperclorada (bar)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -465,7 +470,7 @@
             if (aba === 'temperaturas') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Temperaturas';
             if (aba === 'energia') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Energia (Quadros)';
             if (aba === 'agua') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Água (Hidrômetros)';
-            if (aba === 'utilidades') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Utilidades (DB 29)';
+            if (aba === 'utilidades') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Utilidades (Pressões)';
         }
 
         function alternarVisao(aba, tipo) {
@@ -567,12 +572,13 @@
                     document.getElementById('rt-agua-chuveiro-final').innerText = formatarBR(dados.agua_chuveiro_final);
                     document.getElementById('rt-agua-tanque-escalda').innerText = formatarBR(dados.agua_tanque_escalda);
 
-                    // Utilidades (DB 29)
+                    // Utilidades e Hiperclorada
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
                     document.getElementById('rt-pressao-agua-potavel').innerText = formatarBR(dados.pressao_agua_potavel);
                     document.getElementById('rt-pressao-agua-higienizacao').innerText = formatarBR(dados.pressao_agua_higienizacao);
                     document.getElementById('rt-pressao-agua-pressurizada').innerText = formatarBR(dados.pressao_agua_pressurizada);
+                    document.getElementById('rt-agua-hiperclorada').innerText = formatarBR(dados.agua_hiperclorada);
                 }
 
                 // LÓGICA DO ACUMULADOR DO MÊS
@@ -682,6 +688,7 @@
                         <td>${formatarBR(d.pressao_agua_potavel)}</td>
                         <td>${formatarBR(d.pressao_agua_higienizacao)}</td>
                         <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
+                        <td>${formatarBR(d.agua_hiperclorada)}</td>
                     </tr>`;
                 }
             });
@@ -752,7 +759,7 @@
                 type: 'line', 
                 data: { 
                     labels: horas, 
-                    datasets: [{ label: `${labelUtilidades} (bar)`, data: dataUtilidades, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }] 
+                    datasets: [{ label: `${labelUtilidades}`, data: dataUtilidades, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }] 
                 }, 
                 options: configPadrao 
             });
@@ -801,4 +808,5 @@
         }
     </script>
 </body>
+
 </html>
