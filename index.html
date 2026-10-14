@@ -26,6 +26,7 @@
             --danger: #ef4444;
             --warning: #f59e0b;
             --purple: #8b5cf6;
+            --gray: #64748b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
@@ -45,7 +46,6 @@
         .header h1 { font-size: 28px; }
         .header-controls { display: flex; gap: 10px; }
         
-        /* Adição do grupo de botões de exportação */
         .export-group { display: flex; gap: 10px; }
         
         .date-picker, .select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
@@ -67,6 +67,7 @@
         .text-orange { color: var(--warning); }
         .text-red { color: var(--danger); }
         .text-purple { color: var(--purple); }
+        .text-gray { color: var(--gray); }
 
         .charts-container { background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); width: 100%; }
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
@@ -92,6 +93,7 @@
         .footer { position: fixed; bottom: 0; left: 250px; width: calc(100vw - 250px); background-color: var(--sidebar-bg); color: var(--text-light); text-align: center; padding: 12px; font-size: 13px; letter-spacing: 0.5px; z-index: 500; border-top: 1px solid #334155; }
         .footer strong { color: #ffffff; font-weight: 600; }
 
+        /* ================= RESPONSIVIDADE MOBILE OTIMIZADA ================= */
         @media (max-width: 768px) {
             body { flex-direction: column; }
             .sidebar { width: 100%; height: auto; position: relative; }
@@ -100,27 +102,36 @@
             .nav-items { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--sidebar-bg); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); z-index: 1001; }
             .nav-items.open { display: flex; }
             .menu-item { border-left: 4px solid transparent; border-bottom: 1px solid #334155; padding: 15px 20px; }
-            .main-content { padding: 15px; padding-bottom: 70px; }
-            .header { flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
             
-            /* Ajustes nos botões e inputs para Mobile */
-            .header-controls { flex-direction: column; width: 100%; }
-            .date-picker, .btn-atualizar { width: 100%; }
+            .main-content { padding: 12px; padding-bottom: 70px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
+            .header h1 { font-size: 22px; }
+            
+            .header-controls { flex-direction: column; width: 100%; gap: 8px; }
+            .date-picker, .btn-atualizar { width: 100%; font-size: 14px; }
             .export-group { display: flex; width: 100%; gap: 10px; }
-            .export-group button { flex: 1; }
+            .export-group button { flex: 1; padding: 8px; font-size: 13px; }
 
-            .cards-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+            .section-title { font-size: 14px; margin: 15px 0 10px 0; }
+
+            .cards-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
+            .card { padding: 12px; border-radius: 8px; }
+            .card h3 { white-space: normal; font-size: 10px; line-height: 1.2; margin-bottom: 5px; }
+            .card .value { font-size: 16px; word-break: break-word; overflow-wrap: break-word; }
+
+            .charts-container { padding: 12px; }
+            .chart-header { flex-direction: column; gap: 10px; }
+            .chart-controls { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
+            .select-filtro { width: 100%; margin: 0; font-size: 13px; }
+            .view-toggle-btns { display: flex; width: 100%; }
+            .btn-toggle { flex: 1; text-align: center; font-size: 12px; padding: 8px; }
             
-            /* Ajustes para números quebrando as divs */
-            .card .value { font-size: 18px; word-break: break-word; overflow-wrap: break-word; }
-            .card h3 { white-space: normal; font-size: 11px; }
-
-            .chart-header, .chart-controls { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
-            .select-filtro { width: 100%; margin: 0; }
-            .btn-toggle { flex: 1; text-align: center; }
-            table { font-size: 13px; }
-            td, th { padding: 8px; }
-            .footer { left: 0; width: 100vw; font-size: 12px; padding: 10px; }
+            table { font-size: 11px; }
+            td, th { padding: 6px; }
+            th:nth-child(1), td:nth-child(1) { min-width: 70px; }
+            th:nth-child(2), td:nth-child(2) { min-width: 50px; left: 70px; }
+            
+            .footer { left: 0; width: 100vw; font-size: 11px; padding: 10px; }
         }
     </style>
 </head>
@@ -136,6 +147,7 @@
             <div class="menu-item active" onclick="trocarAba('temperaturas', this)">🌡️ Temperaturas</div>
             <div class="menu-item" onclick="trocarAba('energia', this)">⚡ Energia (Quadros)</div>
             <div class="menu-item" onclick="trocarAba('agua', this)">💧 Água (Hidrômetros)</div>
+            <div class="menu-item" onclick="trocarAba('utilidades', this)">⚙️ Utilidades</div>
         </div>
     </div>
 
@@ -154,137 +166,46 @@
 
         <!-- ================= TELA DE TEMPERATURAS ================= -->
         <div id="view-temperaturas" class="view-section active">
-            
             <h2 class="section-title">Temperatura Ambiente</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>CMS <small style="font-size:10px; color:#94a3b8">(SP: 10°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-cms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>ENVASE CMS <small style="font-size:10px; color:#94a3b8">(SP: 10°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 1 <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 2 <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. IQF <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Emb. Prim. IQF <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Frango Inteiro <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Temperados <small style="font-size:10px; color:#94a3b8">(SP: 13°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-temperados">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chillers <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chillers">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Miúdos <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-miudos">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Padronização <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Paletização <small style="font-size:10px; color:#94a3b8">(SP: 12°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div>
-                </div>
+                <div class="card"><h3>CMS</h3><div class="value text-blue"><span id="rt-cms">--</span> °C</div></div>
+                <div class="card"><h3>ENVASE CMS</h3><div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 1</h3><div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 2</h3><div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div></div>
+                <div class="card"><h3>Abast. IQF</h3><div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div></div>
+                <div class="card"><h3>Emb. Prim. IQF</h3><div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div></div>
+                <div class="card"><h3>Frango Inteiro</h3><div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div></div>
+                <div class="card"><h3>Temperados</h3><div class="value text-blue"><span id="rt-temperados">--</span> °C</div></div>
+                <div class="card"><h3>Chillers</h3><div class="value text-blue"><span id="rt-chillers">--</span> °C</div></div>
+                <div class="card"><h3>Miúdos</h3><div class="value text-blue"><span id="rt-miudos">--</span> °C</div></div>
+                <div class="card"><h3>Padronização</h3><div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div></div>
+                <div class="card"><h3>Paletização</h3><div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Chillers</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Chil. Condicionais</h3>
-                    <div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Ent. <small style="font-size:10px; color:#94a3b8">(SP: 16°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Saída</h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Ent.</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Saída</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Ent.</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Saída</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Coração <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Fígado <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Moela <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Cabeça <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 1 <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 2 <small style="font-size:10px; color:#94a3b8">(SP: 4°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Chil. Condicionais</h3><div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Ent.</h3><div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Saída</h3><div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Ent.</h3><div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Saída</h3><div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Ent.</h3><div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Saída</h3><div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Coração</h3><div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Fígado</h3><div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Moela</h3><div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Cabeça</h3><div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 1</h3><div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 2</h3><div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Abastecimento</h2>
             <div class="cards-grid" style="margin-bottom: 30px;">
-                <div class="card">
-                    <h3>Abast. Pré-Chiller <small style="font-size:10px; color:#94a3b8">(SP: 2°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Pré-Chiller</h3>
-                    <div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. Chiller 2 <small style="font-size:10px; color:#94a3b8">(SP: 2°C)</small></h3>
-                    <div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Chiller 2</h3>
-                    <div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Saída das Placas</h3>
-                    <div class="value text-blue"><span id="rt-saida-placas">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Abast. Pré-Chiller</h3><div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Pré-Chiller</h3><div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Abast. Chiller 2</h3><div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Chiller 2</h3><div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div></div>
+                <div class="card"><h3>Saída das Placas</h3><div class="value text-blue"><span id="rt-saida-placas">--</span> °C</div></div>
             </div>
             
             <div class="charts-container">
@@ -347,73 +268,30 @@
 
         <!-- ================= TELA DE ENERGIA ================= -->
         <div id="view-energia" class="view-section">
-            
-            <h2 class="section-title">Resumo Geral (Fábrica)</h2>
+            <h2 class="section-title">Resumo Geral (Fábrica - Estimativa Copel 34.5kV)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real (Momentâneo)</h3>
-                    <div class="value text-orange"><span id="rt-pot-total">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje (Dia Selecionado)</h3>
-                    <div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora (Dia Selec.)</h3>
-                    <div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Acumulado Mensal (Desde dia 12)</h3>
-                    <div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje (Dia Selecionado)</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-total">--</span></div>
-                </div>
-                <div class="card">
-                    <h3>Custo Acumulado (Desde dia 12)</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real (Momentâneo)</h3><div class="value text-orange"><span id="rt-pot-total">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje (Dia Selecionado)</h3><div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora (Dia Selec.)</h3><div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div></div>
+                <div class="card"><h3>Acumulado Mensal (Desde dia 12)</h3><div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div></div>
+                <div class="card"><h3>Custo Hoje (Dia Selecionado)</h3><div class="value text-red">R$ <span id="rt-custo-total">--</span></div></div>
+                <div class="card"><h3>Custo Acumulado (Desde dia 12)</h3><div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div></div>
             </div>
 
-            <h2 class="section-title">Abatedouro (CCM1 + CCM2)</h2>
+            <h2 class="section-title">Abatedouro (CCM1 + CCM2 - S/ Perdas)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real (Momentâneo)</h3>
-                    <div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje (Dia Selecionado)</h3>
-                    <div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real (Momentâneo)</h3><div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje (Dia Selecionado)</h3><div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div></div>
             </div>
 
-            <h2 class="section-title">Sala de Máquinas (QGBT1 + QGBT2)</h2>
+            <h2 class="section-title">Sala de Máquinas (QGBT1 + QGBT2 - S/ Perdas)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real (Momentâneo)</h3>
-                    <div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje (Dia Selecionado)</h3>
-                    <div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-sala">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real (Momentâneo)</h3><div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje (Dia Selecionado)</h3><div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-sala">--</span></div></div>
             </div>
 
             <div class="charts-container">
@@ -490,6 +368,65 @@
                 <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
+
+        <!-- ================= TELA DE UTILIDADES ================= -->
+        <div id="view-utilidades" class="view-section">
+            <h2 class="section-title">Pressões (DB 29)</h2>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Pressão de Ar <small style="font-size:10px; color:#94a3b8">(Offset 2)</small></h3>
+                    <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Rede Água Quente <small style="font-size:10px; color:#94a3b8">(Offset 422)</small></h3>
+                    <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Água Potável <small style="font-size:10px; color:#94a3b8">(Offset 426)</small></h3>
+                    <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Água Higienização <small style="font-size:10px; color:#94a3b8">(Offset 430)</small></h3>
+                    <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Água Pressurizada <small style="font-size:10px; color:#94a3b8">(Offset 434)</small></h3>
+                    <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-header">
+                    <h3>Histórico de Pressões</h3>
+                    <div class="chart-controls">
+                        <select id="filtroUtilidades" class="select-filtro" onchange="desenharGraficos()">
+                            <option value="pressao_ar">Pressão de Ar</option>
+                            <option value="pressao_agua_quente">Rede Água Quente</option>
+                            <option value="pressao_agua_potavel">Água Potável</option>
+                            <option value="pressao_agua_higienizacao">Água Higienização</option>
+                            <option value="pressao_agua_pressurizada">Água Pressurizada</option>
+                        </select>
+                        <div class="view-toggle-btns">
+                            <button class="btn-toggle active" id="btn-graf-utilidades" onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-utilidades" onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="wrapper-graf-utilidades" class="chart-wrapper"><canvas id="graficoUtilidades"></canvas></div>
+                <div id="wrapper-tab-utilidades" class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th> <th>Hora</th> <th>Pr. Ar (bar)</th> <th>Água Quente (bar)</th> <th>Água Potável (bar)</th> <th>Higienização (bar)</th> <th>Pressurizada (bar)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-utilidades"></tbody>
+                    </table>
+                </div>
+                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
+            </div>
+        </div>
+
     </div>
 
     <div class="footer">
@@ -498,14 +435,15 @@
 
     <script>
         const FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com';
-        const TARIFA_KWH = 0.50; // Tarifa ajustada
+        const TARIFA_KWH = 0.50; 
+        const FATOR_PERDA_TRAFO = 1.02; 
 
         function formatarBR(valor, casas = 1) {
             if (valor === undefined || valor === null || isNaN(valor)) return '--';
             return valor.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
         }
 
-        let graficoTempObj = null; let graficoEnergiaObj = null; let graficoAguaObj = null;
+        let graficoTempObj = null; let graficoEnergiaObj = null; let graficoAguaObj = null; let graficoUtilidadesObj = null;
         let dadosAcumulados = {}; let ultimaChave = null; const LIMITE_POR_LOTE = 50;
 
         window.onload = () => {
@@ -527,6 +465,7 @@
             if (aba === 'temperaturas') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Temperaturas';
             if (aba === 'energia') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Energia (Quadros)';
             if (aba === 'agua') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Água (Hidrômetros)';
+            if (aba === 'utilidades') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Utilidades (DB 29)';
         }
 
         function alternarVisao(aba, tipo) {
@@ -571,6 +510,7 @@
                 const dadosAcum = await resAcum.json();
 
                 if (dados) {
+                    // Temperaturas
                     atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
                     atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
                     atualizarComSetpoint('rt-salaCortes1', dados.temp_salaCortes1, 12);
@@ -604,12 +544,16 @@
                     document.getElementById('rt-retmac-chiller2').innerText = formatarBR(dados.temp_retmac_chiller2);
                     document.getElementById('rt-saida-placas').innerText = formatarBR(dados.temp_saida_placas);
 
+                    // Energia
                     let potAbatedouro = (dados.ccm1_potencia || 0) + (dados.ccm2_potencia || 0);
                     let potSala = (dados.qgbt1_potencia || 0) + (dados.qgbt2_potencia || 0);
+                    let potTotalBaixa = potAbatedouro + potSala;
+                    let potTotalAlta = potTotalBaixa * FATOR_PERDA_TRAFO;
                     document.getElementById('rt-pot-abatedouro').innerText = formatarBR(potAbatedouro, 1);
                     document.getElementById('rt-pot-sala').innerText = formatarBR(potSala, 1);
-                    document.getElementById('rt-pot-total').innerText = formatarBR(potAbatedouro + potSala, 1);
+                    document.getElementById('rt-pot-total').innerText = formatarBR(potTotalAlta, 1);
 
+                    // Água
                     document.getElementById('rt-agua-pre-chiller').innerText = formatarBR(dados.agua_pre_chiller);
                     document.getElementById('rt-agua-chiller1').innerText = formatarBR(dados.agua_chiller1);
                     document.getElementById('rt-agua-chiller2').innerText = formatarBR(dados.agua_chiller2);
@@ -622,24 +566,32 @@
                     document.getElementById('rt-agua-pe2').innerText = formatarBR(dados.agua_pe2);
                     document.getElementById('rt-agua-chuveiro-final').innerText = formatarBR(dados.agua_chuveiro_final);
                     document.getElementById('rt-agua-tanque-escalda').innerText = formatarBR(dados.agua_tanque_escalda);
+
+                    // Utilidades (DB 29)
+                    document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
+                    document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
+                    document.getElementById('rt-pressao-agua-potavel').innerText = formatarBR(dados.pressao_agua_potavel);
+                    document.getElementById('rt-pressao-agua-higienizacao').innerText = formatarBR(dados.pressao_agua_higienizacao);
+                    document.getElementById('rt-pressao-agua-pressurizada').innerText = formatarBR(dados.pressao_agua_pressurizada);
                 }
 
+                // LÓGICA DO ACUMULADOR DO MÊS
                 if (dadosAcum) {
                     let kwhAbatMes = dadosAcum.abatedouro || 0;
                     let kwhSalaMes = dadosAcum.sala || 0;
-                    let kwhTotalMes = kwhAbatMes + kwhSalaMes;
+                    let kwhTotalMesLV = kwhAbatMes + kwhSalaMes;
+                    let kwhTotalMesHV = kwhTotalMesLV * FATOR_PERDA_TRAFO;
 
-                    document.getElementById('rt-mensal-total').innerText = formatarBR(kwhTotalMes, 1);
-                    document.getElementById('rt-custo-mensal-total').innerText = formatarBR(kwhTotalMes * TARIFA_KWH, 2);
+                    document.getElementById('rt-mensal-total').innerText = formatarBR(kwhTotalMesHV, 1);
+                    document.getElementById('rt-custo-mensal-total').innerText = formatarBR(kwhTotalMesHV * TARIFA_KWH, 2);
                 }
             } catch (e) { }
         }
 
-       // ================= HISTÓRICO =================
+        // ================= HISTÓRICO =================
         async function buscarHistorico(novaBusca) {
             const data = document.getElementById('dataBusca').value;
             
-            // Se for uma busca nova (mudança de data), limpa a memória local
             if (novaBusca) { 
                 dadosAcumulados = {}; 
                 ultimaChave = null; 
@@ -652,7 +604,6 @@
                 const res = await fetch(url);
                 const dadosLote = await res.json();
                 
-                // Se retornou dados do banco
                 if (dadosLote && Object.keys(dadosLote).length > 0) {
                     const chaves = Object.keys(dadosLote).sort();
                     if (ultimaChave && chaves[chaves.length - 1] === ultimaChave) { 
@@ -664,12 +615,9 @@
                         Object.assign(dadosAcumulados, dadosLote);
                     }
                 } else if (novaBusca) {
-                    // Se a busca é nova e não tem nada, avisa o usuário
                     alert(`Não há registros salvos para o dia ${data.split('-').reverse().join('/')}.`);
                 }
                 
-                // Tira a atualização de dentro do "if" para forçar a tela a se limpar
-                // caso o objeto dadosAcumulados esteja vazio
                 desenharGraficos();
                 preencherTabelas(data);
                 
@@ -677,9 +625,10 @@
                 console.error("Erro no histórico:", e); 
             }
         }
+        
         function preencherTabelas(data) {
             const horas = Object.keys(dadosAcumulados).sort((a, b) => b.localeCompare(a));
-            let htmlTemp = '', htmlEnergia = '', htmlAgua = '';
+            let htmlTemp = '', htmlEnergia = '', htmlAgua = '', htmlUtilidades = '';
             
             let kwhAbatedouro = 0, kwhSala = 0;
             let totalLeituras = horas.length;
@@ -724,31 +673,41 @@
                         <td>${formatarBR(d.agua_cons_pre_chiller)}</td> <td>${formatarBR(d.agua_cons_chiller1)}</td> <td>${formatarBR(d.agua_cons_chiller2)}</td> <td>${formatarBR(d.agua_cons_condicionais)}</td> <td>${formatarBR(d.agua_cons_coracao)}</td> <td>${formatarBR(d.agua_cons_figado)}</td> <td>${formatarBR(d.agua_cons_moela)}</td> <td>${formatarBR(d.agua_cons_cabeca)}</td> <td>${formatarBR(d.agua_cons_pe1)}</td> <td>${formatarBR(d.agua_cons_pe2)}</td> <td>${formatarBR(d.agua_cons_chuveiro_final)}</td> <td>${formatarBR(d.agua_cons_tanque_escalda)}</td>
                     </tr>`;
                 }
+
+                if (d.pressao_ar !== undefined) {
+                    htmlUtilidades += `<tr>
+                        <td>${dataFormatada}</td><td>${h}</td>
+                        <td>${formatarBR(d.pressao_ar)}</td>
+                        <td>${formatarBR(d.pressao_agua_quente)}</td>
+                        <td>${formatarBR(d.pressao_agua_potavel)}</td>
+                        <td>${formatarBR(d.pressao_agua_higienizacao)}</td>
+                        <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
+                    </tr>`;
+                }
             });
 
-            let kwhTotal = kwhAbatedouro + kwhSala;
+            // ATUALIZAÇÃO DO PAINEL DO DIA SELECIONADO (Energia)
+            let kwhTotalBaixa = kwhAbatedouro + kwhSala;
+            let kwhTotalAlta = kwhTotalBaixa * FATOR_PERDA_TRAFO;
             let horasPassadas = totalLeituras / 60;
             if (horasPassadas === 0) horasPassadas = 1;
 
-            let mediaHoraAbat = kwhAbatedouro / horasPassadas;
-            let mediaHoraSala = kwhSala / horasPassadas;
-            let mediaHoraTotal = kwhTotal / horasPassadas;
-
-            document.getElementById('rt-kwh-total').innerText = formatarBR(kwhTotal, 1);
-            document.getElementById('rt-media-total').innerText = formatarBR(mediaHoraTotal, 1);
-            document.getElementById('rt-custo-total').innerText = formatarBR(kwhTotal * TARIFA_KWH, 2);
+            document.getElementById('rt-kwh-total').innerText = formatarBR(kwhTotalAlta, 1);
+            document.getElementById('rt-media-total').innerText = formatarBR(kwhTotalAlta / horasPassadas, 1);
+            document.getElementById('rt-custo-total').innerText = formatarBR(kwhTotalAlta * TARIFA_KWH, 2);
 
             document.getElementById('rt-kwh-abatedouro').innerText = formatarBR(kwhAbatedouro, 1);
-            document.getElementById('rt-media-abatedouro').innerText = formatarBR(mediaHoraAbat, 1);
+            document.getElementById('rt-media-abatedouro').innerText = formatarBR(kwhAbatedouro / horasPassadas, 1);
             document.getElementById('rt-custo-abatedouro').innerText = formatarBR(kwhAbatedouro * TARIFA_KWH, 2);
 
             document.getElementById('rt-kwh-sala').innerText = formatarBR(kwhSala, 1);
-            document.getElementById('rt-media-sala').innerText = formatarBR(mediaHoraSala, 1);
+            document.getElementById('rt-media-sala').innerText = formatarBR(kwhSala / horasPassadas, 1);
             document.getElementById('rt-custo-sala').innerText = formatarBR(kwhSala * TARIFA_KWH, 2);
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
             document.getElementById('tbody-agua').innerHTML = htmlAgua;
+            document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
         // ================= GRÁFICOS =================
@@ -783,6 +742,20 @@
             const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
             const dataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
             graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelAgua} (m³)`, data: dataAgua, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+
+            const filtroUtilidades = document.getElementById('filtroUtilidades').value;
+            const ctxUtilidades = document.getElementById('graficoUtilidades').getContext('2d');
+            if (graficoUtilidadesObj) graficoUtilidadesObj.destroy();
+            const labelUtilidades = document.querySelector(`#filtroUtilidades option[value="${filtroUtilidades}"]`).innerText;
+            const dataUtilidades = horas.map(h => dadosAcumulados[h]?.[filtroUtilidades] || null);
+            graficoUtilidadesObj = new Chart(ctxUtilidades, { 
+                type: 'line', 
+                data: { 
+                    labels: horas, 
+                    datasets: [{ label: `${labelUtilidades} (bar)`, data: dataUtilidades, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }] 
+                }, 
+                options: configPadrao 
+            });
         }
 
         // ================= EXPORTAÇÃO =================
@@ -791,6 +764,7 @@
             if (viewAtiva === 'view-temperaturas') return document.querySelector('#wrapper-tab-temp table');
             if (viewAtiva === 'view-energia') return document.querySelector('#wrapper-tab-energia table');
             if (viewAtiva === 'view-agua') return document.querySelector('#wrapper-tab-agua table');
+            if (viewAtiva === 'view-utilidades') return document.querySelector('#wrapper-tab-utilidades table');
         }
 
         function exportarExcel() {
@@ -813,7 +787,6 @@
             const dataStr = document.getElementById('dataBusca').value;
             
             const doc = new jsPDF('l', 'pt', 'a4'); 
-            
             doc.setFontSize(14);
             doc.text(`${titulo} - Data: ${dataStr}`, 40, 30);
             
@@ -824,10 +797,8 @@
                 headStyles: { fillColor: [59, 130, 246] },
                 theme: 'grid'
             });
-            
             doc.save(`${titulo} - ${dataStr}.pdf`);
         }
     </script>
 </body>
-
 </html>

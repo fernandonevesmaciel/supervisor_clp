@@ -11,6 +11,7 @@ SLOT = 1
 # --- DECLARAÇÃO DAS DBs ---
 DB_TEMP = 7       # Temperaturas
 DB_AGUA = 21      # Hidrômetros
+DB_UTILIDADES = 29 # Pressões (Utilidades)
 DB_ENERGIA = 34   # PACs (Quadros)
 DB_GATILHO = 23   # DB do Bit de Gatilho
 
@@ -20,7 +21,7 @@ plc = snap7.client.Client()
 plc.connect(IP_CLP, RACK, SLOT)
 
 if plc.get_connected():
-    print("Conectado ao S7-1200 - Lendo DBs 7, 21, 34 e 23...")
+    print("Conectado ao S7-1200 - Lendo DBs 7, 21, 29, 34 e 23...")
 else:
     print("Falha na conexão com o CLP.")
     exit()
@@ -47,6 +48,7 @@ def ler_dados_clp():
     dados_temp = plc.read_area(0x84, DB_TEMP, 0, 1048)
     dados_energia = plc.read_area(0x84, DB_ENERGIA, 0, 128)
     dados_agua = plc.read_area(0x84, DB_AGUA, 0, 750) 
+    dados_utilidades = plc.read_area(0x84, DB_UTILIDADES, 0, 438) # Lê até o maior offset (434 + 4 bytes)
     dados_gatilho = plc.read_area(0x84, DB_GATILHO, 340, 1) 
     
     return {
@@ -117,6 +119,13 @@ def ler_dados_clp():
         "agua_cons_condicionais":   round(get_real(dados_agua, 352), 2),
         "agua_cons_chuveiro_final": round(get_real(dados_agua, 708), 2),
         "agua_cons_tanque_escalda": round(get_real(dados_agua, 746), 2),
+
+        # --- UTILIDADES (DB 29) ---
+        "pressao_ar":                round(get_real(dados_utilidades, 2), 2),
+        "pressao_agua_quente":       round(get_real(dados_utilidades, 422), 2),
+        "pressao_agua_potavel":      round(get_real(dados_utilidades, 426), 2),
+        "pressao_agua_higienizacao": round(get_real(dados_utilidades, 430), 2),
+        "pressao_agua_pressurizada": round(get_real(dados_utilidades, 434), 2),
         
         # --- GATILHO ---
         "gatilho_2_horas":          get_bool(dados_gatilho, 0, 0)
@@ -143,24 +152,21 @@ try:
         if agora - ultimo_salvamento_1min >= 60:
             
             # 2.1 ATUALIZA O ACUMULADOR MENSAL
-            # Se for dia 12 (ou maior) e ainda não tivermos zerado a conta neste mês
             if hoje.day >= 12 and acumulador_mensal.get("ultimo_mes_reset") != hoje.month:
                 acumulador_mensal["abatedouro"] = 0.0
                 acumulador_mensal["sala"] = 0.0
                 acumulador_mensal["ultimo_mes_reset"] = hoje.month
                 print(f"[{hora_atual}] Acumulador mensal zerado! Iniciando ciclo do dia 12.")
 
-            # Converte a potência do momento (kW) para a energia gasta no minuto (kWh) dividindo por 60
             pot_abatedouro = dados["ccm1_potencia"] + dados["ccm2_potencia"]
             pot_sala = dados["qgbt1_potencia"] + dados["qgbt2_potencia"]
             
             acumulador_mensal["abatedouro"] += (pot_abatedouro / 60.0)
             acumulador_mensal["sala"] += (pot_sala / 60.0)
 
-            # Salva o acumulador atualizado em um nó isolado na nuvem
             requests.put(f"{FIREBASE_URL}/acumulados_mes.json", json=acumulador_mensal)
 
-            # 2.2 SALVA HISTÓRICO PADRÃO
+            # 2.2 SALVA HISTÓRICO PADRÃO (Vai incluir Temp, Energia e UTILIDADES juntas)
             dados_temp_energia = {k: v for k, v in dados.items() if not k.startswith("agua_") and k != "gatilho_2_horas"}
             requests.patch(url_hist, json=dados_temp_energia)
                 
