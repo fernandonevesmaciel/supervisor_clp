@@ -5,7 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisório Industrial Integrado</title>
+    
+    <!-- Bibliotecas Gráficos e Exportação -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         :root {
             --bg-color: #f0f2f5;
@@ -25,7 +31,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
         body { display: flex; height: 100vh; width: 100vw; background-color: var(--bg-color); color: var(--text-main); overflow: hidden; }
 
-        /* SIDEBAR e RESPONSIVO mantidos idênticos... */
         .sidebar { width: 250px; background-color: var(--sidebar-bg); color: white; display: flex; flex-direction: column; flex-shrink: 0; z-index: 1000; }
         .sidebar-header { display: flex; justify-content: center; align-items: center; padding: 20px; border-bottom: 1px solid #334155; }
         .sidebar h2 { font-size: 20px; }
@@ -39,9 +44,13 @@
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .header h1 { font-size: 28px; }
         .header-controls { display: flex; gap: 10px; }
+        
+        /* Adição do grupo de botões de exportação */
+        .export-group { display: flex; gap: 10px; }
+        
         .date-picker, .select-filtro { padding: 8px 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; outline: none; }
         .btn-atualizar { padding: 8px 15px; background: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; transition: 0.2s; font-weight: 500; }
-        .btn-atualizar:hover { background: #2563eb; }
+        .btn-atualizar:hover { filter: brightness(1.1); }
         .btn-carregar-mais { padding: 10px 15px; background: #64748b; color: white; border: none; border-radius: 6px; cursor: pointer; margin-top: 10px; width: 100%; transition: 0.2s; font-weight: 500; }
         
         .section-title { font-size: 16px; color: var(--text-main); margin: 25px 0 15px 0; padding-bottom: 8px; border-bottom: 2px solid #e2e8f0; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -93,9 +102,19 @@
             .menu-item { border-left: 4px solid transparent; border-bottom: 1px solid #334155; padding: 15px 20px; }
             .main-content { padding: 15px; padding-bottom: 70px; }
             .header { flex-direction: column; align-items: flex-start; gap: 15px; margin-bottom: 20px; }
-            .header-controls { width: 100%; flex-direction: column; }
+            
+            /* Ajustes nos botões e inputs para Mobile */
+            .header-controls { flex-direction: column; width: 100%; }
             .date-picker, .btn-atualizar { width: 100%; }
+            .export-group { display: flex; width: 100%; gap: 10px; }
+            .export-group button { flex: 1; }
+
             .cards-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+            
+            /* Ajustes para números quebrando as divs */
+            .card .value { font-size: 18px; word-break: break-word; overflow-wrap: break-word; }
+            .card h3 { white-space: normal; font-size: 11px; }
+
             .chart-header, .chart-controls { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
             .select-filtro { width: 100%; margin: 0; }
             .btn-toggle { flex: 1; text-align: center; }
@@ -126,6 +145,10 @@
             <div class="header-controls">
                 <input type="date" id="dataBusca" class="date-picker">
                 <button class="btn-atualizar" onclick="buscarHistorico(true)">Carregar Histórico</button>
+                <div class="export-group">
+                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥 Excel</button>
+                    <button class="btn-atualizar" style="background: #ef4444;" onclick="exportarPDF()">📥 PDF</button>
+                </div>
             </div>
         </div>
 
@@ -539,7 +562,6 @@
         // ================= TEMPO REAL =================
         async function buscarTempoReal() {
             try {
-                // Busca em paralelo o tempo real das maquinas e o acumulador salvo pelo Python
                 const [resTR, resAcum] = await Promise.all([
                     fetch(`${FIREBASE_URL}/tempo_real.json`),
                     fetch(`${FIREBASE_URL}/acumulados_mes.json`)
@@ -548,7 +570,6 @@
                 const dados = await resTR.json();
                 const dadosAcum = await resAcum.json();
 
-                // LÓGICA DE EXIBIÇÃO TEMPO REAL
                 if (dados) {
                     atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
                     atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
@@ -563,7 +584,6 @@
                     atualizarComSetpoint('rt-frangointeiro', dados.temp_frangointeiro, 13);
                     atualizarComSetpoint('rt-temperados', dados.temp_temperados, 13);
                     
-                    // Setpoints (Chillers de Miúdos = 4°C / Entradas = 16°C e 2°C)
                     atualizarComSetpoint('rt-chiller-coracao', dados.temp_chiller_coracao, 4);
                     atualizarComSetpoint('rt-chiller-figado', dados.temp_chiller_figado, 4);
                     atualizarComSetpoint('rt-chiller-moela', dados.temp_chiller_moela, 4);
@@ -584,14 +604,12 @@
                     document.getElementById('rt-retmac-chiller2').innerText = formatarBR(dados.temp_retmac_chiller2);
                     document.getElementById('rt-saida-placas').innerText = formatarBR(dados.temp_saida_placas);
 
-                    // Potência (kW)
                     let potAbatedouro = (dados.ccm1_potencia || 0) + (dados.ccm2_potencia || 0);
                     let potSala = (dados.qgbt1_potencia || 0) + (dados.qgbt2_potencia || 0);
                     document.getElementById('rt-pot-abatedouro').innerText = formatarBR(potAbatedouro, 1);
                     document.getElementById('rt-pot-sala').innerText = formatarBR(potSala, 1);
                     document.getElementById('rt-pot-total').innerText = formatarBR(potAbatedouro + potSala, 1);
 
-                    // Água
                     document.getElementById('rt-agua-pre-chiller').innerText = formatarBR(dados.agua_pre_chiller);
                     document.getElementById('rt-agua-chiller1').innerText = formatarBR(dados.agua_chiller1);
                     document.getElementById('rt-agua-chiller2').innerText = formatarBR(dados.agua_chiller2);
@@ -606,7 +624,6 @@
                     document.getElementById('rt-agua-tanque-escalda').innerText = formatarBR(dados.agua_tanque_escalda);
                 }
 
-                // LÓGICA DO ACUMULADOR DO MÊS (Calculado pelo script em Python)
                 if (dadosAcum) {
                     let kwhAbatMes = dadosAcum.abatedouro || 0;
                     let kwhSalaMes = dadosAcum.sala || 0;
@@ -618,10 +635,15 @@
             } catch (e) { }
         }
 
-        // ================= HISTÓRICO =================
+       // ================= HISTÓRICO =================
         async function buscarHistorico(novaBusca) {
             const data = document.getElementById('dataBusca').value;
-            if (novaBusca) { dadosAcumulados = {}; ultimaChave = null; }
+            
+            // Se for uma busca nova (mudança de data), limpa a memória local
+            if (novaBusca) { 
+                dadosAcumulados = {}; 
+                ultimaChave = null; 
+            }
 
             let url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&limitToLast=${LIMITE_POR_LOTE}`;
             if (ultimaChave) url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&endAt=%22${ultimaChave}%22&limitToLast=${LIMITE_POR_LOTE + 1}`;
@@ -629,19 +651,32 @@
             try {
                 const res = await fetch(url);
                 const dadosLote = await res.json();
+                
+                // Se retornou dados do banco
                 if (dadosLote && Object.keys(dadosLote).length > 0) {
                     const chaves = Object.keys(dadosLote).sort();
-                    if (ultimaChave && chaves[chaves.length - 1] === ultimaChave) { chaves.pop(); delete dadosLote[ultimaChave]; }
+                    if (ultimaChave && chaves[chaves.length - 1] === ultimaChave) { 
+                        chaves.pop(); 
+                        delete dadosLote[ultimaChave]; 
+                    }
                     if (chaves.length > 0) {
                         ultimaChave = chaves[0];
                         Object.assign(dadosAcumulados, dadosLote);
-                        desenharGraficos();
-                        preencherTabelas(data);
                     }
+                } else if (novaBusca) {
+                    // Se a busca é nova e não tem nada, avisa o usuário
+                    alert(`Não há registros salvos para o dia ${data.split('-').reverse().join('/')}.`);
                 }
-            } catch (e) { console.error("Erro no histórico:", e); }
+                
+                // Tira a atualização de dentro do "if" para forçar a tela a se limpar
+                // caso o objeto dadosAcumulados esteja vazio
+                desenharGraficos();
+                preencherTabelas(data);
+                
+            } catch (e) { 
+                console.error("Erro no histórico:", e); 
+            }
         }
-        
         function preencherTabelas(data) {
             const horas = Object.keys(dadosAcumulados).sort((a, b) => b.localeCompare(a));
             let htmlTemp = '', htmlEnergia = '', htmlAgua = '';
@@ -653,7 +688,6 @@
             horas.forEach(h => {
                 const d = dadosAcumulados[h];
 
-                // Acumulando kW para transformar em kWh (kW / 60 minutos) daquele dia
                 kwhAbatedouro += ((d.ccm1_potencia || 0) + (d.ccm2_potencia || 0)) / 60;
                 kwhSala += ((d.qgbt1_potencia || 0) + (d.qgbt2_potencia || 0)) / 60;
 
@@ -692,7 +726,6 @@
                 }
             });
 
-            // ATUALIZAÇÃO DO PAINEL DO DIA SELECIONADO
             let kwhTotal = kwhAbatedouro + kwhSala;
             let horasPassadas = totalLeituras / 60;
             if (horasPassadas === 0) horasPassadas = 1;
@@ -718,7 +751,7 @@
             document.getElementById('tbody-agua').innerHTML = htmlAgua;
         }
 
-        // ================= GRÁFICOS (Mantidos Identicos) =================
+        // ================= GRÁFICOS =================
         function desenharGraficos() {
             const horas = Object.keys(dadosAcumulados).sort();
             const configPadrao = { responsive: true, maintainAspectRatio: false, spanGaps: true };
@@ -750,6 +783,49 @@
             const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
             const dataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
             graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelAgua} (m³)`, data: dataAgua, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+        }
+
+        // ================= EXPORTAÇÃO =================
+        function getTabelaAtiva() {
+            const viewAtiva = document.querySelector('.view-section.active').id;
+            if (viewAtiva === 'view-temperaturas') return document.querySelector('#wrapper-tab-temp table');
+            if (viewAtiva === 'view-energia') return document.querySelector('#wrapper-tab-energia table');
+            if (viewAtiva === 'view-agua') return document.querySelector('#wrapper-tab-agua table');
+        }
+
+        function exportarExcel() {
+            const table = getTabelaAtiva();
+            if (!table || table.rows.length <= 1) return alert('Não há dados carregados para exportar.');
+            
+            const titulo = document.getElementById('titulo-pagina').innerText;
+            const dataStr = document.getElementById('dataBusca').value;
+            
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Dados" });
+            XLSX.writeFile(wb, `${titulo} - ${dataStr}.xlsx`);
+        }
+
+        function exportarPDF() {
+            const table = getTabelaAtiva();
+            if (!table || table.rows.length <= 1) return alert('Não há dados carregados para exportar.');
+
+            const { jsPDF } = window.jspdf;
+            const titulo = document.getElementById('titulo-pagina').innerText;
+            const dataStr = document.getElementById('dataBusca').value;
+            
+            const doc = new jsPDF('l', 'pt', 'a4'); 
+            
+            doc.setFontSize(14);
+            doc.text(`${titulo} - Data: ${dataStr}`, 40, 30);
+            
+            doc.autoTable({
+                html: table,
+                startY: 40,
+                styles: { fontSize: 6, cellPadding: 2, halign: 'center' },
+                headStyles: { fillColor: [59, 130, 246] },
+                theme: 'grid'
+            });
+            
+            doc.save(`${titulo} - ${dataStr}.pdf`);
         }
     </script>
 </body>
