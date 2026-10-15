@@ -82,7 +82,7 @@ def ler_dados_clp():
         "temp_retmac_pre_chiller":   round(get_real(dados_temp, 104), 2),
         "temp_abast_chiller2":       round(get_real(dados_temp, 484), 2),
         "temp_retmac_chiller2":      round(get_real(dados_temp, 504), 2),
-        "temp_saida_placas":         round(get_real(dados_temp, 1044), 2),
+        "temp_glicol":         round(get_real(dados_temp, 1044), 2),
         
         # --- ENERGIA ---
         "ccm1_tensao":         round(get_real(dados_energia, 28), 2),

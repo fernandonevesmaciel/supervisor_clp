@@ -722,10 +722,7 @@
                     <h3>Retmac Chiller 2 (4ºC)</h3>
                     <div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div>
                 </div>
-                <div class="card">
-                    <h3>Saída das Placas</h3>
-                    <div class="value text-blue"><span id="rt-saida-placas">--</span> °C</div>
-                </div>
+
             </div>
 
             <div class="charts-container">
@@ -763,7 +760,7 @@
                             <option value="retmac_pre_chiller">Retmac Pré-Chiller</option>
                             <option value="abast_chiller2">Abast. Chiller 2</option>
                             <option value="retmac_chiller2">Retmac Chiller 2</option>
-                            <option value="saida_placas">Saída das Placas</option>
+                            
                         </select>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-temp"
@@ -1041,28 +1038,33 @@
             <h2 class="section-title">Pressões e Utilidades (DB 29 e DB 23)</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <h3>Pressão de Ar <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 2)</small></h3>
+                    <h3>Pressão de Ar </h3>
                     <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Rede Água Quente <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 422)</small></h3>
+                    <h3>Rede Água Quente </h3>
                     <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Potável <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 426)</small></h3>
+                    <h3>Água Potável </h3>
                     <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Higienização <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 430)</small></h3>
+                    <h3>Água Higienização </h3>
                     <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Pressurizada <small style="font-size:10px; color:#94a3b8">(DB 29 - Off 434)</small></h3>
+                    <h3>Água Pressurizada </h3>
                     <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Hiperclorada <small style="font-size:10px; color:#94a3b8">(DB 23 - Off 336)</small></h3>
-                    <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> bar</div>
+                    <h3>Água Hiperclorada </h3>
+                    <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div>
+                </div>
+
+                <div class="card">
+                    <h3>Temperatura Glicol</h3>
+                    <div class="value text-blue"><span id="rt-glicol">--</span> °C</div>
                 </div>
             </div>
 
@@ -1077,6 +1079,7 @@
                             <option value="pressao_agua_higienizacao">Água Higienização</option>
                             <option value="pressao_agua_pressurizada">Água Pressurizada</option>
                             <option value="agua_hiperclorada">Água Hiperclorada</option>
+                            <option value="saida_placas">Saída das Placas</option>
                         </select>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-utilidades"
@@ -1098,7 +1101,7 @@
                                 <th>Água Potável (bar)</th>
                                 <th>Higienização (bar)</th>
                                 <th>Pressurizada (bar)</th>
-                                <th>Hiperclorada (bar)</th>
+                                <th>Hiperclorada (PPM)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -1229,7 +1232,7 @@
                     atualizarComSetpoint('rt-retmac-pre-chiller', dados.temp_retmac_pre_chiller, 16); // <--- Adicionado setpoint de 16ºC
                     atualizarComSetpoint('rt-abast-chiller2', dados.temp_abast_chiller2, 2);
                     atualizarComSetpoint('rt-retmac-chiller2', dados.temp_retmac_chiller2, 4);
-                    atualizarComSetpoint('rt-saida-placas', dados.temp_saida_placas, 2);         // <--- Adicionado setpoint de -18ºC
+                    atualizarComSetpoint('rt-glicol', dados.temp_glicol, 2);         // <--- Adicionado setpoint de -18ºC
 
                     // Demais campos sem setpoint estrito (apenas exibição)
                     document.getElementById('rt-chiller-condicionais').innerText = formatarBR(dados.temp_chiller_condicionais);
@@ -1353,7 +1356,7 @@
                     <td>${formatarBR(d.temp_chiller_cabeca)}</td><td>${formatarBR(d.temp_chiller_pe1)}</td>
                     <td>${formatarBR(d.temp_chiller_pe2)}</td><td>${formatarBR(d.temp_abast_pre_chiller)}</td>
                     <td>${formatarBR(d.temp_retmac_pre_chiller)}</td><td>${formatarBR(d.temp_abast_chiller2)}</td>
-                    <td>${formatarBR(d.temp_retmac_chiller2)}</td><td>${formatarBR(d.temp_saida_placas)}</td>
+                    <td>${formatarBR(d.temp_retmac_chiller2)}</td>
                 </tr>`;
 
                 htmlEnergia += `<tr>
@@ -1380,6 +1383,7 @@
                         <td>${formatarBR(d.pressao_agua_higienizacao)}</td>
                         <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
                         <td>${formatarBR(d.agua_hiperclorada)}</td>
+                        <td>${formatarBR(d.temp_saida_placas)}</td>
                     </tr>`;
                 }
             });
