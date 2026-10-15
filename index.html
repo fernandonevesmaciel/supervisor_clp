@@ -370,7 +370,6 @@
             font-weight: 600;
         }
 
-        /* ================= RESPONSIVIDADE MOBILE OTIMIZADA ================= */
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
@@ -902,56 +901,56 @@
             <div class="cards-grid">
                 <div class="card">
                     <h3>Pré-Chiller</h3>
-                    <div class="value text-water"><span id="rt-agua-pre-chiller">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Chiller 1</h3>
-                    <div class="value text-water"><span id="rt-agua-chiller1">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Chiller 2</h3>
-                    <div class="value text-water"><span id="rt-agua-chiller2">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Condicionais</h3>
-                    <div class="value text-water"><span id="rt-agua-condicionais">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-condicionais">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Coração</h3>
-                    <div class="value text-water"><span id="rt-agua-coracao">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-coracao">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Fígado</h3>
-                    <div class="value text-water"><span id="rt-agua-figado">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-figado">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Moela</h3>
-                    <div class="value text-water"><span id="rt-agua-moela">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-moela">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Cabeça</h3>
-                    <div class="value text-water"><span id="rt-agua-cabeca">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-cabeca">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Pé 1</h3>
-                    <div class="value text-water"><span id="rt-agua-pe1">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-pe1">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Pé 2</h3>
-                    <div class="value text-water"><span id="rt-agua-pe2">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-pe2">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Chuveiro Final</h3>
-                    <div class="value text-water"><span id="rt-agua-chuveiro-final">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-chuveiro-final">--</span> m³</div>
                 </div>
                 <div class="card">
                     <h3>Tanque Escalda</h3>
-                    <div class="value text-water"><span id="rt-agua-tanque-escalda">--</span> m³</div>
+                    <div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div>
                 </div>
             </div>
             <div class="charts-container">
                 <div class="chart-header">
-                    <h3>Consumo de Água (Pulso 2 Horas)</h3>
+                    <h3>Histórico de Água (Atualização por Minuto - DB21)</h3>
                     <div class="chart-controls">
                         <select id="filtroAgua" class="select-filtro" onchange="desenharGraficos()">
                             <option value="pre_chiller">Pré-Chiller</option>
@@ -1211,18 +1210,19 @@
                     document.getElementById('rt-pot-sala').innerText = formatarBR(potSala, 1);
                     document.getElementById('rt-pot-total').innerText = formatarBR(potTotalAlta, 1);
 
-                    document.getElementById('rt-agua-pre-chiller').innerText = formatarBR(dados.agua_pre_chiller);
-                    document.getElementById('rt-agua-chiller1').innerText = formatarBR(dados.agua_chiller1);
-                    document.getElementById('rt-agua-chiller2').innerText = formatarBR(dados.agua_chiller2);
-                    document.getElementById('rt-agua-condicionais').innerText = formatarBR(dados.agua_condicionais);
-                    document.getElementById('rt-agua-coracao').innerText = formatarBR(dados.agua_coracao);
-                    document.getElementById('rt-agua-figado').innerText = formatarBR(dados.agua_figado);
-                    document.getElementById('rt-agua-moela').innerText = formatarBR(dados.agua_moela);
-                    document.getElementById('rt-agua-cabeca').innerText = formatarBR(dados.agua_cabeca);
-                    document.getElementById('rt-agua-pe1').innerText = formatarBR(dados.agua_pe1);
-                    document.getElementById('rt-agua-pe2').innerText = formatarBR(dados.agua_pe2);
-                    document.getElementById('rt-agua-chuveiro-final').innerText = formatarBR(dados.agua_chuveiro_final);
-                    document.getElementById('rt-agua-tanque-escalda').innerText = formatarBR(dados.agua_tanque_escalda);
+                    // --- ATUALIZAÇÃO DOS CARDS DE ÁGUA COM OS TOTAIS REAIS DA DB21 ---
+                    document.getElementById('rt-total-agua-pre-chiller').innerText = formatarBR(dados.agua_total_pre_chiller);
+                    document.getElementById('rt-total-agua-chiller1').innerText = formatarBR(dados.agua_total_chiller1);
+                    document.getElementById('rt-total-agua-chiller2').innerText = formatarBR(dados.agua_total_chiller2);
+                    document.getElementById('rt-total-agua-condicionais').innerText = formatarBR(dados.agua_total_condicionais);
+                    document.getElementById('rt-total-agua-coracao').innerText = formatarBR(dados.agua_total_coracao);
+                    document.getElementById('rt-total-agua-figado').innerText = formatarBR(dados.agua_total_figado);
+                    document.getElementById('rt-total-agua-moela').innerText = formatarBR(dados.agua_total_moela);
+                    document.getElementById('rt-total-agua-cabeca').innerText = formatarBR(dados.agua_total_cabeca);
+                    document.getElementById('rt-total-agua-pe1').innerText = formatarBR(dados.agua_total_pe1);
+                    document.getElementById('rt-total-agua-pe2').innerText = formatarBR(dados.agua_total_pe2);
+                    document.getElementById('rt-total-agua-chuveiro-final').innerText = formatarBR(dados.agua_total_chuveiro_final);
+                    document.getElementById('rt-total-agua-tanque-escalda').innerText = formatarBR(dados.agua_total_tanque_escalda);
 
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
@@ -1324,10 +1324,10 @@
                     <td>${formatarBR(d.qgbt2_tensao)}V / ${formatarBR(d.qgbt2_potencia)}kW</td>
                 </tr>`;
 
-                if (d.agua_cons_pre_chiller !== undefined) {
+                if (d.agua_pre_chiller !== undefined) {
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
-                        <td>${formatarBR(d.agua_cons_pre_chiller)}</td> <td>${formatarBR(d.agua_cons_chiller1)}</td> <td>${formatarBR(d.agua_cons_chiller2)}</td> <td>${formatarBR(d.agua_cons_condicionais)}</td> <td>${formatarBR(d.agua_cons_coracao)}</td> <td>${formatarBR(d.agua_cons_figado)}</td> <td>${formatarBR(d.agua_cons_moela)}</td> <td>${formatarBR(d.agua_cons_cabeca)}</td> <td>${formatarBR(d.agua_cons_pe1)}</td> <td>${formatarBR(d.agua_cons_pe2)}</td> <td>${formatarBR(d.agua_cons_chuveiro_final)}</td> <td>${formatarBR(d.agua_cons_tanque_escalda)}</td>
+                        <td>${formatarBR(d.agua_pre_chiller)}</td> <td>${formatarBR(d.agua_chiller1)}</td> <td>${formatarBR(d.agua_chiller2)}</td> <td>${formatarBR(d.agua_condicionais)}</td> <td>${formatarBR(d.agua_coracao)}</td> <td>${formatarBR(d.agua_figado)}</td> <td>${formatarBR(d.agua_moela)}</td> <td>${formatarBR(d.agua_cabeca)}</td> <td>${formatarBR(d.agua_pe1)}</td> <td>${formatarBR(d.agua_pe2)}</td> <td>${formatarBR(d.agua_chuveiro_final)}</td> <td>${formatarBR(d.agua_tanque_escalda)}</td>
                     </tr>`;
                 }
 
@@ -1364,7 +1364,7 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            document.getElementById('tbody-agua').innerHTML = htmlAgua;
+            if(htmlAgua !== '') document.getElementById('tbody-agua').innerHTML = htmlAgua;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
