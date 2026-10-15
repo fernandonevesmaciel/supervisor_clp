@@ -1079,7 +1079,7 @@
                             <option value="pressao_agua_higienizacao">Água Higienização</option>
                             <option value="pressao_agua_pressurizada">Água Pressurizada</option>
                             <option value="agua_hiperclorada">Água Hiperclorada</option>
-                            <option value="saida_placas">Saída das Placas</option>
+                            <option value="temp_glicol">Temperatura glicol</option>
                         </select>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-utilidades"
@@ -1102,6 +1102,8 @@
                                 <th>Higienização (bar)</th>
                                 <th>Pressurizada (bar)</th>
                                 <th>Hiperclorada (PPM)</th>
+                                <th>Temperatura glicol</th>
+
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -1232,7 +1234,6 @@
                     atualizarComSetpoint('rt-retmac-pre-chiller', dados.temp_retmac_pre_chiller, 16); // <--- Adicionado setpoint de 16ºC
                     atualizarComSetpoint('rt-abast-chiller2', dados.temp_abast_chiller2, 2);
                     atualizarComSetpoint('rt-retmac-chiller2', dados.temp_retmac_chiller2, 4);
-                    atualizarComSetpoint('rt-glicol', dados.temp_glicol, 2);         // <--- Adicionado setpoint de -18ºC
 
                     // Demais campos sem setpoint estrito (apenas exibição)
                     document.getElementById('rt-chiller-condicionais').innerText = formatarBR(dados.temp_chiller_condicionais);
@@ -1273,6 +1274,7 @@
                     document.getElementById('rt-pressao-agua-higienizacao').innerText = formatarBR(dados.pressao_agua_higienizacao);
                     document.getElementById('rt-pressao-agua-pressurizada').innerText = formatarBR(dados.pressao_agua_pressurizada);
                     document.getElementById('rt-agua-hiperclorada').innerText = formatarBR(dados.agua_hiperclorada);
+                    document.getElementById('rt-temp_glicol').innerText = formatarBR(dados.temp_glicol);
                 }
 
                 // LÓGICA DO ACUMULADOR DO MÊS
@@ -1383,7 +1385,7 @@
                         <td>${formatarBR(d.pressao_agua_higienizacao)}</td>
                         <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
                         <td>${formatarBR(d.agua_hiperclorada)}</td>
-                        <td>${formatarBR(d.temp_saida_placas)}</td>
+                        <td>${formatarBR(d.temp_glicol)}</td>
                     </tr>`;
                 }
             });
