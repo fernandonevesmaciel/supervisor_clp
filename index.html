@@ -212,33 +212,13 @@
             transition: color 0.3s ease;
         }
 
-        .text-blue {
-            color: var(--primary);
-        }
-
-        .text-water {
-            color: var(--water);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-orange {
-            color: var(--warning);
-        }
-
-        .text-red {
-            color: var(--danger);
-        }
-
-        .text-purple {
-            color: var(--purple);
-        }
-
-        .text-gray {
-            color: var(--gray);
-        }
+        .text-blue { color: var(--primary); }
+        .text-water { color: var(--water); }
+        .text-success { color: var(--success); }
+        .text-orange { color: var(--warning); }
+        .text-red { color: var(--danger); }
+        .text-purple { color: var(--purple); }
+        .text-gray { color: var(--gray); }
 
         .charts-container {
             background: var(--card-bg);
@@ -587,8 +567,7 @@
                 <input type="date" id="dataBusca" class="date-picker">
                 <button class="btn-atualizar" onclick="buscarHistorico(true)">Carregar Histórico</button>
                 <div class="export-group">
-                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥
-                        Excel</button>
+                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥 Excel</button>
                     <button class="btn-atualizar" style="background: #ef4444;" onclick="exportarPDF()">📥 PDF</button>
                 </div>
             </div>
@@ -722,7 +701,6 @@
                     <h3>Retmac Chiller 2 (4ºC)</h3>
                     <div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div>
                 </div>
-
             </div>
 
             <div class="charts-container">
@@ -760,13 +738,10 @@
                             <option value="retmac_pre_chiller">Retmac Pré-Chiller</option>
                             <option value="abast_chiller2">Abast. Chiller 2</option>
                             <option value="retmac_chiller2">Retmac Chiller 2</option>
-                            
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-temp"
-                                onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋
-                                Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-temp" onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -812,8 +787,7 @@
                         <tbody id="tbody-temp"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
-                    antigas...</button>
+                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -826,7 +800,7 @@
                     <div class="value text-orange"><span id="rt-pot-total">--</span> kW</div>
                 </div>
                 <div class="card">
-                    <h3>Consumo Hoje </h3>
+                    <h3>Consumo Hoje</h3>
                     <div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div>
                 </div>
                 <div class="card">
@@ -854,7 +828,7 @@
                     <div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div>
                 </div>
                 <div class="card">
-                    <h3>Consumo Hoje </h3>
+                    <h3>Consumo Hoje</h3>
                     <div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div>
                 </div>
                 <div class="card">
@@ -874,7 +848,7 @@
                     <div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div>
                 </div>
                 <div class="card">
-                    <h3>Consumo Hoje </h3>
+                    <h3>Consumo Hoje</h3>
                     <div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div>
                 </div>
                 <div class="card">
@@ -898,10 +872,8 @@
                             <option value="qgbt2">QGBT2 (Sala de Máquinas)</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-energia"
-                                onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-energia"
-                                onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-energia" onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-energia" onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -921,8 +893,7 @@
                         <tbody id="tbody-energia"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
-                    antigas...</button>
+                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -997,10 +968,8 @@
                             <option value="tanque_escalda">Tanque Escalda</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-agua"
-                                onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋
-                                Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-agua" onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1028,8 +997,7 @@
                         <tbody id="tbody-agua"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
-                    antigas...</button>
+                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -1038,33 +1006,32 @@
             <h2 class="section-title">Pressões e Utilidades (DB 29 e DB 23)</h2>
             <div class="cards-grid">
                 <div class="card">
-                    <h3>Pressão de Ar </h3>
+                    <h3>Pressão de Ar</h3>
                     <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Rede Água Quente </h3>
+                    <h3>Rede Água Quente</h3>
                     <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Potável </h3>
+                    <h3>Água Potável</h3>
                     <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Higienização </h3>
+                    <h3>Água Higienização</h3>
                     <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Pressurizada </h3>
+                    <h3>Água Pressurizada</h3>
                     <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
                 </div>
                 <div class="card">
-                    <h3>Água Hiperclorada </h3>
+                    <h3>Água Hiperclorada</h3>
                     <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div>
                 </div>
-
                 <div class="card">
                     <h3>Temperatura Glicol</h3>
-                    <div class="value text-blue"><span id="rt-glicol">--</span> °C</div>
+                    <div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div>
                 </div>
             </div>
 
@@ -1082,10 +1049,8 @@
                             <option value="temp_glicol">Temperatura glicol</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-utilidades"
-                                onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-utilidades"
-                                onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-utilidades" onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-utilidades" onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1103,14 +1068,12 @@
                                 <th>Pressurizada (bar)</th>
                                 <th>Hiperclorada (PPM)</th>
                                 <th>Temperatura glicol</th>
-
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras
-                    antigas...</button>
+                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -1179,9 +1142,9 @@
 
             if (valor !== undefined && valor !== null && !isNaN(valor)) {
                 if (valor <= setpoint) {
-                    divPai.classList.add('text-success'); // Verde se estiver abaixo ou igual ao setpoint
+                    divPai.classList.add('text-success');
                 } else {
-                    divPai.classList.add('text-red'); // Vermelho se estiver acima do setpoint
+                    divPai.classList.add('text-red');
                 }
             } else {
                 divPai.classList.add('text-blue');
@@ -1200,7 +1163,6 @@
                 const dadosAcum = await resAcum.json();
 
                 if (dados) {
-                    // Temperaturas Ambiente (Setpoints Aplicados)
                     atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
                     atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
                     atualizarComSetpoint('rt-salaCortes1', dados.temp_salaCortes1, 12);
@@ -1214,7 +1176,6 @@
                     atualizarComSetpoint('rt-padronizacao', dados.temp_padronizacao, 12);
                     atualizarComSetpoint('rt-paletizacao', dados.temp_paletizacao, 11);
 
-                    // Chillers (Setpoints Aplicados)
                     atualizarComSetpoint('rt-chiller-condicionais', dados.temp_chiller_condicionais, 4);
                     atualizarComSetpoint('rt-pre-chiller-entrada', dados.temp_pre_chiller_entrada, 16);
                     atualizarComSetpoint('rt-pre-chiller-saida', dados.temp_pre_chiller_saida, 16);
@@ -1229,13 +1190,11 @@
                     atualizarComSetpoint('rt-chiller-pe1', dados.temp_chiller_pe1, 4);
                     atualizarComSetpoint('rt-chiller-pe2', dados.temp_chiller_pe2, 4);
 
-                    // Abastecimento e Retmac (Setpoints Aplicados Corretamente)
                     atualizarComSetpoint('rt-abast-pre-chiller', dados.temp_abast_pre_chiller, 2);
-                    atualizarComSetpoint('rt-retmac-pre-chiller', dados.temp_retmac_pre_chiller, 16); // <--- Adicionado setpoint de 16ºC
+                    atualizarComSetpoint('rt-retmac-pre-chiller', dados.temp_retmac_pre_chiller, 16);
                     atualizarComSetpoint('rt-abast-chiller2', dados.temp_abast_chiller2, 2);
                     atualizarComSetpoint('rt-retmac-chiller2', dados.temp_retmac_chiller2, 4);
 
-                    // Demais campos sem setpoint estrito (apenas exibição)
                     document.getElementById('rt-chiller-condicionais').innerText = formatarBR(dados.temp_chiller_condicionais);
                     document.getElementById('rt-pre-chiller-saida').innerText = formatarBR(dados.temp_pre_chiller_saida);
                     document.getElementById('rt-chiller1-entrada').innerText = formatarBR(dados.temp_chiller1_entrada);
@@ -1244,7 +1203,6 @@
                     document.getElementById('rt-chiller2-saida').innerText = formatarBR(dados.temp_chiller2_saida);
                     document.getElementById('rt-retmac-chiller2').innerText = formatarBR(dados.temp_retmac_chiller2);
 
-                    // Energia
                     let potAbatedouro = (dados.ccm1_potencia || 0) + (dados.ccm2_potencia || 0);
                     let potSala = (dados.qgbt1_potencia || 0) + (dados.qgbt2_potencia || 0);
                     let potTotalBaixa = potAbatedouro + potSala;
@@ -1253,7 +1211,6 @@
                     document.getElementById('rt-pot-sala').innerText = formatarBR(potSala, 1);
                     document.getElementById('rt-pot-total').innerText = formatarBR(potTotalAlta, 1);
 
-                    // Água
                     document.getElementById('rt-agua-pre-chiller').innerText = formatarBR(dados.agua_pre_chiller);
                     document.getElementById('rt-agua-chiller1').innerText = formatarBR(dados.agua_chiller1);
                     document.getElementById('rt-agua-chiller2').innerText = formatarBR(dados.agua_chiller2);
@@ -1267,7 +1224,6 @@
                     document.getElementById('rt-agua-chuveiro-final').innerText = formatarBR(dados.agua_chuveiro_final);
                     document.getElementById('rt-agua-tanque-escalda').innerText = formatarBR(dados.agua_tanque_escalda);
 
-                    // Utilidades e Hiperclorada
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
                     document.getElementById('rt-pressao-agua-potavel').innerText = formatarBR(dados.pressao_agua_potavel);
@@ -1277,7 +1233,6 @@
                     document.getElementById('rt-temp_glicol').innerText = formatarBR(dados.temp_glicol);
                 }
 
-                // LÓGICA DO ACUMULADOR DO MÊS
                 if (dadosAcum) {
                     let kwhAbatMes = dadosAcum.abatedouro || 0;
                     let kwhSalaMes = dadosAcum.sala || 0;
