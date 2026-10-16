@@ -18,13 +18,22 @@ DB_DB23 = 23        # DB 23 (Contém Água Hiperclorada no offset 336 e Bit de G
 FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com'
 
 plc = snap7.client.Client()
-plc.connect(IP_CLP, RACK, SLOT)
 
-if plc.get_connected():
-    print("Conectado ao S7-1200 - Lendo DBs 7, 21, 29, 34 e 23...")
-else:
-    print("Falha na conexão com o CLP.")
-    exit()
+def conectar_clp():
+    """Tenta conectar ou reconectar ao CLP com segurança."""
+    try:
+        if plc.get_connected():
+            plc.disconnect()
+        plc.connect(IP_CLP, RACK, SLOT)
+        if plc.get_connected():
+            print("Conectado ao S7-1200 com sucesso!")
+            return True
+    except Exception as e:
+        print(f"Erro ao conectar no CLP: {e}")
+    return False
+
+# Conexão inicial
+conectar_clp()
 
 # --- SISTEMA DO ACUMULADOR MENSAL ---
 acumulador_mensal = {
@@ -33,10 +42,24 @@ acumulador_mensal = {
     "ultimo_mes_reset": 0
 }
 
+def requisicao_firebase(metodo, url, dados=None):
+    """Função auxiliar para tratar quedas de internet sem quebrar o script."""
+    try:
+        if metodo == "get":
+            return requests.get(url, timeout=10)
+        elif metodo == "put":
+            return requests.put(url, json=dados, timeout=10)
+        elif metodo == "patch":
+            return requests.patch(url, json=dados, timeout=10)
+    except requests.exceptions.RequestException as e:
+        print(f"[Aviso de Rede] Falha na comunicação com o Firebase: {e}")
+    return None
+
+# Sincronização inicial com o Firebase
 try:
     print("Sincronizando acumulador mensal com o Firebase...")
-    res_ac = requests.get(f"{FIREBASE_URL}/acumulados_mes.json")
-    if res_ac.status_code == 200 and res_ac.json():
+    res_ac = requisicao_firebase("get", f"{FIREBASE_URL}/acumulados_mes.json")
+    if res_ac and res_ac.status_code == 200 and res_ac.json():
         dados_nuvem = res_ac.json()
         acumulador_mensal["abatedouro"] = dados_nuvem.get("abatedouro", 0.0)
         acumulador_mensal["sala"] = dados_nuvem.get("sala", 0.0)
@@ -95,18 +118,18 @@ def ler_dados_clp():
         "qgbt2_potencia":     round(get_real(dados_energia, 116), 2),
         
         # --- ÁGUA (GATILHO A CADA 2 HORAS) ---
-        "agua_pre_chiller":       round(get_real(dados_agua, 6), 2),
-        "agua_chiller1":          round(get_real(dados_agua, 40), 2),
-        "agua_chiller2":          round(get_real(dados_agua, 78), 2),
-        "agua_condicionais":      round(get_real(dados_agua, 344), 2),
-        "agua_coracao":           round(get_real(dados_agua, 306), 2),
-        "agua_figado":            round(get_real(dados_agua, 310), 2),
-        "agua_moela":             round(get_real(dados_agua, 234), 2),
-        "agua_cabeca":            round(get_real(dados_agua, 196), 2),
-        "agua_pe1":               round(get_real(dados_agua, 120), 2),
-        "agua_pe2":               round(get_real(dados_agua, 158), 2),
-        "agua_chuveiro_final":    round(get_real(dados_agua, 704), 2),
-        "agua_tanque_escalda":    round(get_real(dados_agua, 742), 2),
+        "agua_pre_chiller":       round(get_real(dados_agua, 10), 2),
+        "agua_chiller1":          round(get_real(dados_agua, 48), 2),
+        "agua_chiller2":          round(get_real(dados_agua, 86), 2),
+        "agua_condicionais":      round(get_real(dados_agua, 352), 2),
+        "agua_coracao":           round(get_real(dados_agua, 276), 2),
+        "agua_figado":            round(get_real(dados_agua, 314), 2),
+        "agua_moela":             round(get_real(dados_agua, 238), 2),
+        "agua_cabeca":            round(get_real(dados_agua, 200), 2),
+        "agua_pe1":               round(get_real(dados_agua, 124), 2),
+        "agua_pe2":               round(get_real(dados_agua, 162), 2),
+        "agua_chuveiro_final":    round(get_real(dados_agua, 708), 2),
+        "agua_tanque_escalda":    round(get_real(dados_agua, 746), 2),
 
         # --- ÁGUA (CONSUMO / GRÁFICO DE MINUTO EM MINUTO) ---
         "agua_cons_pre_chiller":      round(get_real(dados_agua, 6), 2),
@@ -157,17 +180,36 @@ try:
     while True:
         agora = time.time()
         hoje = datetime.now()
-        dados = ler_dados_clp()
+        hora_atual = hoje.strftime("%H:%M")
+        
+        # 1. Verifica/Garante a conexão com o CLP antes de tentar ler
+        if not plc.get_connected():
+            print(f"[{hoje.strftime('%H:%M:%S')}] Conexão com o CLP perdida. Tentando reconectar...")
+            if not conectar_clp():
+                time.sleep(5)
+                continue # Pula o ciclo atual e tenta novamente no próximo loop
+        
+        # Tenta ler os dados do CLP com segurança
+        try:
+            dados = ler_dados_clp()
+        except Exception as e:
+            print(f"[{hoje.strftime('%H:%M:%S')}] Erro ao ler dados do CLP: {e}")
+            try:
+                plc.disconnect()
+            except:
+                pass
+            time.sleep(5)
+            continue
+
         gatilho_atual = dados["gatilho_2_horas"]
         
-        # 1. Atualiza Tempo Real (A cada 5 segundos)
-        requests.put(f"{FIREBASE_URL}/tempo_real.json", json=dados)
+        # 2. Atualiza Tempo Real (A cada 5 segundos)
+        requisicao_firebase("put", f"{FIREBASE_URL}/tempo_real.json", dados)
             
         data_atual = hoje.strftime("%Y-%m-%d")
-        hora_atual = hoje.strftime("%H:%M")
         url_hist = f"{FIREBASE_URL}/historico/{data_atual}/{hora_atual}.json"
 
-        # 2. Salva Histórico de Minuto (A cada 60 segundos)
+        # 3. Salva Histórico de Minuto (A cada 60 segundos)
         if agora - ultimo_salvamento_1min >= 60:
             if hoje.day >= 12 and acumulador_mensal.get("ultimo_mes_reset") != hoje.month:
                 acumulador_mensal["abatedouro"] = 0.0
@@ -181,9 +223,9 @@ try:
             acumulador_mensal["abatedouro"] += (pot_abatedouro / 60.0)
             acumulador_mensal["sala"] += (pot_sala / 60.0)
 
-            requests.put(f"{FIREBASE_URL}/acumulados_mes.json", json=acumulador_mensal)
+            requisicao_firebase("put", f"{FIREBASE_URL}/acumulados_mes.json", acumulador_mensal)
 
-            # --- SALVA O HISTÓRICO DE MINUTO (GERAL - EXCETO AS VARIÁVEIS DE GATILHO DE 2H) ---
+            # --- SALVA O HISTÓRICO DE MINUTO ---
             chaves_excluidas_minuto = [
                 "gatilho_2_horas",
                 "agua_pre_chiller", "agua_chiller1", "agua_chiller2", 
@@ -192,18 +234,14 @@ try:
                 "agua_chuveiro_final", "agua_tanque_escalda"
             ]
             
-            dados_historico_minuto = {}
-            for k, v in dados.items():
-                if k in chaves_excluidas_minuto:
-                    continue
-                dados_historico_minuto[k] = v
-
-            requests.patch(url_hist, json=dados_historico_minuto)
-            print(f"[{hora_atual}] Histórico de 1 min salvo com sucesso (sem as variáveis de gatilho 2h).")
+            dados_historico_minuto = {k: v for k, v in dados.items() if k not in chaves_excluidas_minuto}
+            
+            requisicao_firebase("patch", url_hist, dados_historico_minuto)
+            print(f"[{hora_atual}] Histórico de 1 min salvo com sucesso.")
                 
             ultimo_salvamento_1min = agora
 
-        # 3. Salva Histórico da Tabela de Água (Acionado pelo CLP - Borda de Subida do Gatilho a cada 2h)
+        # 4. Salva Histórico da Tabela de Água (Acionado pelo CLP - Borda de Subida do Gatilho a cada 2h)
         if gatilho_atual and not estado_anterior_gatilho:
             dados_agua_tabela = {
                 "agua_pre_chiller": dados["agua_pre_chiller"],
@@ -219,7 +257,7 @@ try:
                 "agua_chuveiro_final": dados["agua_chuveiro_final"],
                 "agua_tanque_escalda": dados["agua_tanque_escalda"]
             }
-            requests.patch(url_hist, json=dados_agua_tabela)
+            requisicao_firebase("patch", url_hist, dados_agua_tabela)
             print(f"[{hora_atual}] Histórico de Tabela de Água (Gatilho 2h) salvo com sucesso.")
                 
         estado_anterior_gatilho = gatilho_atual
@@ -228,5 +266,8 @@ try:
         time.sleep(5)
 
 except KeyboardInterrupt:
-    print("\nDesconectando do CLP...")
-    plc.disconnect()
+    print("\nEncerrando script manualmente...")
+    try:
+        plc.disconnect()
+    except:
+        pass

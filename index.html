@@ -155,19 +155,6 @@
             filter: brightness(1.1);
         }
 
-        .btn-carregar-mais {
-            padding: 10px 15px;
-            background: #64748b;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-top: 10px;
-            width: 100%;
-            transition: 0.2s;
-            font-weight: 500;
-        }
-
         .section-title {
             font-size: 16px;
             color: var(--text-main);
@@ -564,7 +551,7 @@
             <h1 id="titulo-pagina">Monitoramento de Temperaturas</h1>
             <div class="header-controls">
                 <input type="date" id="dataBusca" class="date-picker">
-                <button class="btn-atualizar" onclick="buscarHistorico(true)">Carregar Histórico</button>
+                <button class="btn-atualizar" onclick="buscarHistorico()">Carregar Histórico do Dia</button>
                 <div class="export-group">
                     <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥 Excel</button>
                     <button class="btn-atualizar" style="background: #ef4444;" onclick="exportarPDF()">📥 PDF</button>
@@ -780,13 +767,11 @@
                                 <th>Retmac Pré-Chil.</th>
                                 <th>Abast. Chil. 2</th>
                                 <th>Retmac Chil. 2</th>
-                                <th>Saída Placas</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-temp"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -883,16 +868,19 @@
                             <tr>
                                 <th>Data</th>
                                 <th>Hora</th>
-                                <th>CCM1 (V / kW)</th>
-                                <th>CCM2 (V / kW)</th>
-                                <th>QGBT1 (V / kW)</th>
-                                <th>QGBT2 (V / kW)</th>
+                                <th>CCM1 Tensão (V)</th>
+                                <th>CCM1 Potência (kW)</th>
+                                <th>CCM2 Tensão (V)</th>
+                                <th>CCM2 Potência (kW)</th>
+                                <th>QGBT1 Tensão (V)</th>
+                                <th>QGBT1 Potência (kW)</th>
+                                <th>QGBT2 Tensão (V)</th>
+                                <th>QGBT2 Potência (kW)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-energia"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -996,7 +984,6 @@
                         <tbody id="tbody-agua"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -1072,7 +1059,6 @@
                         <tbody id="tbody-utilidades"></tbody>
                     </table>
                 </div>
-                <button class="btn-carregar-mais" onclick="buscarHistorico(false)">+ Carregar mais leituras antigas...</button>
             </div>
         </div>
 
@@ -1093,11 +1079,11 @@
         }
 
         let graficoTempObj = null; let graficoEnergiaObj = null; let graficoAguaObj = null; let graficoUtilidadesObj = null;
-        let dadosAcumulados = {}; let ultimaChave = null; const LIMITE_POR_LOTE = 50;
+        let dadosAcumulados = {};
 
         window.onload = () => {
             document.getElementById('dataBusca').valueAsDate = new Date();
-            buscarHistorico(true);
+            buscarHistorico();
             buscarTempoReal();
             setInterval(buscarTempoReal, 5000);
         };
@@ -1210,7 +1196,6 @@
                     document.getElementById('rt-pot-sala').innerText = formatarBR(potSala, 1);
                     document.getElementById('rt-pot-total').innerText = formatarBR(potTotalAlta, 1);
 
-                    // --- ATUALIZAÇÃO DOS CARDS DE ÁGUA COM OS TOTAIS REAIS DA DB21 ---
                     document.getElementById('rt-total-agua-pre-chiller').innerText = formatarBR(dados.agua_total_pre_chiller);
                     document.getElementById('rt-total-agua-chiller1').innerText = formatarBR(dados.agua_total_chiller1);
                     document.getElementById('rt-total-agua-chiller2').innerText = formatarBR(dados.agua_total_chiller2);
@@ -1245,33 +1230,20 @@
             } catch (e) { }
         }
 
-        // ================= HISTÓRICO =================
-        async function buscarHistorico(novaBusca) {
+        // ================= HISTÓRICO (PUXA O DIA INTEIRO) =================
+        async function buscarHistorico() {
             const data = document.getElementById('dataBusca').value;
+            dadosAcumulados = {};
 
-            if (novaBusca) {
-                dadosAcumulados = {};
-                ultimaChave = null;
-            }
-
-            let url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&limitToLast=${LIMITE_POR_LOTE}`;
-            if (ultimaChave) url = `${FIREBASE_URL}/historico/${data}.json?orderBy="$key"&endAt=%22${ultimaChave}%22&limitToLast=${LIMITE_POR_LOTE + 1}`;
+            let url = `${FIREBASE_URL}/historico/${data}.json`;
 
             try {
                 const res = await fetch(url);
-                const dadosLote = await res.json();
+                const dadosDia = await res.json();
 
-                if (dadosLote && Object.keys(dadosLote).length > 0) {
-                    const chaves = Object.keys(dadosLote).sort();
-                    if (ultimaChave && chaves[chaves.length - 1] === ultimaChave) {
-                        chaves.pop();
-                        delete dadosLote[ultimaChave];
-                    }
-                    if (chaves.length > 0) {
-                        ultimaChave = chaves[0];
-                        Object.assign(dadosAcumulados, dadosLote);
-                    }
-                } else if (novaBusca) {
+                if (dadosDia && Object.keys(dadosDia).length > 0) {
+                    dadosAcumulados = dadosDia;
+                } else {
                     alert(`Não há registros salvos para o dia ${data.split('-').reverse().join('/')}.`);
                 }
 
@@ -1316,12 +1288,13 @@
                     <td>${formatarBR(d.temp_retmac_chiller2)}</td>
                 </tr>`;
 
+                // Colunas separadas para Tensão e Potência de cada quadro no Excel/Tabela
                 htmlEnergia += `<tr>
                     <td>${dataFormatada}</td><td>${h}</td>
-                    <td>${formatarBR(d.ccm1_tensao)}V / ${formatarBR(d.ccm1_potencia)}kW</td>
-                    <td>${formatarBR(d.ccm2_tensao)}V / ${formatarBR(d.ccm2_potencia)}kW</td>
-                    <td>${formatarBR(d.qgbt1_tensao)}V / ${formatarBR(d.qgbt1_potencia)}kW</td>
-                    <td>${formatarBR(d.qgbt2_tensao)}V / ${formatarBR(d.qgbt2_potencia)}kW</td>
+                    <td>${formatarBR(d.ccm1_tensao)}</td><td>${formatarBR(d.ccm1_potencia)}</td>
+                    <td>${formatarBR(d.ccm2_tensao)}</td><td>${formatarBR(d.ccm2_potencia)}</td>
+                    <td>${formatarBR(d.qgbt1_tensao)}</td><td>${formatarBR(d.qgbt1_potencia)}</td>
+                    <td>${formatarBR(d.qgbt2_tensao)}</td><td>${formatarBR(d.qgbt2_potencia)}</td>
                 </tr>`;
 
                 if (d.agua_pre_chiller !== undefined) {
@@ -1416,7 +1389,7 @@
             });
         }
 
-        // ================= EXPORTAÇÃO =================
+        // ================= EXPORTAÇÃO INTELIGENTE =================
         function getTabelaAtiva() {
             const viewAtiva = document.querySelector('.view-section.active').id;
             if (viewAtiva === 'view-temperaturas') return document.querySelector('#wrapper-tab-temp table');
@@ -1432,7 +1405,24 @@
             const titulo = document.getElementById('titulo-pagina').innerText;
             const dataStr = document.getElementById('dataBusca').value;
 
-            const wb = XLSX.utils.table_to_book(table, { sheet: "Dados" });
+            const clonedTable = table.cloneNode(true);
+            const rows = clonedTable.querySelectorAll('tr');
+            
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i].querySelectorAll('td');
+                for (let j = 2; j < cols.length; j++) {
+                    let text = cols[j].innerText.trim();
+                    if (text && text !== '--') {
+                        let cleanText = text.replace(/\./g, '').replace(',', '.');
+                        let num = parseFloat(cleanText);
+                        if (!isNaN(num)) {
+                            cols[j].innerText = num;
+                        }
+                    }
+                }
+            }
+
+            const wb = XLSX.utils.table_to_book(clonedTable, { sheet: "Dados", raw: true });
             XLSX.writeFile(wb, `${titulo} - ${dataStr}.xlsx`);
         }
 
