@@ -1082,10 +1082,24 @@
         let dadosAcumulados = {};
 
         window.onload = () => {
-            document.getElementById('dataBusca').valueAsDate = new Date();
+            // Define a data de hoje no input
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('dataBusca').value = hoje;
+            
+            // Carrega o histórico e o tempo real de forma automática ao iniciar
             buscarHistorico();
             buscarTempoReal();
-            setInterval(buscarTempoReal, 5000);
+
+            // Atualiza o tempo real e o histórico de hoje a cada 30 segundos automaticamente
+            setInterval(() => {
+                buscarTempoReal();
+                // Verifica se o campo de data está selecionado para o dia de hoje, atualizando-o em tempo real
+                const dataAtualInput = document.getElementById('dataBusca').value;
+                const hojeStr = new Date().toISOString().split('T')[0];
+                if (dataAtualInput === hojeStr) {
+                    buscarHistoricoSilencioso();
+                }
+            }, 30000);
         };
 
         function toggleMenu() { document.getElementById('navItems').classList.toggle('open'); }
@@ -1230,7 +1244,7 @@
             } catch (e) { }
         }
 
-        // ================= HISTÓRICO (PUXA O DIA INTEIRO) =================
+        // ================= HISTÓRICO =================
         async function buscarHistorico() {
             const data = document.getElementById('dataBusca').value;
             dadosAcumulados = {};
@@ -1253,6 +1267,23 @@
             } catch (e) {
                 console.error("Erro no histórico:", e);
             }
+        }
+
+        // Versão sem alerta de erro para atualização automática em segundo plano
+        async function buscarHistoricoSilencioso() {
+            const data = document.getElementById('dataBusca').value;
+            let url = `${FIREBASE_URL}/historico/${data}.json`;
+
+            try {
+                const res = await fetch(url);
+                const dadosDia = await res.json();
+
+                if (dadosDia && Object.keys(dadosDia).length > 0) {
+                    dadosAcumulados = dadosDia;
+                    desenharGraficos();
+                    preencherTabelas(data);
+                }
+            } catch (e) { }
         }
 
         function preencherTabelas(data) {
@@ -1288,7 +1319,6 @@
                     <td>${formatarBR(d.temp_retmac_chiller2)}</td>
                 </tr>`;
 
-                // Colunas separadas para Tensão e Potência de cada quadro no Excel/Tabela
                 htmlEnergia += `<tr>
                     <td>${dataFormatada}</td><td>${h}</td>
                     <td>${formatarBR(d.ccm1_tensao)}</td><td>${formatarBR(d.ccm1_potencia)}</td>
