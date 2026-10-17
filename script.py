@@ -71,7 +71,7 @@ def ler_dados_clp():
     dados_temp = plc.read_area(0x84, DB_TEMP, 0, 1048)
     dados_energia = plc.read_area(0x84, DB_ENERGIA, 0, 128)
     dados_agua = plc.read_area(0x84, DB_AGUA, 0, 772) 
-    dados_utilidades = plc.read_area(0x84, DB_UTILIDADES, 0, 438)
+    dados_utilidades = plc.read_area(0x84, DB_UTILIDADES, 0, 454)
     dados_db23 = plc.read_area(0x84, DB_DB23, 0, 344)
     
     return {
@@ -165,6 +165,11 @@ def ler_dados_clp():
         "pressao_agua_potavel":       round(get_real(dados_utilidades, 426), 2),
         "pressao_agua_higienizacao":  round(get_real(dados_utilidades, 430), 2),
         "pressao_agua_pressurizada":  round(get_real(dados_utilidades, 434), 2),
+        "pressao_chuv_final":         round(get_real(dados_utilidades, 438), 2),
+        "pressao_lav_final":          round(get_real(dados_utilidades, 442), 2),
+        "pressao_lav_meyn":           round(get_real(dados_utilidades, 446), 2),
+        "pressao_pos_evisc":          round(get_real(dados_utilidades, 450), 2),
+
 
         # --- ÁGUA HIPERCLORADA (DB 23) ---
         "agua_hiperclorada":          round(get_real(dados_db23, 336), 2),

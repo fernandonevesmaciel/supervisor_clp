@@ -199,13 +199,33 @@
             transition: color 0.3s ease;
         }
 
-        .text-blue { color: var(--primary); }
-        .text-water { color: var(--water); }
-        .text-success { color: var(--success); }
-        .text-orange { color: var(--warning); }
-        .text-red { color: var(--danger); }
-        .text-purple { color: var(--purple); }
-        .text-gray { color: var(--gray); }
+        .text-blue {
+            color: var(--primary);
+        }
+
+        .text-water {
+            color: var(--water);
+        }
+
+        .text-success {
+            color: var(--success);
+        }
+
+        .text-orange {
+            color: var(--warning);
+        }
+
+        .text-red {
+            color: var(--danger);
+        }
+
+        .text-purple {
+            color: var(--purple);
+        }
+
+        .text-gray {
+            color: var(--gray);
+        }
 
         .charts-container {
             background: var(--card-bg);
@@ -553,7 +573,8 @@
                 <input type="date" id="dataBusca" class="date-picker">
                 <button class="btn-atualizar" onclick="buscarHistorico()">Carregar Histórico do Dia</button>
                 <div class="export-group">
-                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥 Excel</button>
+                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥
+                        Excel</button>
                     <button class="btn-atualizar" style="background: #ef4444;" onclick="exportarPDF()">📥 PDF</button>
                 </div>
             </div>
@@ -726,8 +747,10 @@
                             <option value="retmac_chiller2">Retmac Chiller 2</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-temp" onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-temp"
+                                onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋
+                                Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -856,8 +879,10 @@
                             <option value="qgbt2">QGBT2 (Sala de Máquinas)</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-energia" onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-energia" onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-energia"
+                                onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-energia"
+                                onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -955,8 +980,10 @@
                             <option value="tanque_escalda">Tanque Escalda</option>
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-agua" onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-agua"
+                                onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋
+                                Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1019,6 +1046,22 @@
                     <h3>Temperatura Glicol</h3>
                     <div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div>
                 </div>
+                <div class="card">
+                    <h3>Pressão chuveiro Final</h3>
+                    <div class="value text-blue"><span id="rt-chuv_final">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Pressão lav. final PL26</h3>
+                    <div class="value text-blue"><span id="rt-lav_final">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Pressão lav. MEYN</h3>
+                    <div class="value text-blue"><span id="rt-lav_meyn">--</span> bar</div>
+                </div>
+                <div class="card">
+                    <h3>Pressão pós Evisc</h3>
+                    <div class="value text-blue"><span id="rt-pos_evisc">--</span> bar</div>
+                </div>
             </div>
 
             <div class="charts-container">
@@ -1033,10 +1076,21 @@
                             <option value="pressao_agua_pressurizada">Água Pressurizada</option>
                             <option value="agua_hiperclorada">Água Hiperclorada</option>
                             <option value="temp_glicol">Temperatura glicol</option>
+                            <option value="pressao_chuv_final">Pressão chuv final</option>
+                            <option value="pressao_lav_final">Pressão lav. final</option>
+                            <option value="pressao_lav_meyn">Pressão lav. MEYN</option>
+                            <option value="pressao_pos_evisc">Pressão pós evisc.</option>
+
+
+
+
+
                         </select>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-utilidades" onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-utilidades" onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-utilidades"
+                                onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-utilidades"
+                                onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1054,6 +1108,11 @@
                                 <th>Pressurizada (bar)</th>
                                 <th>Hiperclorada (PPM)</th>
                                 <th>Temperatura glicol</th>
+                                <th>Pressão chuv final</th>
+                                <th>Pressão lav. final</th>
+                                <th>Pressão lav. MEYN</th>
+                                <th>Pressão pós evisc.</th>
+
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -1085,7 +1144,7 @@
             // Define a data de hoje no input
             const hoje = new Date().toISOString().split('T')[0];
             document.getElementById('dataBusca').value = hoje;
-            
+
             // Carrega o histórico e o tempo real de forma automática ao iniciar
             buscarHistorico();
             buscarTempoReal();
@@ -1230,6 +1289,11 @@
                     document.getElementById('rt-pressao-agua-pressurizada').innerText = formatarBR(dados.pressao_agua_pressurizada);
                     document.getElementById('rt-agua-hiperclorada').innerText = formatarBR(dados.agua_hiperclorada);
                     document.getElementById('rt-temp_glicol').innerText = formatarBR(dados.temp_glicol);
+                     document.getElementById('rt-chuv_final').innerText = formatarBR(dados.pressao_chuv_final);
+                      document.getElementById('rt-lav_final').innerText = formatarBR(dados.pressao_lav_final);
+                       document.getElementById('rt-lav_meyn').innerText = formatarBR(dados.pressao_lav_meyn);
+                        document.getElementById('rt-pos_evisc').innerText = formatarBR(dados.pressao_pos_evisc);
+
                 }
 
                 if (dadosAcum) {
@@ -1344,6 +1408,11 @@
                         <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
                         <td>${formatarBR(d.agua_hiperclorada)}</td>
                         <td>${formatarBR(d.temp_glicol)}</td>
+                        <td>${formatarBR(d.pressao_chuv_final)}</td>
+                        <td>${formatarBR(d.pressao_lav_final)}</td>
+                        <td>${formatarBR(d.pressao_lav_meyn)}</td>
+                        <td>${formatarBR(d.pressao_pos_evisc)}</td>
+
                     </tr>`;
                 }
             });
@@ -1367,7 +1436,7 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            if(htmlAgua !== '') document.getElementById('tbody-agua').innerHTML = htmlAgua;
+            if (htmlAgua !== '') document.getElementById('tbody-agua').innerHTML = htmlAgua;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
@@ -1437,7 +1506,7 @@
 
             const clonedTable = table.cloneNode(true);
             const rows = clonedTable.querySelectorAll('tr');
-            
+
             for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].querySelectorAll('td');
                 for (let j = 2; j < cols.length; j++) {
