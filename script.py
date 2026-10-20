@@ -115,7 +115,7 @@ def ler_dados_clp():
         "qgbt1_tensao":       round(get_real(dados_energia, 92), 2),
         "qgbt1_potencia":     round(get_real(dados_energia, 84), 2),
         "qgbt2_tensao":       round(get_real(dados_energia, 124), 2),
-        "qgbt2_potencia":     round(get_real(dados_energia, 116), 2),
+        "qgbt2_potencia":     round(get_real(dados_energia, 120), 2),
         
         # --- ÁGUA (GATILHO A CADA 2 HORAS) ---
         "agua_pre_chiller":       round(get_real(dados_agua, 10), 2),
