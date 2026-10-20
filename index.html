@@ -240,12 +240,37 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .chart-controls {
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .chart-range-btns {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-range {
+            padding: 6px 10px;
+            background: #e2e8f0;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .btn-range.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
 
         .chart-wrapper {
@@ -746,6 +771,10 @@
                             <option value="abast_chiller2">Abast. Chiller 2</option>
                             <option value="retmac_chiller2">Retmac Chiller 2</option>
                         </select>
+                        <div class="chart-range-btns">
+                            <button class="btn-range active" id="btn-janela-2h-temp" onclick="mudarJanelaTempo('temp', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-temp" onclick="mudarJanelaTempo('temp', 'tudo')">📈 Dia Todo</button>
+                        </div>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-temp"
                                 onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
@@ -878,6 +907,10 @@
                             <option value="qgbt1">QGBT1 (Sala de Máquinas)</option>
                             <option value="qgbt2">QGBT2 (Sala de Máquinas)</option>
                         </select>
+                        <div class="chart-range-btns">
+                            <button class="btn-range active" id="btn-janela-2h-energia" onclick="mudarJanelaTempo('energia', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-energia" onclick="mudarJanelaTempo('energia', 'tudo')">📈 Dia Todo</button>
+                        </div>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-energia"
                                 onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
@@ -979,6 +1012,10 @@
                             <option value="chuveiro_final">Chuveiro Final</option>
                             <option value="tanque_escalda">Tanque Escalda</option>
                         </select>
+                        <div class="chart-range-btns">
+                            <button class="btn-range active" id="btn-janela-2h-agua" onclick="mudarJanelaTempo('agua', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-agua" onclick="mudarJanelaTempo('agua', 'tudo')">📈 Dia Todo</button>
+                        </div>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-agua"
                                 onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
@@ -1080,12 +1117,11 @@
                             <option value="pressao_lav_final">Pressão lav. final</option>
                             <option value="pressao_lav_meyn">Pressão lav. MEYN</option>
                             <option value="pressao_pos_evisc">Pressão pós evisc.</option>
-
-
-
-
-
                         </select>
+                        <div class="chart-range-btns">
+                            <button class="btn-range active" id="btn-janela-2h-utilidades" onclick="mudarJanelaTempo('utilidades', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-utilidades" onclick="mudarJanelaTempo('utilidades', 'tudo')">📈 Dia Todo</button>
+                        </div>
                         <div class="view-toggle-btns">
                             <button class="btn-toggle active" id="btn-graf-utilidades"
                                 onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
@@ -1112,7 +1148,6 @@
                                 <th>Pressão lav. final</th>
                                 <th>Pressão lav. MEYN</th>
                                 <th>Pressão pós evisc.</th>
-
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -1132,6 +1167,14 @@
         const TARIFA_KWH = 0.50;
         const FATOR_PERDA_TRAFO = 1.02;
 
+        // Controla se cada aba exibe apenas os últimos pontos (ex: 120 pontos = 2 horas) ou tudo
+        let janelasTempo = {
+            temp: 120,
+            energia: 120,
+            agua: 120,
+            utilidades: 120
+        };
+
         function formatarBR(valor, casas = 1) {
             if (valor === undefined || valor === null || isNaN(valor)) return '--';
             return valor.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
@@ -1141,18 +1184,14 @@
         let dadosAcumulados = {};
 
         window.onload = () => {
-            // Define a data de hoje no input
             const hoje = new Date().toISOString().split('T')[0];
             document.getElementById('dataBusca').value = hoje;
 
-            // Carrega o histórico e o tempo real de forma automática ao iniciar
             buscarHistorico();
             buscarTempoReal();
 
-            // Atualiza o tempo real e o histórico de hoje a cada 30 segundos automaticamente
             setInterval(() => {
                 buscarTempoReal();
-                // Verifica se o campo de data está selecionado para o dia de hoje, atualizando-o em tempo real
                 const dataAtualInput = document.getElementById('dataBusca').value;
                 const hojeStr = new Date().toISOString().split('T')[0];
                 if (dataAtualInput === hojeStr) {
@@ -1188,6 +1227,22 @@
                 document.getElementById(`wrapper-graf-${aba}`).classList.add('hidden');
                 document.getElementById(`wrapper-tab-${aba}`).classList.add('active');
             }
+        }
+
+        function mudarJanelaTempo(aba, valor) {
+            janelasTempo[aba] = valor;
+            
+            // Atualiza o visual dos botões
+            document.getElementById(`btn-janela-2h-${aba}`).classList.remove('active');
+            document.getElementById(`btn-janela-dia-${aba}`).classList.remove('active');
+            
+            if (valor === 120) {
+                document.getElementById(`btn-janela-2h-${aba}`).classList.add('active');
+            } else {
+                document.getElementById(`btn-janela-dia-${aba}`).classList.add('active');
+            }
+
+            desenharGraficos();
         }
 
         function atualizarComSetpoint(id, valor, setpoint) {
@@ -1289,11 +1344,10 @@
                     document.getElementById('rt-pressao-agua-pressurizada').innerText = formatarBR(dados.pressao_agua_pressurizada);
                     document.getElementById('rt-agua-hiperclorada').innerText = formatarBR(dados.agua_hiperclorada);
                     document.getElementById('rt-temp_glicol').innerText = formatarBR(dados.temp_glicol);
-                     document.getElementById('rt-chuv_final').innerText = formatarBR(dados.pressao_chuv_final);
-                      document.getElementById('rt-lav_final').innerText = formatarBR(dados.pressao_lav_final);
-                       document.getElementById('rt-lav_meyn').innerText = formatarBR(dados.pressao_lav_meyn);
-                        document.getElementById('rt-pos_evisc').innerText = formatarBR(dados.pressao_pos_evisc);
-
+                    document.getElementById('rt-chuv_final').innerText = formatarBR(dados.pressao_chuv_final);
+                    document.getElementById('rt-lav_final').innerText = formatarBR(dados.pressao_lav_final);
+                    document.getElementById('rt-lav_meyn').innerText = formatarBR(dados.pressao_lav_meyn);
+                    document.getElementById('rt-pos_evisc').innerText = formatarBR(dados.pressao_pos_evisc);
                 }
 
                 if (dadosAcum) {
@@ -1333,7 +1387,6 @@
             }
         }
 
-        // Versão sem alerta de erro para atualização automática em segundo plano
         async function buscarHistoricoSilencioso() {
             const data = document.getElementById('dataBusca').value;
             let url = `${FIREBASE_URL}/historico/${data}.json`;
@@ -1412,7 +1465,6 @@
                         <td>${formatarBR(d.pressao_lav_final)}</td>
                         <td>${formatarBR(d.pressao_lav_meyn)}</td>
                         <td>${formatarBR(d.pressao_pos_evisc)}</td>
-
                     </tr>`;
                 }
             });
@@ -1441,48 +1493,67 @@
         }
 
         // ================= GRÁFICOS =================
+        function prepararDadosJanela(horas, dadosArray, aba) {
+            let limite = janelasTempo[aba];
+            if (limite !== 'tudo' && horas.length > limite) {
+                return {
+                    labels: horas.slice(horas.length - limite),
+                    data: dadosArray.slice(dadosArray.length - limite)
+                };
+            }
+            return { labels: horas, data: dadosArray };
+        }
+
         function desenharGraficos() {
             const horas = Object.keys(dadosAcumulados).sort();
             const configPadrao = { responsive: true, maintainAspectRatio: false, spanGaps: true };
 
+            // 1. TEMPERATURAS
             const filtroTemp = document.getElementById('filtroSetor').value;
             const ctxTemp = document.getElementById('graficoTemp').getContext('2d');
             if (graficoTempObj) graficoTempObj.destroy();
-            let dataTemp = [], labelTemp = 'Temperatura (°C)';
+            let rawDataTemp = [], labelTemp = 'Temperatura (°C)';
             if (filtroTemp !== 'todos') {
                 labelTemp = document.querySelector(`#filtroSetor option[value="${filtroTemp}"]`).innerText;
-                dataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] || null);
+                rawDataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] || null);
             } else {
                 labelTemp = "CMS (Referência)";
-                dataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms || null);
+                rawDataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms || null);
             }
-            graficoTempObj = new Chart(ctxTemp, { type: 'line', data: { labels: horas, datasets: [{ label: labelTemp, data: dataTemp, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+            let resTemp = prepararDadosJanela(horas, rawDataTemp, 'temp');
+            graficoTempObj = new Chart(ctxTemp, { type: 'line', data: { labels: resTemp.labels, datasets: [{ label: labelTemp, data: resTemp.data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
 
+            // 2. ENERGIA
             const filtroEnergia = document.getElementById('filtroQuadro').value;
             const ctxEnergia = document.getElementById('graficoEnergia').getContext('2d');
             if (graficoEnergiaObj) graficoEnergiaObj.destroy();
             const labelEnergia = document.querySelector(`#filtroQuadro option[value="${filtroEnergia}"]`).innerText;
-            const dataPotencia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] || null);
-            graficoEnergiaObj = new Chart(ctxEnergia, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelEnergia} Potência (kW)`, data: dataPotencia, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+            let rawDataEnergia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] || null);
+            let resEnergia = prepararDadosJanela(horas, rawDataEnergia, 'energia');
+            graficoEnergiaObj = new Chart(ctxEnergia, { type: 'line', data: { labels: resEnergia.labels, datasets: [{ label: `${labelEnergia} Potência (kW)`, data: resEnergia.data, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
 
+            // 3. ÁGUA
             const filtroAgua = document.getElementById('filtroAgua').value;
             const ctxAgua = document.getElementById('graficoAgua').getContext('2d');
             if (graficoAguaObj) graficoAguaObj.destroy();
             const chaveAgua = `agua_cons_${filtroAgua}`;
             const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
-            const dataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
-            graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: horas, datasets: [{ label: `${labelAgua} (m³)`, data: dataAgua, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+            let rawDataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
+            let resAgua = prepararDadosJanela(horas, rawDataAgua, 'agua');
+            graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: resAgua.labels, datasets: [{ label: `${labelAgua} (m³)`, data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
 
+            // 4. UTILIDADES
             const filtroUtilidades = document.getElementById('filtroUtilidades').value;
             const ctxUtilidades = document.getElementById('graficoUtilidades').getContext('2d');
             if (graficoUtilidadesObj) graficoUtilidadesObj.destroy();
             const labelUtilidades = document.querySelector(`#filtroUtilidades option[value="${filtroUtilidades}"]`).innerText;
-            const dataUtilidades = horas.map(h => dadosAcumulados[h]?.[filtroUtilidades] || null);
+            let rawDataUtil = horas.map(h => dadosAcumulados[h]?.[filtroUtilidades] || null);
+            let resUtil = prepararDadosJanela(horas, rawDataUtil, 'utilidades');
             graficoUtilidadesObj = new Chart(ctxUtilidades, {
                 type: 'line',
                 data: {
-                    labels: horas,
-                    datasets: [{ label: `${labelUtilidades}`, data: dataUtilidades, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }]
+                    labels: resUtil.labels,
+                    datasets: [{ label: `${labelUtilidades}`, data: resUtil.data, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }]
                 },
                 options: configPadrao
             });
