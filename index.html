@@ -362,11 +362,11 @@
             background-color: #e2e8f0;
         }
 
-        /* Badges da Tela de Registros */
+        /* Badges da Aba de Registos */
         .badge-manual {
             background-color: #fee2e2;
             color: #ef4444;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 12px;
@@ -377,7 +377,7 @@
         .badge-auto {
             background-color: #dcfce7;
             color: #10b981;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-weight: 700;
             font-size: 12px;
@@ -1109,16 +1109,15 @@
                     <table id="tabela-registros">
                         <thead>
                             <tr>
-                                <th style="min-width: 100px;">Data</th>
-                                <th style="min-width: 90px;">Horário</th>
-                                <th style="text-align: left; padding-left: 20px;">Equipamento / Setor</th>
-                                <th style="text-align: left; padding-left: 20px;">Descrição da Ocorrência</th>
-                                <th style="min-width: 130px;">Modo de Operação</th>
+                                <th style="min-width: 110px;">Data</th>
+                                <th style="min-width: 90px;">Hora</th>
+                                <th style="text-align: left; padding-left: 20px;">Descrição</th>
+                                <th style="min-width: 140px;">Modo de Operação</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-registros">
                             <tr>
-                                <td colspan="5" style="text-align: center; color: var(--text-light); padding: 25px;">Selecione o dia e clique em carregar.</td>
+                                <td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Selecione o dia e clique em carregar.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1134,6 +1133,7 @@
 
     <script>
         const FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com';
+        const FIREBASE_SECRET = 'CR79C5ymIpFJyFnNeLXDkMrBDMkrKYP7afhQ0LUF';
         const TARIFA_KWH = 0.50;
         const FATOR_PERDA_TRAFO = 1.02;
 
@@ -1246,8 +1246,8 @@
         async function buscarTempoReal() {
             try {
                 const [resTR, resAcum] = await Promise.all([
-                    fetch(`${FIREBASE_URL}/tempo_real.json`),
-                    fetch(`${FIREBASE_URL}/acumulados_mes.json`)
+                    fetch(`${FIREBASE_URL}/tempo_real.json?auth=${FIREBASE_SECRET}`),
+                    fetch(`${FIREBASE_URL}/acumulados_mes.json?auth=${FIREBASE_SECRET}`)
                 ]);
 
                 const dados = await resTR.json();
@@ -1337,7 +1337,7 @@
             const data = document.getElementById('dataBusca').value;
             dadosAcumulados = {};
 
-            let url = `${FIREBASE_URL}/historico/${data}.json`;
+            let url = `${FIREBASE_URL}/historico/${data}.json?auth=${FIREBASE_SECRET}`;
 
             try {
                 const res = await fetch(url);
@@ -1360,7 +1360,7 @@
 
         async function buscarHistoricoSilencioso() {
             const data = document.getElementById('dataBusca').value;
-            let url = `${FIREBASE_URL}/historico/${data}.json`;
+            let url = `${FIREBASE_URL}/historico/${data}.json?auth=${FIREBASE_SECRET}`;
 
             try {
                 const res = await fetch(url);
@@ -1467,7 +1467,7 @@
         // ================= REGISTROS E EVENTOS =================
         async function buscarRegistrosDia() {
             const data = document.getElementById('dataBusca').value;
-            const url = `${FIREBASE_URL}/registros/${data}.json`;
+            const url = `${FIREBASE_URL}/registros/${data}.json?auth=${FIREBASE_SECRET}`;
 
             try {
                 const res = await fetch(url);
@@ -1479,11 +1479,21 @@
                 listaRegistrosDia = [];
 
                 if (logs) {
-                    const chaves = Object.keys(logs);
-                    listaRegistrosDia = chaves.map(k => logs[k]).sort((a, b) => b.hora.localeCompare(a.hora));
+                    if (Array.isArray(logs)) {
+                        listaRegistrosDia = logs.filter(item => item !== null);
+                    } else if (typeof logs === 'object') {
+                        listaRegistrosDia = Object.keys(logs).map(k => logs[k]);
+                    }
+
+                    listaRegistrosDia.sort((a, b) => {
+                        const horaA = a.hora || a.horario || '';
+                        const horaB = b.hora || b.horario || '';
+                        return horaB.localeCompare(horaA);
+                    });
+
                     renderizarLinhasRegistros(listaRegistrosDia, dataFormatada);
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
                 }
             } catch (e) {
                 console.error("Erro ao buscar registros:", e);
@@ -1495,16 +1505,20 @@
             let html = '';
 
             dados.forEach(r => {
-                const isManual = r.tipo === 'manual';
+                const hora = r.hora || r.horario || '--:--:--';
+                const descricao = r.equipamento || r.mensagem || "Cuba de Insensibilização";
+
+                const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
+                const isManual = tipoTexto.includes('manual');
+
                 const badge = isManual 
                     ? '<span class="badge-manual">MANUAL</span>' 
                     : '<span class="badge-auto">AUTOMÁTICO</span>';
 
                 html += `<tr>
                     <td>${dataFormatada}</td>
-                    <td><strong>${r.hora}</strong></td>
-                    <td style="text-align: left; padding-left: 20px;">${r.equipamento}</td>
-                    <td style="text-align: left; padding-left: 20px; font-weight: 500;">${r.mensagem}</td>
+                    <td><strong>${hora}</strong></td>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 500;">${descricao}</td>
                     <td>${badge}</td>
                 </tr>`;
             });
@@ -1516,11 +1530,12 @@
             const termo = document.getElementById('filtroTextoRegistros').value.toLowerCase();
             const dataFormatada = document.getElementById('dataBusca').value.split('-').reverse().join('/');
             
-            const filtrados = listaRegistrosDia.filter(item => 
-                item.equipamento.toLowerCase().includes(termo) ||
-                item.mensagem.toLowerCase().includes(termo) ||
-                item.hora.toLowerCase().includes(termo)
-            );
+            const filtrados = listaRegistrosDia.filter(item => {
+                const hora = (item.hora || item.horario || '').toLowerCase();
+                const msg = (item.mensagem || item.equipamento || 'cuba de insensibilização').toLowerCase();
+                const tipo = (item.tipo || '').toLowerCase();
+                return hora.includes(termo) || msg.includes(termo) || tipo.includes(termo);
+            });
             renderizarLinhasRegistros(filtrados, dataFormatada);
         }
 
