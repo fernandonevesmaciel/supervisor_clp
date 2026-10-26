@@ -1472,10 +1472,8 @@
             try {
                 const res = await fetch(url);
                 const logs = await res.json();
-                const tbody = document.getElementById('tbody-registros');
                 const dataFormatada = data.split('-').reverse().join('/');
 
-                tbody.innerHTML = '';
                 listaRegistrosDia = [];
 
                 if (logs) {
@@ -1484,16 +1482,48 @@
                     } else if (typeof logs === 'object') {
                         listaRegistrosDia = Object.keys(logs).map(k => logs[k]);
                     }
+                }
 
-                    listaRegistrosDia.sort((a, b) => {
-                        const horaA = a.hora || a.horario || '';
-                        const horaB = b.hora || b.horario || '';
-                        return horaB.localeCompare(horaA);
-                    });
+                // Fallback: Se o dia não tem nenhum registro, recupera o status herdado do dia anterior
+                if (listaRegistrosDia.length === 0) {
+                    const dataObj = new Date(data + 'T12:00:00');
+                    dataObj.setDate(dataObj.getDate() - 1);
+                    const diaAnterior = dataObj.toISOString().split('T')[0];
 
+                    try {
+                        const resAnt = await fetch(`${FIREBASE_URL}/registros/${diaAnterior}.json?auth=${FIREBASE_SECRET}`);
+                        const logsAnt = await resAnt.json();
+
+                        if (logsAnt) {
+                            let listaAnt = Array.isArray(logsAnt) ? logsAnt.filter(i => i !== null) : Object.values(logsAnt);
+                            listaAnt.sort((a, b) => (b.hora || b.horario || '').localeCompare(a.hora || a.horario || ''));
+
+                            if (listaAnt.length > 0) {
+                                const ultimoDoDiaAnterior = listaAnt[0];
+                                listaRegistrosDia.push({
+                                    hora: '00:00:00',
+                                    equipamento: `${ultimoDoDiaAnterior.equipamento || 'Cuba de Insensibilização'} (Herdado do dia anterior)`,
+                                    tipo: ultimoDoDiaAnterior.tipo || ultimoDoDiaAnterior.mensagem,
+                                    mensagem: ultimoDoDiaAnterior.mensagem || ''
+                                });
+                            }
+                        }
+                    } catch (errAnt) {
+                        console.warn("Não foi possível buscar estado do dia anterior:", errAnt);
+                    }
+                }
+
+                listaRegistrosDia.sort((a, b) => {
+                    const horaA = a.hora || a.horario || '';
+                    const horaB = b.hora || b.horario || '';
+                    return horaB.localeCompare(horaA);
+                });
+
+                if (listaRegistrosDia.length > 0) {
                     renderizarLinhasRegistros(listaRegistrosDia, dataFormatada);
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
+                    document.getElementById('tbody-registros').innerHTML = 
+                        `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
                 }
             } catch (e) {
                 console.error("Erro ao buscar registros:", e);
@@ -1506,7 +1536,7 @@
 
             dados.forEach(r => {
                 const hora = r.hora || r.horario || '--:--:--';
-                const descricao = r.equipamento || r.mensagem || "Cuba de Insensibilização";
+                const descricao = r.mensagem || r.equipamento || "Cuba de Insensibilização";
 
                 const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
                 const isManual = tipoTexto.includes('manual');
