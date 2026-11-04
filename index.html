@@ -954,6 +954,19 @@
                     <h3>Tanque Escalda</h3>
                     <div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div>
                 </div>
+                <!-- NOVOS CARDS ADICIONADOS -->
+                <div class="card">
+                    <h3>Tanques Água</h3>
+                    <div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div>
+                </div>
+                <div class="card">
+                    <h3>Geral Adutora / Abt</h3>
+                    <div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div>
+                </div>
+                <div class="card">
+                    <h3>Geral Abatedouro</h3>
+                    <div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div>
+                </div>
             </div>
             <div class="charts-container">
                 <div class="chart-header">
@@ -972,6 +985,10 @@
                             <option value="pe2">Pé 2</option>
                             <option value="chuveiro_final">Chuveiro Final</option>
                             <option value="tanque_escalda">Tanque Escalda</option>
+                            <!-- NOVAS OPÇÕES NO SELECT -->
+                            <option value="tanques_agua">Tanques Água</option>
+                            <option value="geral_adultora_abt">Geral Adutora Abt</option>
+                            <option value="geral_abate">Geral Abate</option>
                         </select>
                         <div class="chart-range-btns">
                             <button class="btn-range active" id="btn-janela-2h-agua" onclick="mudarJanelaTempo('agua', 120)">🔍 Últimas 2h</button>
@@ -993,6 +1010,8 @@
                                 <th>Condicionais (m³)</th><th>Coração (m³)</th><th>Fígado (m³)</th>
                                 <th>Moela (m³)</th><th>Cabeça (m³)</th><th>Pé 1 (m³)</th>
                                 <th>Pé 2 (m³)</th><th>Chuveiro (m³)</th><th>Tanq. Escalda (m³)</th>
+                                <!-- NOVAS COLUNAS NA TABELA -->
+                                <th>Tanques Água (m³)</th><th>Ger. Adut. Abt (m³)</th><th>Ger. Abate (m³)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-agua"></tbody>
@@ -1306,6 +1325,10 @@
                     document.getElementById('rt-total-agua-pe2').innerText = formatarBR(dados.agua_total_pe2);
                     document.getElementById('rt-total-agua-chuveiro-final').innerText = formatarBR(dados.agua_total_chuveiro_final);
                     document.getElementById('rt-total-agua-tanque-escalda').innerText = formatarBR(dados.agua_total_tanque_escalda);
+                    // NOVOS HIDRÔMETROS EM TEMPO REAL
+                    document.getElementById('rt-total-agua-tanques-agua').innerText = formatarBR(dados.agua_total_tanques_agua);
+                    document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
+                    document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
 
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
@@ -1420,6 +1443,7 @@
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
                         <td>${formatarBR(d.agua_pre_chiller)}</td> <td>${formatarBR(d.agua_chiller1)}</td> <td>${formatarBR(d.agua_chiller2)}</td> <td>${formatarBR(d.agua_condicionais)}</td> <td>${formatarBR(d.agua_coracao)}</td> <td>${formatarBR(d.agua_figado)}</td> <td>${formatarBR(d.agua_moela)}</td> <td>${formatarBR(d.agua_cabeca)}</td> <td>${formatarBR(d.agua_pe1)}</td> <td>${formatarBR(d.agua_pe2)}</td> <td>${formatarBR(d.agua_chuveiro_final)}</td> <td>${formatarBR(d.agua_tanque_escalda)}</td>
+                        <td>${formatarBR(d.agua_tanques_agua)}</td> <td>${formatarBR(d.agua_geral_adultora_abt)}</td> <td>${formatarBR(d.agua_geral_abate)}</td>
                     </tr>`;
                 }
 
@@ -1484,7 +1508,6 @@
                     }
                 }
 
-                // Fallback: Se o dia não tem nenhum registro, recupera o status herdado do dia anterior
                 if (listaRegistrosDia.length === 0) {
                     const dataObj = new Date(data + 'T12:00:00');
                     dataObj.setDate(dataObj.getDate() - 1);
