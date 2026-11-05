@@ -927,7 +927,12 @@
 
         <!-- ================= TELA DE ÁGUA ================= -->
         <div id="view-agua" class="view-section">
+            <h2 class="section-title">Consumo de Água</h2>
             <div class="cards-grid">
+                <div class="card" style="border: 2px solid var(--water); background: #f0f9ff;">
+                    <h3 style="color: #0284c7; font-weight: bold;">Total Consumo Dia</h3>
+                    <div class="value text-water"><span id="rt-total-agua-geral-soma">--</span> m³</div>
+                </div>
                 <div class="card">
                     <h3>Pré-Chiller</h3>
                     <div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div>
@@ -1026,6 +1031,7 @@
                         <thead>
                             <tr>
                                 <th>Data</th><th>Hora</th>
+                                <th style="background-color: #bae6fd; color: #0369a1;">Total Setores (m³)</th>
                                 <th>Pré-Chiller (m³)</th><th>Chil. 1 (m³)</th><th>Chil. 2 (m³)</th>
                                 <th>Condicionais (m³)</th><th>Coração (m³)</th><th>Fígado (m³)</th>
                                 <th>Moela (m³)</th><th>Cabeça (m³)</th><th>Pé 1 (m³)</th>
@@ -1364,6 +1370,30 @@
                     document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
                     document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
 
+                    // Soma dos hidrômetros de setores em tempo real
+                    const vPreChillerTR = Number(dados.agua_total_pre_chiller) || 0;
+                    const vChil1TR = Number(dados.agua_total_chiller1) || 0;
+                    const vChil2TR = Number(dados.agua_total_chiller2) || 0;
+                    const vCondTR = Number(dados.agua_total_condicionais) || 0;
+                    const vCoracaoTR = Number(dados.agua_total_coracao) || 0;
+                    const vFigadoTR = Number(dados.agua_total_figado) || 0;
+                    const vMoelaTR = Number(dados.agua_total_moela) || 0;
+                    const vCabecaTR = Number(dados.agua_total_cabeca) || 0;
+                    const vPe1TR = Number(dados.agua_total_pe1) || 0;
+                    const vPe2TR = Number(dados.agua_total_pe2) || 0;
+                    const vChuvTR = Number(dados.agua_total_chuveiro_final) || 0;
+                    const vEscaldaTR = Number(dados.agua_total_tanque_escalda) || 0;
+                    const vTanquesNumTR = Number(valTanquesTR) || 0;
+
+                    const totalTRSetores = vPreChillerTR + vChil1TR + vChil2TR + vCondTR + 
+                                           vCoracaoTR + vFigadoTR + vMoelaTR + vCabecaTR + 
+                                           vPe1TR + vPe2TR + vChuvTR + vEscaldaTR + vTanquesNumTR;
+
+                    const elSomaGeralTR = document.getElementById('rt-total-agua-geral-soma');
+                    if (elSomaGeralTR && totalTRSetores > 0) {
+                        elSomaGeralTR.innerText = formatarBR(totalTRSetores);
+                    }
+
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
                     document.getElementById('rt-pressao-agua-potavel').innerText = formatarBR(dados.pressao_agua_potavel);
@@ -1442,6 +1472,7 @@
 
             // Acumuladores para soma diária de água
             let totaisAgua = {
+                total_geral_setores: 0,
                 pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
                 coracao: 0, figado: 0, moela: 0, cabeca: 0,
                 pe1: 0, pe2: 0, chuveiro: 0, tanque_escalda: 0,
@@ -1512,6 +1543,12 @@
                     const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
                     const vAbate = Number(d.agua_geral_abate) || 0;
 
+                    // Somatório de consumo de processo desta leitura
+                    const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond + 
+                                             vCoracao + vFigado + vMoela + vCabeca + 
+                                             vPe1 + vPe2 + vChuv + vEscalda + vTanques;
+
+                    totaisAgua.total_geral_setores += somaLinhaSetores;
                     totaisAgua.pre_chiller += vPreChiller;
                     totaisAgua.chiller1 += vChil1;
                     totaisAgua.chiller2 += vChil2;
@@ -1530,6 +1567,7 @@
 
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
+                        <td style="font-weight: bold; background-color: #f0f9ff; color: #0284c7;">${formatarBR(somaLinhaSetores)}</td>
                         <td>${formatarBR(vPreChiller)}</td>
                         <td>${formatarBR(vChil1)}</td>
                         <td>${formatarBR(vChil2)}</td>
@@ -1571,6 +1609,7 @@
                 const linhaTotal = `<tr class="linha-total-dia">
                     <td>TOTAL DIA</td>
                     <td>SOMA</td>
+                    <td style="background-color: #0284c7 !important; color: #ffffff !important; font-size: 15px;">${formatarBR(totaisAgua.total_geral_setores)}</td>
                     <td>${formatarBR(totaisAgua.pre_chiller)}</td>
                     <td>${formatarBR(totaisAgua.chiller1)}</td>
                     <td>${formatarBR(totaisAgua.chiller2)}</td>
@@ -1588,6 +1627,12 @@
                     <td>${formatarBR(totaisAgua.geral_abate)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
+
+                // Atualiza o Card Superior de Resumo com o Total Geral Somado
+                const cardSomaGeral = document.getElementById('rt-total-agua-geral-soma');
+                if (cardSomaGeral) {
+                    cardSomaGeral.innerText = formatarBR(totaisAgua.total_geral_setores);
+                }
             }
 
             let kwhTotalBaixa = kwhAbatedouro + kwhSala;
@@ -1609,7 +1654,7 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="17" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
+            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="18" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
