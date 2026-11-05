@@ -345,6 +345,7 @@
             left: 0;
             min-width: 95px;
             z-index: 20;
+            background-color: #ffffff;
         }
 
         .tabela-congelada th:nth-child(2),
@@ -353,7 +354,8 @@
             left: 95px;
             min-width: 65px;
             z-index: 20;
-            border-right: 2px solid #94a3b8;
+            border-right: 2px solid #cbd5e1;
+            background-color: #ffffff;
         }
 
         .tabela-congelada th:nth-child(1),
@@ -362,7 +364,27 @@
             background-color: #e2e8f0;
         }
 
-        /* Badges da Aba de Registos */
+        tr:hover td:nth-child(1),
+        tr:hover td:nth-child(2) {
+            background-color: #f1f5f9;
+        }
+
+        /* Estilo da Linha de Total do Dia */
+        .linha-total-dia td {
+            background-color: #e0f2fe !important;
+            font-weight: bold;
+            border-top: 2px solid #0284c7;
+            border-bottom: 2px solid #0284c7;
+        }
+
+        .linha-total-dia td:nth-child(1),
+        .linha-total-dia td:nth-child(2) {
+            background-color: #bae6fd !important;
+            color: #0369a1;
+            z-index: 25 !important;
+        }
+
+        /* Badges da Aba de Registros */
         .badge-manual {
             background-color: #fee2e2;
             color: #ef4444;
@@ -954,7 +976,6 @@
                     <h3>Tanque Escalda</h3>
                     <div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div>
                 </div>
-                <!-- NOVOS CARDS ADICIONADOS -->
                 <div class="card">
                     <h3>Tanques Água</h3>
                     <div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div>
@@ -976,16 +997,15 @@
                             <option value="pre_chiller">Pré-Chiller</option>
                             <option value="chiller1">Chiller 1</option>
                             <option value="chiller2">Chiller 2</option>
-                            <option value="condicionais">Condicionais</option>
-                            <option value="coracao">Coração</option>
-                            <option value="figado">Fígado</option>
-                            <option value="moela">Moela</option>
-                            <option value="cabeca">Cabeça</option>
                             <option value="pe1">Pé 1</option>
                             <option value="pe2">Pé 2</option>
+                            <option value="cabeca">Cabeça</option>
+                            <option value="moela">Moela</option>
+                            <option value="coracao">Coração</option>
+                            <option value="figado">Fígado</option>
+                            <option value="condicionais">Condicionais</option>
                             <option value="chuveiro_final">Chuveiro Final</option>
                             <option value="tanque_escalda">Tanque Escalda</option>
-                            <!-- NOVAS OPÇÕES NO SELECT -->
                             <option value="tanques_agua">Tanques Água</option>
                             <option value="geral_adultora_abt">Geral Adutora Abt</option>
                             <option value="geral_abate">Geral Abate</option>
@@ -1010,7 +1030,6 @@
                                 <th>Condicionais (m³)</th><th>Coração (m³)</th><th>Fígado (m³)</th>
                                 <th>Moela (m³)</th><th>Cabeça (m³)</th><th>Pé 1 (m³)</th>
                                 <th>Pé 2 (m³)</th><th>Chuveiro (m³)</th><th>Tanq. Escalda (m³)</th>
-                                <!-- NOVAS COLUNAS NA TABELA -->
                                 <th>Tanques Água (m³)</th><th>Ger. Adut. Abt (m³)</th><th>Ger. Abate (m³)</th>
                             </tr>
                         </thead>
@@ -1163,9 +1182,22 @@
             utilidades: 120
         };
 
+        function extrairValor(obj, chaves, valorPadrao = '--') {
+            if (!obj) return valorPadrao;
+            for (const chave of chaves) {
+                if (obj[chave] !== undefined && obj[chave] !== null) {
+                    const num = Number(obj[chave]);
+                    if (!isNaN(num)) return num;
+                }
+            }
+            return valorPadrao;
+        }
+
         function formatarBR(valor, casas = 1) {
-            if (valor === undefined || valor === null || isNaN(valor)) return '--';
-            return valor.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
+            if (valor === undefined || valor === null || valor === '--') return '--';
+            const num = Number(valor);
+            if (isNaN(num)) return '--';
+            return num.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
         }
 
         let graficoTempObj = null; 
@@ -1250,8 +1282,8 @@
             span.innerText = formatarBR(valor, 1);
             divPai.classList.remove('text-blue', 'text-success', 'text-danger', 'text-orange', 'text-red', 'text-purple');
 
-            if (valor !== undefined && valor !== null && !isNaN(valor)) {
-                if (valor <= setpoint) {
+            if (valor !== undefined && valor !== null && valor !== '--' && !isNaN(valor)) {
+                if (Number(valor) <= setpoint) {
                     divPai.classList.add('text-success');
                 } else {
                     divPai.classList.add('text-red');
@@ -1325,8 +1357,10 @@
                     document.getElementById('rt-total-agua-pe2').innerText = formatarBR(dados.agua_total_pe2);
                     document.getElementById('rt-total-agua-chuveiro-final').innerText = formatarBR(dados.agua_total_chuveiro_final);
                     document.getElementById('rt-total-agua-tanque-escalda').innerText = formatarBR(dados.agua_total_tanque_escalda);
-                    // NOVOS HIDRÔMETROS EM TEMPO REAL
-                    document.getElementById('rt-total-agua-tanques-agua').innerText = formatarBR(dados.agua_total_tanques_agua);
+                    
+                    const valTanquesTR = extrairValor(dados, ['agua_total_tanques_agua', 'agua_total_tanque_agua', 'agua_total_tanques', 'agua_total_tanque']);
+                    document.getElementById('rt-total-agua-tanques-agua').innerText = formatarBR(valTanquesTR);
+
                     document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
                     document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
 
@@ -1406,6 +1440,15 @@
             let totalLeituras = horas.length;
             const dataFormatada = data.split('-').reverse().join('/');
 
+            // Acumuladores para soma diária de água
+            let totaisAgua = {
+                pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
+                coracao: 0, figado: 0, moela: 0, cabeca: 0,
+                pe1: 0, pe2: 0, chuveiro: 0, tanque_escalda: 0,
+                tanques_agua: 0, geral_adutora: 0, geral_abate: 0
+            };
+            let qtdLinhasAgua = 0;
+
             horas.forEach(h => {
                 const d = dadosAcumulados[h];
 
@@ -1439,11 +1482,69 @@
                     <td>${formatarBR(d.qgbt2_tensao)}</td><td>${formatarBR(d.qgbt2_potencia)}</td>
                 </tr>`;
 
-                if (d.agua_pre_chiller !== undefined) {
+                // Tabela de água: apenas linhas do gatilho de 2 horas
+                if (d.agua_pre_chiller !== undefined || d.agua_chiller1 !== undefined) {
+                    qtdLinhasAgua++;
+
+                    const vPreChiller = Number(d.agua_pre_chiller) || 0;
+                    const vChil1 = Number(d.agua_chiller1) || 0;
+                    const vChil2 = Number(d.agua_chiller2) || 0;
+                    const vCond = Number(d.agua_condicionais) || 0;
+                    const vCoracao = Number(d.agua_coracao) || 0;
+                    const vFigado = Number(d.agua_figado) || 0;
+                    const vMoela = Number(d.agua_moela) || 0;
+                    const vCabeca = Number(d.agua_cabeca) || 0;
+                    const vPe1 = Number(d.agua_pe1) || 0;
+                    const vPe2 = Number(d.agua_pe2) || 0;
+                    const vChuv = Number(d.agua_chuveiro_final) || 0;
+                    const vEscalda = Number(d.agua_tanque_escalda) || 0;
+                    
+                    const rawTanques = extrairValor(d, [
+                        'agua_tanques_agua', 
+                        'agua_tanque_agua', 
+                        'agua_total_tanques_agua', 
+                        'agua_total_tanque_agua',
+                        'agua_cons_tanques_agua',
+                        'agua_cons_tanque_agua'
+                    ], 0);
+                    const vTanques = Number(rawTanques) || 0;
+
+                    const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
+                    const vAbate = Number(d.agua_geral_abate) || 0;
+
+                    totaisAgua.pre_chiller += vPreChiller;
+                    totaisAgua.chiller1 += vChil1;
+                    totaisAgua.chiller2 += vChil2;
+                    totaisAgua.condicionais += vCond;
+                    totaisAgua.coracao += vCoracao;
+                    totaisAgua.figado += vFigado;
+                    totaisAgua.moela += vMoela;
+                    totaisAgua.cabeca += vCabeca;
+                    totaisAgua.pe1 += vPe1;
+                    totaisAgua.pe2 += vPe2;
+                    totaisAgua.chuveiro += vChuv;
+                    totaisAgua.tanque_escalda += vEscalda;
+                    totaisAgua.tanques_agua += vTanques;
+                    totaisAgua.geral_adutora += vAdutora;
+                    totaisAgua.geral_abate += vAbate;
+
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
-                        <td>${formatarBR(d.agua_pre_chiller)}</td> <td>${formatarBR(d.agua_chiller1)}</td> <td>${formatarBR(d.agua_chiller2)}</td> <td>${formatarBR(d.agua_condicionais)}</td> <td>${formatarBR(d.agua_coracao)}</td> <td>${formatarBR(d.agua_figado)}</td> <td>${formatarBR(d.agua_moela)}</td> <td>${formatarBR(d.agua_cabeca)}</td> <td>${formatarBR(d.agua_pe1)}</td> <td>${formatarBR(d.agua_pe2)}</td> <td>${formatarBR(d.agua_chuveiro_final)}</td> <td>${formatarBR(d.agua_tanque_escalda)}</td>
-                        <td>${formatarBR(d.agua_tanques_agua)}</td> <td>${formatarBR(d.agua_geral_adultora_abt)}</td> <td>${formatarBR(d.agua_geral_abate)}</td>
+                        <td>${formatarBR(vPreChiller)}</td>
+                        <td>${formatarBR(vChil1)}</td>
+                        <td>${formatarBR(vChil2)}</td>
+                        <td>${formatarBR(vCond)}</td>
+                        <td>${formatarBR(vCoracao)}</td>
+                        <td>${formatarBR(vFigado)}</td>
+                        <td>${formatarBR(vMoela)}</td>
+                        <td>${formatarBR(vCabeca)}</td>
+                        <td>${formatarBR(vPe1)}</td>
+                        <td>${formatarBR(vPe2)}</td>
+                        <td>${formatarBR(vChuv)}</td>
+                        <td>${formatarBR(vEscalda)}</td>
+                        <td>${formatarBR(vTanques)}</td>
+                        <td>${formatarBR(vAdutora)}</td>
+                        <td>${formatarBR(vAbate)}</td>
                     </tr>`;
                 }
 
@@ -1465,6 +1566,30 @@
                 }
             });
 
+            // Concatenação da linha de soma diária no topo da tabela de água
+            if (qtdLinhasAgua > 0) {
+                const linhaTotal = `<tr class="linha-total-dia">
+                    <td>TOTAL DIA</td>
+                    <td>SOMA</td>
+                    <td>${formatarBR(totaisAgua.pre_chiller)}</td>
+                    <td>${formatarBR(totaisAgua.chiller1)}</td>
+                    <td>${formatarBR(totaisAgua.chiller2)}</td>
+                    <td>${formatarBR(totaisAgua.condicionais)}</td>
+                    <td>${formatarBR(totaisAgua.coracao)}</td>
+                    <td>${formatarBR(totaisAgua.figado)}</td>
+                    <td>${formatarBR(totaisAgua.moela)}</td>
+                    <td>${formatarBR(totaisAgua.cabeca)}</td>
+                    <td>${formatarBR(totaisAgua.pe1)}</td>
+                    <td>${formatarBR(totaisAgua.pe2)}</td>
+                    <td>${formatarBR(totaisAgua.chuveiro)}</td>
+                    <td>${formatarBR(totaisAgua.tanque_escalda)}</td>
+                    <td>${formatarBR(totaisAgua.tanques_agua)}</td>
+                    <td>${formatarBR(totaisAgua.geral_adutora)}</td>
+                    <td>${formatarBR(totaisAgua.geral_abate)}</td>
+                </tr>`;
+                htmlAgua = linhaTotal + htmlAgua;
+            }
+
             let kwhTotalBaixa = kwhAbatedouro + kwhSala;
             let kwhTotalAlta = kwhTotalBaixa * FATOR_PERDA_TRAFO;
             let horasPassadas = totalLeituras / 60;
@@ -1484,7 +1609,7 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            if (htmlAgua !== '') document.getElementById('tbody-agua').innerHTML = htmlAgua;
+            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="17" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
@@ -1615,10 +1740,10 @@
             let rawDataTemp = [], labelTemp = 'Temperatura (°C)';
             if (filtroTemp !== 'todos') {
                 labelTemp = document.querySelector(`#filtroSetor option[value="${filtroTemp}"]`).innerText;
-                rawDataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] || null);
+                rawDataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] ?? null);
             } else {
                 labelTemp = "CMS (Referência)";
-                rawDataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms || null);
+                rawDataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms ?? null);
             }
             let resTemp = prepararDadosJanela(horas, rawDataTemp, 'temp');
             graficoTempObj = new Chart(ctxTemp, { type: 'line', data: { labels: resTemp.labels, datasets: [{ label: labelTemp, data: resTemp.data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
@@ -1628,7 +1753,7 @@
             const ctxEnergia = document.getElementById('graficoEnergia').getContext('2d');
             if (graficoEnergiaObj) graficoEnergiaObj.destroy();
             const labelEnergia = document.querySelector(`#filtroQuadro option[value="${filtroEnergia}"]`).innerText;
-            let rawDataEnergia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] || null);
+            let rawDataEnergia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] ?? null);
             let resEnergia = prepararDadosJanela(horas, rawDataEnergia, 'energia');
             graficoEnergiaObj = new Chart(ctxEnergia, { type: 'line', data: { labels: resEnergia.labels, datasets: [{ label: `${labelEnergia} Potência (kW)`, data: resEnergia.data, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
 
@@ -1638,7 +1763,15 @@
             if (graficoAguaObj) graficoAguaObj.destroy();
             const chaveAgua = `agua_cons_${filtroAgua}`;
             const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
-            let rawDataAgua = horas.map(h => dadosAcumulados[h]?.[chaveAgua] || null);
+            let rawDataAgua = horas.map(h => {
+                const d = dadosAcumulados[h];
+                if (!d) return null;
+                if (filtroAgua === 'tanques_agua') {
+                    const v = extrairValor(d, ['agua_cons_tanques_agua', 'agua_cons_tanque_agua', 'agua_tanques_agua', 'agua_tanque_agua'], null);
+                    return v !== null && v !== '--' ? v : null;
+                }
+                return d[chaveAgua] !== undefined && d[chaveAgua] !== null ? Number(d[chaveAgua]) : null;
+            });
             let resAgua = prepararDadosJanela(horas, rawDataAgua, 'agua');
             graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: resAgua.labels, datasets: [{ label: `${labelAgua} (m³)`, data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
 
@@ -1647,7 +1780,10 @@
             const ctxUtilidades = document.getElementById('graficoUtilidades').getContext('2d');
             if (graficoUtilidadesObj) graficoUtilidadesObj.destroy();
             const labelUtilidades = document.querySelector(`#filtroUtilidades option[value="${filtroUtilidades}"]`).innerText;
-            let rawDataUtil = horas.map(h => dadosAcumulados[h]?.[filtroUtilidades] || null);
+            let rawDataUtil = horas.map(h => {
+                const d = dadosAcumulados[h];
+                return d?.[filtroUtilidades] !== undefined && d[filtroUtilidades] !== null ? Number(d[filtroUtilidades]) : null;
+            });
             let resUtil = prepararDadosJanela(horas, rawDataUtil, 'utilidades');
             graficoUtilidadesObj = new Chart(ctxUtilidades, {
                 type: 'line',
