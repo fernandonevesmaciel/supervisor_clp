@@ -338,7 +338,6 @@
             background-color: #f8fafc;
         }
 
-        /* Congelamento de colunas padrão */
         .tabela-congelada th:nth-child(1),
         .tabela-congelada td:nth-child(1) {
             position: sticky;
@@ -369,7 +368,6 @@
             background-color: #f1f5f9;
         }
 
-        /* Estilo da Linha de Total do Dia */
         .linha-total-dia td {
             background-color: #e0f2fe !important;
             font-weight: bold;
@@ -384,7 +382,6 @@
             z-index: 25 !important;
         }
 
-        /* Badges da Aba de Registros */
         .badge-manual {
             background-color: #fee2e2;
             color: #ef4444;
@@ -1370,30 +1367,6 @@
                     document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
                     document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
 
-                    // Soma dos hidrômetros de setores em tempo real
-                    const vPreChillerTR = Number(dados.agua_total_pre_chiller) || 0;
-                    const vChil1TR = Number(dados.agua_total_chiller1) || 0;
-                    const vChil2TR = Number(dados.agua_total_chiller2) || 0;
-                    const vCondTR = Number(dados.agua_total_condicionais) || 0;
-                    const vCoracaoTR = Number(dados.agua_total_coracao) || 0;
-                    const vFigadoTR = Number(dados.agua_total_figado) || 0;
-                    const vMoelaTR = Number(dados.agua_total_moela) || 0;
-                    const vCabecaTR = Number(dados.agua_total_cabeca) || 0;
-                    const vPe1TR = Number(dados.agua_total_pe1) || 0;
-                    const vPe2TR = Number(dados.agua_total_pe2) || 0;
-                    const vChuvTR = Number(dados.agua_total_chuveiro_final) || 0;
-                    const vEscaldaTR = Number(dados.agua_total_tanque_escalda) || 0;
-                    const vTanquesNumTR = Number(valTanquesTR) || 0;
-
-                    const totalTRSetores = vPreChillerTR + vChil1TR + vChil2TR + vCondTR + 
-                                           vCoracaoTR + vFigadoTR + vMoelaTR + vCabecaTR + 
-                                           vPe1TR + vPe2TR + vChuvTR + vEscaldaTR + vTanquesNumTR;
-
-                    const elSomaGeralTR = document.getElementById('rt-total-agua-geral-soma');
-                    if (elSomaGeralTR && totalTRSetores > 0) {
-                        elSomaGeralTR.innerText = formatarBR(totalTRSetores);
-                    }
-
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
                     document.getElementById('rt-pressao-agua-potavel').innerText = formatarBR(dados.pressao_agua_potavel);
@@ -1470,7 +1443,6 @@
             let totalLeituras = horas.length;
             const dataFormatada = data.split('-').reverse().join('/');
 
-            // Acumuladores para soma diária de água
             let totaisAgua = {
                 total_geral_setores: 0,
                 pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
@@ -1513,7 +1485,6 @@
                     <td>${formatarBR(d.qgbt2_tensao)}</td><td>${formatarBR(d.qgbt2_potencia)}</td>
                 </tr>`;
 
-                // Tabela de água: apenas linhas do gatilho de 2 horas
                 if (d.agua_pre_chiller !== undefined || d.agua_chiller1 !== undefined) {
                     qtdLinhasAgua++;
 
@@ -1543,10 +1514,9 @@
                     const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
                     const vAbate = Number(d.agua_geral_abate) || 0;
 
-                    // Somatório de consumo de processo desta leitura
                     const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond + 
                                              vCoracao + vFigado + vMoela + vCabeca + 
-                                             vPe1 + vPe2 + vChuv + vEscalda + vTanques;
+                                             vPe1 + vPe2 + vChuv + vEscalda;
 
                     totaisAgua.total_geral_setores += somaLinhaSetores;
                     totaisAgua.pre_chiller += vPreChiller;
@@ -1604,7 +1574,8 @@
                 }
             });
 
-            // Concatenação da linha de soma diária no topo da tabela de água
+            const cardSomaGeral = document.getElementById('rt-total-agua-geral-soma');
+
             if (qtdLinhasAgua > 0) {
                 const linhaTotal = `<tr class="linha-total-dia">
                     <td>TOTAL DIA</td>
@@ -1628,10 +1599,13 @@
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
 
-                // Atualiza o Card Superior de Resumo com o Total Geral Somado
-                const cardSomaGeral = document.getElementById('rt-total-agua-geral-soma');
+                const somaCardConsumoDia = totaisAgua.tanques_agua + totaisAgua.geral_adutora + totaisAgua.geral_abate;
                 if (cardSomaGeral) {
-                    cardSomaGeral.innerText = formatarBR(totaisAgua.total_geral_setores);
+                    cardSomaGeral.innerText = formatarBR(somaCardConsumoDia);
+                }
+            } else {
+                if (cardSomaGeral) {
+                    cardSomaGeral.innerText = '--';
                 }
             }
 
@@ -1857,24 +1831,31 @@
             const titulo = document.getElementById('titulo-pagina').innerText;
             const dataStr = document.getElementById('dataBusca').value;
 
-            const clonedTable = table.cloneNode(true);
-            const rows = clonedTable.querySelectorAll('tr');
+            // 1. Cria a planilha lendo os dados originais da tabela
+            const wb = XLSX.utils.table_to_book(table, { sheet: "Dados", raw: true });
+            const ws = wb.Sheets["Dados"];
 
-            for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i].querySelectorAll('td');
-                for (let j = 2; j < cols.length; j++) {
-                    let text = cols[j].innerText.trim();
-                    if (text && text !== '--') {
-                        let cleanText = text.replace(/\./g, '').replace(',', '.');
-                        let num = parseFloat(cleanText);
-                        if (!isNaN(num)) {
-                            cols[j].innerText = num;
+            // 2. Converte textos numéricos para números reais do Excel mantendo o formato com vírgula visual
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            for (let R = range.s.r + 1; R <= range.e.r; ++R) {
+                for (let C = 2; C <= range.e.c; ++C) { // Pula as colunas 0 e 1 (Data e Hora)
+                    const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
+                    const cell = ws[cellAddress];
+
+                    if (cell && cell.t === 's') {
+                        const text = cell.v.trim();
+                        if (text !== '' && text !== '--' && /^-?[\d.]+,\d+$|^-?\d+$/.test(text)) {
+                            const num = parseFloat(text.replace(/\./g, '').replace(',', '.'));
+                            if (!isNaN(num)) {
+                                cell.t = 'n';       // Define a célula como Número real
+                                cell.v = num;       // Atribui o valor numérico
+                                cell.z = '#,##0.0'; // Formato visual padrão com vírgula em PT-BR
+                            }
                         }
                     }
                 }
             }
 
-            const wb = XLSX.utils.table_to_book(clonedTable, { sheet: "Dados", raw: true });
             XLSX.writeFile(wb, `${titulo} - ${dataStr}.xlsx`);
         }
 
