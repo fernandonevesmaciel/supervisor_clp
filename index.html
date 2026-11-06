@@ -875,6 +875,9 @@
                 <div class="card"><h3>Tanques Água</h3><div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div></div>
                 <div class="card"><h3>Geral Adutora / Abt</h3><div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div></div>
                 <div class="card"><h3>Geral Abatedouro</h3><div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div></div>
+                <div class="card"><h3>Escaldador Patas</h3><div class="value text-water"><span id="rt-total-agua-escaldador-patas">--</span> m³</div></div>
+                <div class="card"><h3>Saída Depenadeira</h3><div class="value text-water"><span id="rt-total-agua-saida-depenadeira">--</span> m³</div></div>
+                <div class="card"><h3>Bomba Trocador das Placas</h3><div class="value text-water"><span id="rt-total-agua-trocador-placas">--</span> m³</div></div>
             </div>
             <div class="charts-container">
                 <div class="chart-header">
@@ -896,6 +899,9 @@
                             <option value="tanques_agua">Tanques Água</option>
                             <option value="geral_adultora_abt">Geral Adutora Abt</option>
                             <option value="geral_abate">Geral Abate</option>
+                            <option value="escaldador_patas">Escaldador Patas</option>
+                            <option value="saida_depenadeira">Saída Depenadeira</option>
+                            <option value="trocador_placas">Trocador Placas</option>
                         </select>
                         <div class="chart-range-btns">
                             <button class="btn-range active" id="btn-janela-2h-agua" onclick="mudarJanelaTempo('agua', 120)">🔍 Últimas 2h</button>
@@ -919,6 +925,7 @@
                                 <th>Moela (m³)</th><th>Cabeça (m³)</th><th>Pé 1 (m³)</th>
                                 <th>Pé 2 (m³)</th><th>Chuveiro (m³)</th><th>Tanq. Escalda (m³)</th>
                                 <th>Tanques Água (m³)</th><th>Ger. Adut. Abt (m³)</th><th>Ger. Abate (m³)</th>
+                                <th>Escaldador Patas (m³)</th><th>Saída Depenadeira (m³)</th><th>Trocador Placas (m³)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-agua"></tbody>
@@ -1265,6 +1272,9 @@
 
                     document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
                     document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
+                    document.getElementById('rt-total-agua-escaldador-patas').innerText = formatarBR(dados.agua_total_escaldador_patas);
+                    document.getElementById('rt-total-agua-saida-depenadeira').innerText = formatarBR(dados.agua_total_saida_depenadeira);
+                    document.getElementById('rt-total-agua-trocador-placas').innerText = formatarBR(dados.agua_total_trocador_placas);
 
                     document.getElementById('rt-pressao-ar').innerText = formatarBR(dados.pressao_ar);
                     document.getElementById('rt-pressao-agua-quente').innerText = formatarBR(dados.pressao_agua_quente);
@@ -1347,7 +1357,8 @@
                 pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
                 coracao: 0, figado: 0, moela: 0, cabeca: 0,
                 pe1: 0, pe2: 0, chuveiro: 0, tanque_escalda: 0,
-                tanques_agua: 0, geral_adutora: 0, geral_abate: 0
+                tanques_agua: 0, geral_adutora: 0, geral_abate: 0,
+                escaldador_patas: 0, saida_depenadeira: 0, trocador_placas: 0
             };
             let qtdLinhasAgua = 0;
 
@@ -1407,10 +1418,13 @@
                     const vTanques = Number(rawTanques) || 0;
                     const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
                     const vAbate = Number(d.agua_geral_abate) || 0;
+                    const vEscPatas = Number(d.agua_escaldador_patas) || 0;
+                    const vSaiDep = Number(d.agua_saida_depenadeira) || 0;
+                    const vTrocaP = Number(d.agua_trocador_placas) || 0;
 
                     const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond +
                                              vCoracao + vFigado + vMoela + vCabeca +
-                                             vPe1 + vPe2 + vChuv + vEscalda;
+                                             vPe1 + vPe2 + vChuv + vEscalda + vEscPatas + vSaiDep + vTrocaP;
 
                     totaisAgua.total_geral_setores += somaLinhaSetores;
                     totaisAgua.pre_chiller += vPreChiller;
@@ -1428,6 +1442,9 @@
                     totaisAgua.tanques_agua += vTanques;
                     totaisAgua.geral_adutora += vAdutora;
                     totaisAgua.geral_abate += vAbate;
+                    totaisAgua.escaldador_patas += vEscPatas;
+                    totaisAgua.saida_depenadeira += vSaiDep;
+                    totaisAgua.trocador_placas += vTrocaP;
 
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
@@ -1437,6 +1454,7 @@
                         <td>${formatarBR(vMoela)}</td><td>${formatarBR(vCabeca)}</td><td>${formatarBR(vPe1)}</td>
                         <td>${formatarBR(vPe2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEscalda)}</td>
                         <td>${formatarBR(vTanques)}</td><td>${formatarBR(vAdutora)}</td><td>${formatarBR(vAbate)}</td>
+                        <td>${formatarBR(vEscPatas)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td>
                     </tr>`;
                 }
 
@@ -1466,7 +1484,8 @@
                     <td>${formatarBR(totaisAgua.pe1)}</td><td>${formatarBR(totaisAgua.pe2)}</td>
                     <td>${formatarBR(totaisAgua.chuveiro)}</td><td>${formatarBR(totaisAgua.tanque_escalda)}</td>
                     <td>${formatarBR(totaisAgua.tanques_agua)}</td><td>${formatarBR(totaisAgua.geral_adutora)}</td>
-                    <td>${formatarBR(totaisAgua.geral_abate)}</td>
+                    <td>${formatarBR(totaisAgua.geral_abate)}</td><td>${formatarBR(totaisAgua.escaldador_patas)}</td>
+                    <td>${formatarBR(totaisAgua.saida_depenadeira)}</td><td>${formatarBR(totaisAgua.trocador_placas)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
 
@@ -1495,7 +1514,7 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="18" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
+            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="21" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
@@ -1677,7 +1696,7 @@
         }
 
         // =========================================================================
-        // NOVO SISTEMA DE EXPORTAÇÃO POR PERÍODO (EXCEL E PDF PROFISSIONAIS)
+        // SISTEMA DE EXPORTAÇÃO POR PERÍODO (EXCEL E PDF PROFISSIONAIS)
         // =========================================================================
 
         function abrirModalExportacao(formato) {
@@ -1773,7 +1792,6 @@
                 let linhaResumo = null;
 
                 if (viewAtiva === 'view-registros') {
-                    // Busca na coleção /registros/
                     cabecalhos = ['Data', 'Hora', 'Descrição do Evento / Equipamento', 'Modo de Operação'];
 
                     for (let i = 0; i < listaDatas.length; i++) {
@@ -1796,7 +1814,6 @@
                         });
                     }
                 } else {
-                    // Busca na coleção /historico/ para os demais setores
                     const mapaPorData = {};
                     for (let i = 0; i < listaDatas.length; i++) {
                         const dt = listaDatas[i];
@@ -1920,10 +1937,11 @@
                     'Condicionais (m³)', 'Coração (m³)', 'Fígado (m³)',
                     'Moela (m³)', 'Cabeça (m³)', 'Pé 1 (m³)',
                     'Pé 2 (m³)', 'Chuveiro (m³)', 'Tanq. Escalda (m³)',
-                    'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)'
+                    'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)',
+                    'Escaldador Patas (m³)', 'Saída Depenadeira (m³)', 'Trocador Placas (m³)'
                 ];
 
-                let acumulados = new Array(16).fill(0);
+                let acumulados = new Array(19).fill(0);
 
                 datasOrdenadas.forEach(dt => {
                     const dataBR = dt.split('-').reverse().join('/');
@@ -1951,11 +1969,14 @@
                             const vTanq = Number(rawTanq) || 0;
                             const vAdut = Number(d.agua_geral_adultora_abt) || 0;
                             const vAbt = Number(d.agua_geral_abate) || 0;
+                            const vEscPatas = Number(d.agua_escaldador_patas) || 0;
+                            const vSaiDep = Number(d.agua_saida_depenadeira) || 0;
+                            const vTrocaP = Number(d.agua_trocador_placas) || 0;
 
-                            const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc;
+                            const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc + vEscPatas + vSaiDep + vTrocaP;
 
                             const valoresLinha = [
-                                somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt
+                                somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt, vEscPatas, vSaiDep, vTrocaP
                             ].map(v => Number(v.toFixed(1)));
 
                             valoresLinha.forEach((val, idx) => acumulados[idx] += val);
@@ -2006,11 +2027,10 @@
         function gerarExcelProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo) {
             const agora = new Date().toLocaleString('pt-BR');
 
-            // Estrutura visual com cabeçalho institucional no topo da planilha
             const matrizPlanilha = [
                 [`SUPERVISÓRIO INDUSTRIAL INTEGRADO - ${titulo.toUpperCase()}`],
                 [`Período Filtrado: ${periodo}   |   Emitido em: ${agora}   |   Total de Registros: ${linhas.length}`],
-                [], // Linha em branco separadora
+                [],
                 cabecalhos
             ];
 
@@ -2025,13 +2045,11 @@
 
             const ws = XLSX.utils.aoa_to_sheet(matrizPlanilha);
 
-            // Mescla as células do título (Linha 1 e Linha 2)
             ws['!merges'] = [
                 { s: { r: 0, c: 0 }, e: { r: 0, c: Math.min(cabecalhos.length - 1, 10) } },
                 { s: { r: 1, c: 0 }, e: { r: 1, c: Math.min(cabecalhos.length - 1, 10) } }
             ];
 
-            // Aplica formato numérico PT-BR (#,##0.0) em todas as células numéricas
             const range = XLSX.utils.decode_range(ws['!ref']);
             for (let R = 4; R <= range.e.r; ++R) {
                 for (let C = 2; C <= range.e.c; ++C) {
@@ -2044,7 +2062,6 @@
                 }
             }
 
-            // Calcula automaticamente a largura ideal de cada coluna
             const colWidths = cabecalhos.map((cab, colIdx) => {
                 let maxLen = cab ? cab.toString().length : 10;
                 for (let r = 4; r < Math.min(matrizPlanilha.length, 200); r++) {
@@ -2066,13 +2083,12 @@
         // ================= GERAÇÃO DE PDF EXECUTIVO =================
         function gerarPDFProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo, viewAtiva) {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('l', 'pt', 'a4'); // Paisagem A4
+            const doc = new jsPDF('l', 'pt', 'a4');
             const larguraPagina = doc.internal.pageSize.getWidth();
             const alturaPagina = doc.internal.pageSize.getHeight();
             const agora = new Date().toLocaleString('pt-BR');
 
-            // Faixa superior escura institucional
-            doc.setFillColor(30, 41, 59); // #1e293b
+            doc.setFillColor(30, 41, 59);
             doc.rect(0, 0, larguraPagina, 62, 'F');
 
             doc.setTextColor(255, 255, 255);
@@ -2086,7 +2102,6 @@
             doc.text(`Período analisado: ${periodo}   |   Registros listados: ${linhas.length}`, 30, 45);
             doc.text(`Emitido em: ${agora}`, larguraPagina - 30, 45, { align: 'right' });
 
-            // Prepara o corpo da tabela convertendo números para formato PT-BR com vírgula
             const corpoPDF = [];
 
             if (linhaResumo) {
@@ -2101,7 +2116,6 @@
                 }));
             });
 
-            // Ajusta tamanho de fonte conforme quantidade de colunas (Temperaturas tem 31 colunas)
             const qtdColunas = cabecalhos.length;
             const tamanhoFonte = qtdColunas > 20 ? 5.5 : (qtdColunas > 12 ? 7 : 8.5);
             const paddingCelula = qtdColunas > 20 ? 2 : 4;
@@ -2131,19 +2145,16 @@
                     fillColor: [248, 250, 252]
                 },
                 didParseCell: function (data) {
-                    // Destaca a linha de Totalização se existir
                     if (linhaResumo && data.section === 'body' && data.row.index === 0) {
-                        data.cell.styles.fillColor = [186, 230, 253]; // Azul claro destaque
+                        data.cell.styles.fillColor = [186, 230, 253];
                         data.cell.styles.textColor = [3, 105, 161];
                         data.cell.styles.fontStyle = 'bold';
                     }
-                    // Alinha descrição de registros à esquerda
                     if (viewAtiva === 'view-registros' && data.section === 'body' && data.column.index === 2) {
                         data.cell.styles.halign = 'left';
                     }
                 },
                 didDrawPage: function (data) {
-                    // Rodapé profissional em todas as páginas
                     doc.setFontSize(8);
                     doc.setTextColor(148, 163, 184);
                     doc.text(
