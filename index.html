@@ -115,6 +115,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header h1 {
@@ -124,11 +126,13 @@
         .header-controls {
             display: flex;
             gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .export-group {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
 
         .date-picker,
@@ -138,6 +142,7 @@
             border-radius: 6px;
             font-size: 14px;
             outline: none;
+            background: white;
         }
 
         .btn-atualizar {
@@ -149,6 +154,9 @@
             cursor: pointer;
             transition: 0.2s;
             font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .btn-atualizar:hover {
@@ -424,26 +432,181 @@
             font-weight: 600;
         }
 
+        /* ================= ESTILOS DO MODAL DE EXPORTAÇÃO ================= */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(3px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 460px;
+            border-radius: 14px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: modalFadeIn 0.2s ease-out;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h3 {
+            font-size: 17px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: white;
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-info-aba {
+            background: #f1f5f9;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #475569;
+            margin-bottom: 18px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #475569;
+            text-transform: uppercase;
+        }
+
+        .atalhos-periodo {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-atalho {
+            flex: 1;
+            padding: 7px 10px;
+            font-size: 12px;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #334155;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-atalho:hover {
+            background: #e2e8f0;
+            border-color: #94a3b8;
+        }
+
+        .progress-status {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            font-size: 13px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 16px 24px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn-cancelar {
+            padding: 9px 16px;
+            background: #e2e8f0;
+            color: #475569;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .btn-confirmar-export {
+            padding: 9px 20px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .sidebar-header {
-                justify-content: space-between;
-                padding: 15px 20px;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .sidebar-header { justify-content: space-between; padding: 15px 20px; }
+            .hamburger { display: block; }
             .nav-items {
                 display: none;
                 position: absolute;
@@ -454,134 +617,30 @@
                 box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
                 z-index: 1001;
             }
-
-            .nav-items.open {
-                display: flex;
-            }
-
-            .menu-item {
-                border-left: 4px solid transparent;
-                border-bottom: 1px solid #334155;
-                padding: 15px 20px;
-            }
-
-            .main-content {
-                padding: 12px;
-                padding-bottom: 70px;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .header-controls {
-                flex-direction: column;
-                width: 100%;
-                gap: 8px;
-            }
-
-            .date-picker,
-            .btn-atualizar {
-                width: 100%;
-                font-size: 14px;
-            }
-
-            .export-group {
-                display: flex;
-                width: 100%;
-                gap: 10px;
-            }
-
-            .export-group button {
-                flex: 1;
-                padding: 8px;
-                font-size: 13px;
-            }
-
-            .section-title {
-                font-size: 14px;
-                margin: 15px 0 10px 0;
-            }
-
-            .cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-                gap: 8px;
-                margin-bottom: 20px;
-            }
-
-            .card {
-                padding: 12px;
-                border-radius: 8px;
-            }
-
-            .card h3 {
-                white-space: normal;
-                font-size: 10px;
-                line-height: 1.2;
-                margin-bottom: 5px;
-            }
-
-            .card .value {
-                font-size: 16px;
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-
-            .charts-container {
-                padding: 12px;
-            }
-
-            .chart-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .chart-controls {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-                width: 100%;
-            }
-
-            .select-filtro {
-                width: 100%;
-                margin: 0;
-                font-size: 13px;
-            }
-
-            .view-toggle-btns {
-                display: flex;
-                width: 100%;
-            }
-
-            .btn-toggle {
-                flex: 1;
-                text-align: center;
-                font-size: 12px;
-                padding: 8px;
-            }
-
-            table {
-                font-size: 11px;
-            }
-
-            td, th {
-                padding: 6px;
-            }
-
-            .footer {
-                left: 0;
-                width: 100vw;
-                font-size: 11px;
-                padding: 10px;
-            }
+            .nav-items.open { display: flex; }
+            .menu-item { border-left: 4px solid transparent; border-bottom: 1px solid #334155; padding: 15px 20px; }
+            .main-content { padding: 12px; padding-bottom: 70px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
+            .header h1 { font-size: 22px; }
+            .header-controls { flex-direction: column; width: 100%; gap: 8px; }
+            .date-picker, .btn-atualizar { width: 100%; font-size: 14px; justify-content: center; }
+            .export-group { display: flex; width: 100%; gap: 10px; }
+            .export-group button { flex: 1; padding: 8px; font-size: 13px; }
+            .section-title { font-size: 14px; margin: 15px 0 10px 0; }
+            .cards-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 20px; }
+            .card { padding: 12px; border-radius: 8px; }
+            .card h3 { white-space: normal; font-size: 10px; line-height: 1.2; margin-bottom: 5px; }
+            .card .value { font-size: 16px; word-break: break-word; overflow-wrap: break-word; }
+            .charts-container { padding: 12px; }
+            .chart-header { flex-direction: column; gap: 10px; }
+            .chart-controls { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
+            .select-filtro { width: 100%; margin: 0; font-size: 13px; }
+            .view-toggle-btns { display: flex; width: 100%; }
+            .btn-toggle { flex: 1; text-align: center; font-size: 12px; padding: 8px; }
+            table { font-size: 11px; }
+            td, th { padding: 6px; }
+            .footer { left: 0; width: 100vw; font-size: 11px; padding: 10px; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -607,10 +666,10 @@
             <h1 id="titulo-pagina">Monitoramento de Temperaturas</h1>
             <div class="header-controls">
                 <input type="date" id="dataBusca" class="date-picker">
-                <button class="btn-atualizar" onclick="buscarHistorico()">Carregar Histórico do Dia</button>
+                <button class="btn-atualizar" onclick="buscarHistorico()">🔄 Carregar Dia</button>
                 <div class="export-group">
-                    <button class="btn-atualizar" style="background: #10b981;" onclick="exportarExcel()">📥 Excel</button>
-                    <button class="btn-atualizar" style="background: #ef4444;" onclick="exportarPDF()">📥 PDF</button>
+                    <button class="btn-atualizar" style="background: #10b981;" onclick="abrirModalExportacao('excel')">📊 Exportar Excel</button>
+                    <button class="btn-atualizar" style="background: #ef4444;" onclick="abrirModalExportacao('pdf')">📄 Exportar PDF</button>
                 </div>
             </div>
         </div>
@@ -619,130 +678,43 @@
         <div id="view-temperaturas" class="view-section active">
             <h2 class="section-title">Temperatura Ambiente</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>CMS (10ºC)</h3>
-                    <div class="value text-blue"><span id="rt-cms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>ENVASE CMS (10ºC)</h3>
-                    <div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 1 (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 2 (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. IQF (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Emb. Prim. IQF (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Frango Inteiro (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Temperados (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-temperados">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chillers (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chillers">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Miúdos (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-miudos">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Padronização (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Paletização (11ºC)</h3>
-                    <div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div>
-                </div>
+                <div class="card"><h3>CMS (10ºC)</h3><div class="value text-blue"><span id="rt-cms">--</span> °C</div></div>
+                <div class="card"><h3>ENVASE CMS (10ºC)</h3><div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 1 (12ºC)</h3><div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 2 (12ºC)</h3><div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div></div>
+                <div class="card"><h3>Abast. IQF (12ºC)</h3><div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div></div>
+                <div class="card"><h3>Emb. Prim. IQF (13ºC)</h3><div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div></div>
+                <div class="card"><h3>Frango Inteiro (12ºC)</h3><div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div></div>
+                <div class="card"><h3>Temperados (12ºC)</h3><div class="value text-blue"><span id="rt-temperados">--</span> °C</div></div>
+                <div class="card"><h3>Chillers (13ºC)</h3><div class="value text-blue"><span id="rt-chillers">--</span> °C</div></div>
+                <div class="card"><h3>Miúdos (13ºC)</h3><div class="value text-blue"><span id="rt-miudos">--</span> °C</div></div>
+                <div class="card"><h3>Padronização (12ºC)</h3><div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div></div>
+                <div class="card"><h3>Paletização (11ºC)</h3><div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Chillers</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Chil. Condicionais (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Ent. (16ºC)</h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Saída (16ºC)</h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Ent. (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Saída (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Ent. (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Saída (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Coração (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Fígado (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Moela (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Cabeça (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 1 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 2 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Chil. Condicionais (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Ent. (16ºC)</h3><div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Saída (16ºC)</h3><div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Ent. (4ºC)</h3><div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Saída (4ºC)</h3><div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Ent. (4ºC)</h3><div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Saída (4ºC)</h3><div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Coração (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Fígado (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Moela (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Cabeça (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 1 (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 2 (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Abastecimento</h2>
             <div class="cards-grid" style="margin-bottom: 30px;">
-                <div class="card">
-                    <h3>Abast. Pré-Chiller (2ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Pré-Chiller</h3>
-                    <div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. Chiller 2 (2ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Chiller 2 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Abast. Pré-Chiller (2ºC)</h3><div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Pré-Chiller</h3><div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Abast. Chiller 2 (2ºC)</h3><div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Chiller 2 (4ºC)</h3><div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div></div>
             </div>
 
             <div class="charts-container">
@@ -818,70 +790,28 @@
         <div id="view-energia" class="view-section">
             <h2 class="section-title">Resumo Geral (Fábrica - Estimativa Copel 34.5kV)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-total">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Acumulado Mensal</h3>
-                    <div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-total">--</span></div>
-                </div>
-                <div class="card">
-                    <h3>Custo Acumulado mês</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-total">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div></div>
+                <div class="card"><h3>Acumulado Mensal</h3><div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-total">--</span></div></div>
+                <div class="card"><h3>Custo Acumulado mês</h3><div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div></div>
             </div>
 
             <h2 class="section-title">Abatedouro (CCM1 + CCM2 - S/ Perdas)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div></div>
             </div>
 
             <h2 class="section-title">Sala de Máquinas (QGBT1 + QGBT2 - S/ Perdas)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-sala">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-sala">--</span></div></div>
             </div>
 
             <div class="charts-container">
@@ -930,66 +860,21 @@
                     <h3 style="color: #0284c7; font-weight: bold;">Total Consumo Dia</h3>
                     <div class="value text-water"><span id="rt-total-agua-geral-soma">--</span> m³</div>
                 </div>
-                <div class="card">
-                    <h3>Pré-Chiller</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Condicionais</h3>
-                    <div class="value text-water"><span id="rt-total-agua-condicionais">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Coração</h3>
-                    <div class="value text-water"><span id="rt-total-agua-coracao">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Fígado</h3>
-                    <div class="value text-water"><span id="rt-total-agua-figado">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Moela</h3>
-                    <div class="value text-water"><span id="rt-total-agua-moela">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Cabeça</h3>
-                    <div class="value text-water"><span id="rt-total-agua-cabeca">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Pé 1</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pe1">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Pé 2</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pe2">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chuveiro Final</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chuveiro-final">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Tanque Escalda</h3>
-                    <div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Tanques Água</h3>
-                    <div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Geral Adutora / Abt</h3>
-                    <div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Geral Abatedouro</h3>
-                    <div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div>
-                </div>
+                <div class="card"><h3>Pré-Chiller</h3><div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div></div>
+                <div class="card"><h3>Chiller 1</h3><div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div></div>
+                <div class="card"><h3>Chiller 2</h3><div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div></div>
+                <div class="card"><h3>Condicionais</h3><div class="value text-water"><span id="rt-total-agua-condicionais">--</span> m³</div></div>
+                <div class="card"><h3>Coração</h3><div class="value text-water"><span id="rt-total-agua-coracao">--</span> m³</div></div>
+                <div class="card"><h3>Fígado</h3><div class="value text-water"><span id="rt-total-agua-figado">--</span> m³</div></div>
+                <div class="card"><h3>Moela</h3><div class="value text-water"><span id="rt-total-agua-moela">--</span> m³</div></div>
+                <div class="card"><h3>Cabeça</h3><div class="value text-water"><span id="rt-total-agua-cabeca">--</span> m³</div></div>
+                <div class="card"><h3>Pé 1</h3><div class="value text-water"><span id="rt-total-agua-pe1">--</span> m³</div></div>
+                <div class="card"><h3>Pé 2</h3><div class="value text-water"><span id="rt-total-agua-pe2">--</span> m³</div></div>
+                <div class="card"><h3>Chuveiro Final</h3><div class="value text-water"><span id="rt-total-agua-chuveiro-final">--</span> m³</div></div>
+                <div class="card"><h3>Tanque Escalda</h3><div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div></div>
+                <div class="card"><h3>Tanques Água</h3><div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div></div>
+                <div class="card"><h3>Geral Adutora / Abt</h3><div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div></div>
+                <div class="card"><h3>Geral Abatedouro</h3><div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div></div>
             </div>
             <div class="charts-container">
                 <div class="chart-header">
@@ -1046,50 +931,17 @@
         <div id="view-utilidades" class="view-section">
             <h2 class="section-title">Pressões e Utilidades (DB 29 e DB 23)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Pressão de Ar</h3>
-                    <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Rede Água Quente</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Potável</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Higienização</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Pressurizada</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Hiperclorada</h3>
-                    <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div>
-                </div>
-                <div class="card">
-                    <h3>Temperatura Glicol</h3>
-                    <div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão chuveiro Final</h3>
-                    <div class="value text-blue"><span id="rt-chuv_final">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão lav. final PL26</h3>
-                    <div class="value text-blue"><span id="rt-lav_final">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão rede lav. MEYN</h3>
-                    <div class="value text-blue"><span id="rt-lav_meyn">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão pós Evisc PL24</h3>
-                    <div class="value text-blue"><span id="rt-pos_evisc">--</span> bar</div>
-                </div>
+                <div class="card"><h3>Pressão de Ar</h3><div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div></div>
+                <div class="card"><h3>Rede Água Quente</h3><div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div></div>
+                <div class="card"><h3>Água Potável</h3><div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div></div>
+                <div class="card"><h3>Água Higienização</h3><div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div></div>
+                <div class="card"><h3>Água Pressurizada</h3><div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div></div>
+                <div class="card"><h3>Água Hiperclorada</h3><div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div></div>
+                <div class="card"><h3>Temperatura Glicol</h3><div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div></div>
+                <div class="card"><h3>Pressão chuveiro Final</h3><div class="value text-blue"><span id="rt-chuv_final">--</span> bar</div></div>
+                <div class="card"><h3>Pressão lav. final PL26</h3><div class="value text-blue"><span id="rt-lav_final">--</span> bar</div></div>
+                <div class="card"><h3>Pressão rede lav. MEYN</h3><div class="value text-blue"><span id="rt-lav_meyn">--</span> bar</div></div>
+                <div class="card"><h3>Pressão pós Evisc PL24</h3><div class="value text-blue"><span id="rt-pos_evisc">--</span> bar</div></div>
             </div>
 
             <div class="charts-container">
@@ -1168,6 +1020,49 @@
 
     </div>
 
+    <!-- ================= MODAL DE EXPORTAÇÃO POR PERÍODO ================= -->
+    <div class="modal-overlay" id="modalExportacao">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modalTituloExportacao">📥 Exportar Relatório por Período</h3>
+                <button class="modal-close" onclick="fecharModalExportacao()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-info-aba" id="modalSubtituloSetor">
+                    Módulo selecionado: <strong>Monitoramento de Temperaturas</strong>
+                </div>
+
+                <div class="atalhos-periodo">
+                    <button class="btn-atalho" onclick="definirAtalhoPeriodo(0)">Hoje</button>
+                    <button class="btn-atalho" onclick="definirAtalhoPeriodo(7)">Últimos 7 dias</button>
+                    <button class="btn-atalho" onclick="definirAtalhoPeriodo(15)">Últimos 15 dias</button>
+                    <button class="btn-atalho" onclick="definirAtalhoMesAtual()">Mês Atual</button>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="exportDataInicio">Data Inicial</label>
+                        <input type="date" id="exportDataInicio" class="date-picker">
+                    </div>
+                    <div class="form-group">
+                        <label for="exportDataFim">Data Final</label>
+                        <input type="date" id="exportDataFim" class="date-picker">
+                    </div>
+                </div>
+
+                <div class="progress-status" id="statusExportacao">
+                    ⏳ Buscando dados no servidor... aguarde.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancelar" onclick="fecharModalExportacao()">Cancelar</button>
+                <button class="btn-confirmar-export" id="btnConfirmarExportacao" onclick="processarExportacaoPeriodo()">
+                    Gerar Arquivo
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="footer">
         produzido por <strong>FERNANDO MACIEL</strong>
     </div>
@@ -1177,6 +1072,8 @@
         const FIREBASE_SECRET = 'CR79C5ymIpFJyFnNeLXDkMrBDMkrKYP7afhQ0LUF';
         const TARIFA_KWH = 0.50;
         const FATOR_PERDA_TRAFO = 1.02;
+
+        let formatoExportacaoAtual = 'excel'; // 'excel' ou 'pdf'
 
         let janelasTempo = {
             temp: 120,
@@ -1203,9 +1100,9 @@
             return num.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
         }
 
-        let graficoTempObj = null; 
-        let graficoEnergiaObj = null; 
-        let graficoAguaObj = null; 
+        let graficoTempObj = null;
+        let graficoEnergiaObj = null;
+        let graficoAguaObj = null;
         let graficoUtilidadesObj = null;
         let dadosAcumulados = {};
         let listaRegistrosDia = [];
@@ -1213,6 +1110,8 @@
         window.onload = () => {
             const hoje = new Date().toISOString().split('T')[0];
             document.getElementById('dataBusca').value = hoje;
+            document.getElementById('exportDataInicio').value = hoje;
+            document.getElementById('exportDataFim').value = hoje;
 
             buscarHistorico();
             buscarTempoReal();
@@ -1227,8 +1126,8 @@
             }, 30000);
         };
 
-        function toggleMenu() { 
-            document.getElementById('navItems').classList.toggle('open'); 
+        function toggleMenu() {
+            document.getElementById('navItems').classList.toggle('open');
         }
 
         function trocarAba(aba, elemento) {
@@ -1264,10 +1163,10 @@
 
         function mudarJanelaTempo(aba, valor) {
             janelasTempo[aba] = valor;
-            
+
             document.getElementById(`btn-janela-2h-${aba}`).classList.remove('active');
             document.getElementById(`btn-janela-dia-${aba}`).classList.remove('active');
-            
+
             if (valor === 120) {
                 document.getElementById(`btn-janela-2h-${aba}`).classList.add('active');
             } else {
@@ -1360,7 +1259,7 @@
                     document.getElementById('rt-total-agua-pe2').innerText = formatarBR(dados.agua_total_pe2);
                     document.getElementById('rt-total-agua-chuveiro-final').innerText = formatarBR(dados.agua_total_chuveiro_final);
                     document.getElementById('rt-total-agua-tanque-escalda').innerText = formatarBR(dados.agua_total_tanque_escalda);
-                    
+
                     const valTanquesTR = extrairValor(dados, ['agua_total_tanques_agua', 'agua_total_tanque_agua', 'agua_total_tanques', 'agua_total_tanque']);
                     document.getElementById('rt-total-agua-tanques-agua').innerText = formatarBR(valTanquesTR);
 
@@ -1392,7 +1291,7 @@
             } catch (e) { }
         }
 
-        // ================= HISTÓRICO =================
+        // ================= HISTÓRICO DO DIA (VISUALIZAÇÃO TELA) =================
         async function buscarHistorico() {
             const data = document.getElementById('dataBusca').value;
             dadosAcumulados = {};
@@ -1500,22 +1399,17 @@
                     const vPe2 = Number(d.agua_pe2) || 0;
                     const vChuv = Number(d.agua_chuveiro_final) || 0;
                     const vEscalda = Number(d.agua_tanque_escalda) || 0;
-                    
+
                     const rawTanques = extrairValor(d, [
-                        'agua_tanques_agua', 
-                        'agua_tanque_agua', 
-                        'agua_total_tanques_agua', 
-                        'agua_total_tanque_agua',
-                        'agua_cons_tanques_agua',
-                        'agua_cons_tanque_agua'
+                        'agua_tanques_agua', 'agua_tanque_agua', 'agua_total_tanques_agua',
+                        'agua_total_tanque_agua', 'agua_cons_tanques_agua', 'agua_cons_tanque_agua'
                     ], 0);
                     const vTanques = Number(rawTanques) || 0;
-
                     const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
                     const vAbate = Number(d.agua_geral_abate) || 0;
 
-                    const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond + 
-                                             vCoracao + vFigado + vMoela + vCabeca + 
+                    const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond +
+                                             vCoracao + vFigado + vMoela + vCabeca +
                                              vPe1 + vPe2 + vChuv + vEscalda;
 
                     totaisAgua.total_geral_setores += somaLinhaSetores;
@@ -1538,37 +1432,22 @@
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
                         <td style="font-weight: bold; background-color: #f0f9ff; color: #0284c7;">${formatarBR(somaLinhaSetores)}</td>
-                        <td>${formatarBR(vPreChiller)}</td>
-                        <td>${formatarBR(vChil1)}</td>
-                        <td>${formatarBR(vChil2)}</td>
-                        <td>${formatarBR(vCond)}</td>
-                        <td>${formatarBR(vCoracao)}</td>
-                        <td>${formatarBR(vFigado)}</td>
-                        <td>${formatarBR(vMoela)}</td>
-                        <td>${formatarBR(vCabeca)}</td>
-                        <td>${formatarBR(vPe1)}</td>
-                        <td>${formatarBR(vPe2)}</td>
-                        <td>${formatarBR(vChuv)}</td>
-                        <td>${formatarBR(vEscalda)}</td>
-                        <td>${formatarBR(vTanques)}</td>
-                        <td>${formatarBR(vAdutora)}</td>
-                        <td>${formatarBR(vAbate)}</td>
+                        <td>${formatarBR(vPreChiller)}</td><td>${formatarBR(vChil1)}</td><td>${formatarBR(vChil2)}</td>
+                        <td>${formatarBR(vCond)}</td><td>${formatarBR(vCoracao)}</td><td>${formatarBR(vFigado)}</td>
+                        <td>${formatarBR(vMoela)}</td><td>${formatarBR(vCabeca)}</td><td>${formatarBR(vPe1)}</td>
+                        <td>${formatarBR(vPe2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEscalda)}</td>
+                        <td>${formatarBR(vTanques)}</td><td>${formatarBR(vAdutora)}</td><td>${formatarBR(vAbate)}</td>
                     </tr>`;
                 }
 
                 if (d.pressao_ar !== undefined) {
                     htmlUtilidades += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
-                        <td>${formatarBR(d.pressao_ar)}</td>
-                        <td>${formatarBR(d.pressao_agua_quente)}</td>
-                        <td>${formatarBR(d.pressao_agua_potavel)}</td>
-                        <td>${formatarBR(d.pressao_agua_higienizacao)}</td>
-                        <td>${formatarBR(d.pressao_agua_pressurizada)}</td>
-                        <td>${formatarBR(d.agua_hiperclorada)}</td>
-                        <td>${formatarBR(d.temp_glicol)}</td>
-                        <td>${formatarBR(d.pressao_chuv_final)}</td>
-                        <td>${formatarBR(d.pressao_lav_final)}</td>
-                        <td>${formatarBR(d.pressao_lav_meyn)}</td>
+                        <td>${formatarBR(d.pressao_ar)}</td><td>${formatarBR(d.pressao_agua_quente)}</td>
+                        <td>${formatarBR(d.pressao_agua_potavel)}</td><td>${formatarBR(d.pressao_agua_higienizacao)}</td>
+                        <td>${formatarBR(d.pressao_agua_pressurizada)}</td><td>${formatarBR(d.agua_hiperclorada)}</td>
+                        <td>${formatarBR(d.temp_glicol)}</td><td>${formatarBR(d.pressao_chuv_final)}</td>
+                        <td>${formatarBR(d.pressao_lav_final)}</td><td>${formatarBR(d.pressao_lav_meyn)}</td>
                         <td>${formatarBR(d.pressao_pos_evisc)}</td>
                     </tr>`;
                 }
@@ -1578,35 +1457,23 @@
 
             if (qtdLinhasAgua > 0) {
                 const linhaTotal = `<tr class="linha-total-dia">
-                    <td>TOTAL DIA</td>
-                    <td>SOMA</td>
+                    <td>TOTAL DIA</td><td>SOMA</td>
                     <td style="background-color: #0284c7 !important; color: #ffffff !important; font-size: 15px;">${formatarBR(totaisAgua.total_geral_setores)}</td>
-                    <td>${formatarBR(totaisAgua.pre_chiller)}</td>
-                    <td>${formatarBR(totaisAgua.chiller1)}</td>
-                    <td>${formatarBR(totaisAgua.chiller2)}</td>
-                    <td>${formatarBR(totaisAgua.condicionais)}</td>
-                    <td>${formatarBR(totaisAgua.coracao)}</td>
-                    <td>${formatarBR(totaisAgua.figado)}</td>
-                    <td>${formatarBR(totaisAgua.moela)}</td>
-                    <td>${formatarBR(totaisAgua.cabeca)}</td>
-                    <td>${formatarBR(totaisAgua.pe1)}</td>
-                    <td>${formatarBR(totaisAgua.pe2)}</td>
-                    <td>${formatarBR(totaisAgua.chuveiro)}</td>
-                    <td>${formatarBR(totaisAgua.tanque_escalda)}</td>
-                    <td>${formatarBR(totaisAgua.tanques_agua)}</td>
-                    <td>${formatarBR(totaisAgua.geral_adutora)}</td>
+                    <td>${formatarBR(totaisAgua.pre_chiller)}</td><td>${formatarBR(totaisAgua.chiller1)}</td>
+                    <td>${formatarBR(totaisAgua.chiller2)}</td><td>${formatarBR(totaisAgua.condicionais)}</td>
+                    <td>${formatarBR(totaisAgua.coracao)}</td><td>${formatarBR(totaisAgua.figado)}</td>
+                    <td>${formatarBR(totaisAgua.moela)}</td><td>${formatarBR(totaisAgua.cabeca)}</td>
+                    <td>${formatarBR(totaisAgua.pe1)}</td><td>${formatarBR(totaisAgua.pe2)}</td>
+                    <td>${formatarBR(totaisAgua.chuveiro)}</td><td>${formatarBR(totaisAgua.tanque_escalda)}</td>
+                    <td>${formatarBR(totaisAgua.tanques_agua)}</td><td>${formatarBR(totaisAgua.geral_adutora)}</td>
                     <td>${formatarBR(totaisAgua.geral_abate)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
 
                 const somaCardConsumoDia = totaisAgua.tanques_agua + totaisAgua.geral_adutora + totaisAgua.geral_abate;
-                if (cardSomaGeral) {
-                    cardSomaGeral.innerText = formatarBR(somaCardConsumoDia);
-                }
+                if (cardSomaGeral) cardSomaGeral.innerText = formatarBR(somaCardConsumoDia);
             } else {
-                if (cardSomaGeral) {
-                    cardSomaGeral.innerText = '--';
-                }
+                if (cardSomaGeral) cardSomaGeral.innerText = '--';
             }
 
             let kwhTotalBaixa = kwhAbatedouro + kwhSala;
@@ -1675,9 +1542,7 @@
                                 });
                             }
                         }
-                    } catch (errAnt) {
-                        console.warn("Não foi possível buscar estado do dia anterior:", errAnt);
-                    }
+                    } catch (errAnt) { }
                 }
 
                 listaRegistrosDia.sort((a, b) => {
@@ -1689,12 +1554,10 @@
                 if (listaRegistrosDia.length > 0) {
                     renderizarLinhasRegistros(listaRegistrosDia, dataFormatada);
                 } else {
-                    document.getElementById('tbody-registros').innerHTML = 
+                    document.getElementById('tbody-registros').innerHTML =
                         `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
                 }
-            } catch (e) {
-                console.error("Erro ao buscar registros:", e);
-            }
+            } catch (e) { }
         }
 
         function renderizarLinhasRegistros(dados, dataFormatada) {
@@ -1704,12 +1567,11 @@
             dados.forEach(r => {
                 const hora = r.hora || r.horario || '--:--:--';
                 const descricao = r.mensagem || r.equipamento || "Cuba de Insensibilização";
-
                 const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
                 const isManual = tipoTexto.includes('manual');
 
-                const badge = isManual 
-                    ? '<span class="badge-manual">MANUAL</span>' 
+                const badge = isManual
+                    ? '<span class="badge-manual">MANUAL</span>'
                     : '<span class="badge-auto">AUTOMÁTICO</span>';
 
                 html += `<tr>
@@ -1726,7 +1588,7 @@
         function filtrarTabelaRegistros() {
             const termo = document.getElementById('filtroTextoRegistros').value.toLowerCase();
             const dataFormatada = document.getElementById('dataBusca').value.split('-').reverse().join('/');
-            
+
             const filtrados = listaRegistrosDia.filter(item => {
                 const hora = (item.hora || item.horario || '').toLowerCase();
                 const msg = (item.mensagem || item.equipamento || 'cuba de insensibilização').toLowerCase();
@@ -1814,71 +1676,491 @@
             });
         }
 
-        // ================= EXPORTAÇÃO INTELIGENTE =================
-        function getTabelaAtiva() {
-            const viewAtiva = document.querySelector('.view-section.active').id;
-            if (viewAtiva === 'view-temperaturas') return document.querySelector('#wrapper-tab-temp table');
-            if (viewAtiva === 'view-energia') return document.querySelector('#wrapper-tab-energia table');
-            if (viewAtiva === 'view-agua') return document.querySelector('#wrapper-tab-agua table');
-            if (viewAtiva === 'view-utilidades') return document.querySelector('#wrapper-tab-utilidades table');
-            if (viewAtiva === 'view-registros') return document.querySelector('#tabela-registros');
+        // =========================================================================
+        // NOVO SISTEMA DE EXPORTAÇÃO POR PERÍODO (EXCEL E PDF PROFISSIONAIS)
+        // =========================================================================
+
+        function abrirModalExportacao(formato) {
+            formatoExportacaoAtual = formato;
+            const tituloAba = document.getElementById('titulo-pagina').innerText;
+            const dataBuscaAtual = document.getElementById('dataBusca').value;
+
+            document.getElementById('exportDataInicio').value = dataBuscaAtual;
+            document.getElementById('exportDataFim').value = dataBuscaAtual;
+
+            const btnConfirmar = document.getElementById('btnConfirmarExportacao');
+            const modalTitulo = document.getElementById('modalTituloExportacao');
+
+            if (formato === 'excel') {
+                modalTitulo.innerHTML = '📊 Exportar Planilha Excel (.xlsx)';
+                btnConfirmar.style.background = '#10b981';
+                btnConfirmar.innerHTML = '📥 Baixar Planilha';
+            } else {
+                modalTitulo.innerHTML = '📄 Exportar Relatório PDF (.pdf)';
+                btnConfirmar.style.background = '#ef4444';
+                btnConfirmar.innerHTML = '📥 Baixar PDF';
+            }
+
+            document.getElementById('modalSubtituloSetor').innerHTML = `Relatório: <strong>${tituloAba}</strong>`;
+            document.getElementById('statusExportacao').style.display = 'none';
+            document.getElementById('modalExportacao').classList.add('active');
         }
 
-        function exportarExcel() {
-            const table = getTabelaAtiva();
-            if (!table || table.rows.length <= 1) return alert('Não há dados carregados para exportar.');
+        function fecharModalExportacao() {
+            document.getElementById('modalExportacao').classList.remove('active');
+        }
 
-            const titulo = document.getElementById('titulo-pagina').innerText;
-            const dataStr = document.getElementById('dataBusca').value;
+        function definirAtalhoPeriodo(diasAtras) {
+            const fim = new Date();
+            const inicio = new Date();
+            inicio.setDate(fim.getDate() - diasAtras);
 
-            // 1. Cria a planilha lendo os dados originais da tabela
-            const wb = XLSX.utils.table_to_book(table, { sheet: "Dados", raw: true });
-            const ws = wb.Sheets["Dados"];
+            document.getElementById('exportDataInicio').value = inicio.toISOString().split('T')[0];
+            document.getElementById('exportDataFim').value = fim.toISOString().split('T')[0];
+        }
 
-            // 2. Converte textos numéricos para números reais do Excel mantendo o formato com vírgula visual
-            const range = XLSX.utils.decode_range(ws['!ref']);
-            for (let R = range.s.r + 1; R <= range.e.r; ++R) {
-                for (let C = 2; C <= range.e.c; ++C) { // Pula as colunas 0 e 1 (Data e Hora)
-                    const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
-                    const cell = ws[cellAddress];
+        function definirAtalhoMesAtual() {
+            const hoje = new Date();
+            const primeiroDia = new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+            document.getElementById('exportDataInicio').value = primeiroDia.toISOString().split('T')[0];
+            document.getElementById('exportDataFim').value = hoje.toISOString().split('T')[0];
+        }
 
-                    if (cell && cell.t === 's') {
-                        const text = cell.v.trim();
-                        if (text !== '' && text !== '--' && /^-?[\d.]+,\d+$|^-?\d+$/.test(text)) {
-                            const num = parseFloat(text.replace(/\./g, '').replace(',', '.'));
-                            if (!isNaN(num)) {
-                                cell.t = 'n';       // Define a célula como Número real
-                                cell.v = num;       // Atribui o valor numérico
-                                cell.z = '#,##0.0'; // Formato visual padrão com vírgula em PT-BR
-                            }
+        function gerarListaDatas(dataInicioStr, dataFimStr) {
+            const datas = [];
+            let atual = new Date(dataInicioStr + 'T12:00:00');
+            const fim = new Date(dataFimStr + 'T12:00:00');
+
+            while (atual <= fim) {
+                datas.push(atual.toISOString().split('T')[0]);
+                atual.setDate(atual.getDate() + 1);
+            }
+            return datas;
+        }
+
+        function numOuVazio(val, casas = 1) {
+            if (val === undefined || val === null || val === '--' || isNaN(Number(val))) return null;
+            return Number(Number(val).toFixed(casas));
+        }
+
+        async function processarExportacaoPeriodo() {
+            const dataInicio = document.getElementById('exportDataInicio').value;
+            const dataFim = document.getElementById('exportDataFim').value;
+
+            if (!dataInicio || !dataFim) {
+                return alert('Por favor, selecione a Data Inicial e a Data Final.');
+            }
+            if (dataInicio > dataFim) {
+                return alert('A Data Inicial não pode ser maior que a Data Final.');
+            }
+
+            const listaDatas = gerarListaDatas(dataInicio, dataFim);
+            if (listaDatas.length > 62) {
+                if (!confirm(`Você selecionou um período de ${listaDatas.length} dias. Isso pode levar alguns segundos. Deseja continuar?`)) return;
+            }
+
+            const statusBox = document.getElementById('statusExportacao');
+            const btnConfirmar = document.getElementById('btnConfirmarExportacao');
+            statusBox.style.display = 'block';
+            btnConfirmar.disabled = true;
+
+            const viewAtiva = document.querySelector('.view-section.active').id;
+            const tituloRelatorio = document.getElementById('titulo-pagina').innerText;
+
+            try {
+                let cabecalhos = [];
+                let linhasDados = [];
+                let linhaResumo = null;
+
+                if (viewAtiva === 'view-registros') {
+                    // Busca na coleção /registros/
+                    cabecalhos = ['Data', 'Hora', 'Descrição do Evento / Equipamento', 'Modo de Operação'];
+
+                    for (let i = 0; i < listaDatas.length; i++) {
+                        const dt = listaDatas[i];
+                        statusBox.innerText = `⏳ Carregando dia ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
+                        const res = await fetch(`${FIREBASE_URL}/registros/${dt}.json?auth=${FIREBASE_SECRET}`);
+                        const logs = await res.json();
+                        if (!logs) continue;
+
+                        let arrLogs = Array.isArray(logs) ? logs.filter(x => x !== null) : Object.values(logs);
+                        arrLogs.sort((a, b) => (a.hora || a.horario || '').localeCompare(b.hora || b.horario || ''));
+
+                        const dataBR = dt.split('-').reverse().join('/');
+                        arrLogs.forEach(r => {
+                            const hora = r.hora || r.horario || '--:--:--';
+                            const desc = r.mensagem || r.equipamento || 'Cuba de Insensibilização';
+                            const tipoTxt = (r.tipo || r.mensagem || '').toString().toLowerCase();
+                            const modo = tipoTxt.includes('manual') ? 'MANUAL' : 'AUTOMÁTICO';
+                            linhasDados.push([dataBR, hora, desc, modo]);
+                        });
+                    }
+                } else {
+                    // Busca na coleção /historico/ para os demais setores
+                    const mapaPorData = {};
+                    for (let i = 0; i < listaDatas.length; i++) {
+                        const dt = listaDatas[i];
+                        statusBox.innerText = `⏳ Carregando dia ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
+                        const res = await fetch(`${FIREBASE_URL}/historico/${dt}.json?auth=${FIREBASE_SECRET}`);
+                        const dadosDia = await res.json();
+                        if (dadosDia && Object.keys(dadosDia).length > 0) {
+                            mapaPorData[dt] = dadosDia;
                         }
+                    }
+
+                    const resultadoMontagem = montarMatrizSetor(viewAtiva, mapaPorData);
+                    cabecalhos = resultadoMontagem.cabecalhos;
+                    linhasDados = resultadoMontagem.linhas;
+                    linhaResumo = resultadoMontagem.resumo;
+                }
+
+                if (linhasDados.length === 0) {
+                    statusBox.style.display = 'none';
+                    btnConfirmar.disabled = false;
+                    return alert('Nenhum dado encontrado para o período selecionado.');
+                }
+
+                statusBox.innerText = '✨ Formatando documento...';
+
+                const periodoTexto = `${dataInicio.split('-').reverse().join('/')} a ${dataFim.split('-').reverse().join('/')}`;
+                const nomeArquivoBase = `${tituloRelatorio} (${dataInicio}_a_${dataFim})`;
+
+                if (formatoExportacaoAtual === 'excel') {
+                    gerarExcelProfissional(tituloRelatorio, periodoTexto, cabecalhos, linhasDados, linhaResumo, nomeArquivoBase);
+                } else {
+                    gerarPDFProfissional(tituloRelatorio, periodoTexto, cabecalhos, linhasDados, linhaResumo, nomeArquivoBase, viewAtiva);
+                }
+
+                fecharModalExportacao();
+            } catch (erro) {
+                console.error('Erro na exportação por período:', erro);
+                alert('Ocorreu um erro ao buscar ou gerar o relatório.');
+            } finally {
+                statusBox.style.display = 'none';
+                btnConfirmar.disabled = false;
+            }
+        }
+
+        function montarMatrizSetor(viewAtiva, mapaPorData) {
+            let cabecalhos = [];
+            let linhas = [];
+            let resumo = null;
+
+            const datasOrdenadas = Object.keys(mapaPorData).sort();
+
+            if (viewAtiva === 'view-temperaturas') {
+                cabecalhos = [
+                    'Data', 'Hora', 'CMS', 'Env. CMS', 'Cortes 1', 'Cortes 2',
+                    'Abast. IQF', 'Emb. IQF', 'F. Inteiro', 'Temperados',
+                    'Chillers', 'Miúdos', 'Padron.', 'Paletiz.',
+                    'Chil. Condic.', 'Pré-Chil. Ent.', 'Pré-Chil. Sai.',
+                    'Chil. 1 Ent.', 'Chil. 1 Sai.', 'Chil. 2 Ent.',
+                    'Chil. 2 Sai.', 'Chil. Coração', 'Chil. Fígado',
+                    'Chil. Moela', 'Chil. Cabeça', 'Chil. Pé 1',
+                    'Chil. Pé 2', 'Abast. Pré-Chil.', 'Retmac Pré-Chil.',
+                    'Abast. Chil. 2', 'Retmac Chil. 2'
+                ];
+
+                datasOrdenadas.forEach(dt => {
+                    const dataBR = dt.split('-').reverse().join('/');
+                    const horas = Object.keys(mapaPorData[dt]).sort();
+                    horas.forEach(h => {
+                        const d = mapaPorData[dt][h];
+                        linhas.push([
+                            dataBR, h,
+                            numOuVazio(d.temp_cms), numOuVazio(d.temp_envaseCms),
+                            numOuVazio(d.temp_salaCortes1), numOuVazio(d.temp_salaCortes2),
+                            numOuVazio(d.temp_abastiqf), numOuVazio(d.temp_embprimariaiqf),
+                            numOuVazio(d.temp_frangointeiro), numOuVazio(d.temp_temperados),
+                            numOuVazio(d.temp_chillers), numOuVazio(d.temp_miudos),
+                            numOuVazio(d.temp_padronizacao), numOuVazio(d.temp_paletizacao),
+                            numOuVazio(d.temp_chiller_condicionais), numOuVazio(d.temp_pre_chiller_entrada),
+                            numOuVazio(d.temp_pre_chiller_saida), numOuVazio(d.temp_chiller1_entrada),
+                            numOuVazio(d.temp_chiller1_saida), numOuVazio(d.temp_chiller2_entrada),
+                            numOuVazio(d.temp_chiller2_saida), numOuVazio(d.temp_chiller_coracao),
+                            numOuVazio(d.temp_chiller_figado), numOuVazio(d.temp_chiller_moela),
+                            numOuVazio(d.temp_chiller_cabeca), numOuVazio(d.temp_chiller_pe1),
+                            numOuVazio(d.temp_chiller_pe2), numOuVazio(d.temp_abast_pre_chiller),
+                            numOuVazio(d.temp_retmac_pre_chiller), numOuVazio(d.temp_abast_chiller2),
+                            numOuVazio(d.temp_retmac_chiller2)
+                        ]);
+                    });
+                });
+            }
+
+            else if (viewAtiva === 'view-energia') {
+                cabecalhos = [
+                    'Data', 'Hora',
+                    'CCM1 Tensão (V)', 'CCM1 Potência (kW)',
+                    'CCM2 Tensão (V)', 'CCM2 Potência (kW)',
+                    'QGBT1 Tensão (V)', 'QGBT1 Potência (kW)',
+                    'QGBT2 Tensão (V)', 'QGBT2 Potência (kW)'
+                ];
+
+                datasOrdenadas.forEach(dt => {
+                    const dataBR = dt.split('-').reverse().join('/');
+                    const horas = Object.keys(mapaPorData[dt]).sort();
+                    horas.forEach(h => {
+                        const d = mapaPorData[dt][h];
+                        linhas.push([
+                            dataBR, h,
+                            numOuVazio(d.ccm1_tensao), numOuVazio(d.ccm1_potencia),
+                            numOuVazio(d.ccm2_tensao), numOuVazio(d.ccm2_potencia),
+                            numOuVazio(d.qgbt1_tensao), numOuVazio(d.qgbt1_potencia),
+                            numOuVazio(d.qgbt2_tensao), numOuVazio(d.qgbt2_potencia)
+                        ]);
+                    });
+                });
+            }
+
+            else if (viewAtiva === 'view-agua') {
+                cabecalhos = [
+                    'Data', 'Hora', 'Total Setores (m³)',
+                    'Pré-Chiller (m³)', 'Chil. 1 (m³)', 'Chil. 2 (m³)',
+                    'Condicionais (m³)', 'Coração (m³)', 'Fígado (m³)',
+                    'Moela (m³)', 'Cabeça (m³)', 'Pé 1 (m³)',
+                    'Pé 2 (m³)', 'Chuveiro (m³)', 'Tanq. Escalda (m³)',
+                    'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)'
+                ];
+
+                let acumulados = new Array(16).fill(0);
+
+                datasOrdenadas.forEach(dt => {
+                    const dataBR = dt.split('-').reverse().join('/');
+                    const horas = Object.keys(mapaPorData[dt]).sort();
+                    horas.forEach(h => {
+                        const d = mapaPorData[dt][h];
+                        if (d.agua_pre_chiller !== undefined || d.agua_chiller1 !== undefined) {
+                            const vPre = Number(d.agua_pre_chiller) || 0;
+                            const vC1 = Number(d.agua_chiller1) || 0;
+                            const vC2 = Number(d.agua_chiller2) || 0;
+                            const vCond = Number(d.agua_condicionais) || 0;
+                            const vCor = Number(d.agua_coracao) || 0;
+                            const vFig = Number(d.agua_figado) || 0;
+                            const vMoe = Number(d.agua_moela) || 0;
+                            const vCab = Number(d.agua_cabeca) || 0;
+                            const vP1 = Number(d.agua_pe1) || 0;
+                            const vP2 = Number(d.agua_pe2) || 0;
+                            const vChuv = Number(d.agua_chuveiro_final) || 0;
+                            const vEsc = Number(d.agua_tanque_escalda) || 0;
+
+                            const rawTanq = extrairValor(d, [
+                                'agua_tanques_agua', 'agua_tanque_agua', 'agua_total_tanques_agua',
+                                'agua_total_tanque_agua', 'agua_cons_tanques_agua', 'agua_cons_tanque_agua'
+                            ], 0);
+                            const vTanq = Number(rawTanq) || 0;
+                            const vAdut = Number(d.agua_geral_adultora_abt) || 0;
+                            const vAbt = Number(d.agua_geral_abate) || 0;
+
+                            const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc;
+
+                            const valoresLinha = [
+                                somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt
+                            ].map(v => Number(v.toFixed(1)));
+
+                            valoresLinha.forEach((val, idx) => acumulados[idx] += val);
+
+                            linhas.push([dataBR, h, ...valoresLinha]);
+                        }
+                    });
+                });
+
+                if (linhas.length > 0) {
+                    resumo = ['TOTAL PERÍODO', 'SOMA (m³)', ...acumulados.map(v => Number(v.toFixed(1)))];
+                }
+            }
+
+            else if (viewAtiva === 'view-utilidades') {
+                cabecalhos = [
+                    'Data', 'Hora',
+                    'Pr. Ar (bar)', 'Água Quente (bar)', 'Água Potável (bar)',
+                    'Higienização (bar)', 'Pressurizada (bar)', 'Hiperclorada (PPM)',
+                    'Temp. Glicol (°C)', 'Pr. Chuv. Final (bar)', 'Pr. Lav. Final (bar)',
+                    'Pr. Lav. MEYN (bar)', 'Pr. Pós Evisc. (bar)'
+                ];
+
+                datasOrdenadas.forEach(dt => {
+                    const dataBR = dt.split('-').reverse().join('/');
+                    const horas = Object.keys(mapaPorData[dt]).sort();
+                    horas.forEach(h => {
+                        const d = mapaPorData[dt][h];
+                        if (d.pressao_ar !== undefined) {
+                            linhas.push([
+                                dataBR, h,
+                                numOuVazio(d.pressao_ar), numOuVazio(d.pressao_agua_quente),
+                                numOuVazio(d.pressao_agua_potavel), numOuVazio(d.pressao_agua_higienizacao),
+                                numOuVazio(d.pressao_agua_pressurizada), numOuVazio(d.agua_hiperclorada),
+                                numOuVazio(d.temp_glicol), numOuVazio(d.pressao_chuv_final),
+                                numOuVazio(d.pressao_lav_final), numOuVazio(d.pressao_lav_meyn),
+                                numOuVazio(d.pressao_pos_evisc)
+                            ]);
+                        }
+                    });
+                });
+            }
+
+            return { cabecalhos, linhas, resumo };
+        }
+
+        // ================= GERAÇÃO DE EXCEL BEM FORMATADO =================
+        function gerarExcelProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo) {
+            const agora = new Date().toLocaleString('pt-BR');
+
+            // Estrutura visual com cabeçalho institucional no topo da planilha
+            const matrizPlanilha = [
+                [`SUPERVISÓRIO INDUSTRIAL INTEGRADO - ${titulo.toUpperCase()}`],
+                [`Período Filtrado: ${periodo}   |   Emitido em: ${agora}   |   Total de Registros: ${linhas.length}`],
+                [], // Linha em branco separadora
+                cabecalhos
+            ];
+
+            if (linhaResumo) {
+                matrizPlanilha.push(linhaResumo);
+            }
+
+            linhas.forEach(l => {
+                const linhaFormatada = l.map((val, idx) => (val === null ? '--' : val));
+                matrizPlanilha.push(linhaFormatada);
+            });
+
+            const ws = XLSX.utils.aoa_to_sheet(matrizPlanilha);
+
+            // Mescla as células do título (Linha 1 e Linha 2)
+            ws['!merges'] = [
+                { s: { r: 0, c: 0 }, e: { r: 0, c: Math.min(cabecalhos.length - 1, 10) } },
+                { s: { r: 1, c: 0 }, e: { r: 1, c: Math.min(cabecalhos.length - 1, 10) } }
+            ];
+
+            // Aplica formato numérico PT-BR (#,##0.0) em todas as células numéricas
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            for (let R = 4; R <= range.e.r; ++R) {
+                for (let C = 2; C <= range.e.c; ++C) {
+                    const addr = XLSX.utils.encode_cell({ r: R, c: C });
+                    const cell = ws[addr];
+                    if (cell && typeof cell.v === 'number') {
+                        cell.t = 'n';
+                        cell.z = '#,##0.0';
                     }
                 }
             }
 
-            XLSX.writeFile(wb, `${titulo} - ${dataStr}.xlsx`);
+            // Calcula automaticamente a largura ideal de cada coluna
+            const colWidths = cabecalhos.map((cab, colIdx) => {
+                let maxLen = cab ? cab.toString().length : 10;
+                for (let r = 4; r < Math.min(matrizPlanilha.length, 200); r++) {
+                    const val = matrizPlanilha[r][colIdx];
+                    if (val !== undefined && val !== null) {
+                        const len = val.toString().length;
+                        if (len > maxLen) maxLen = len;
+                    }
+                }
+                return { wch: Math.max(maxLen + 4, 11) };
+            });
+            ws['!cols'] = colWidths;
+
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+            XLSX.writeFile(wb, `${nomeArquivo}.xlsx`);
         }
 
-        function exportarPDF() {
-            const table = getTabelaAtiva();
-            if (!table || table.rows.length <= 1) return alert('Não há dados carregados para exportar.');
-
+        // ================= GERAÇÃO DE PDF EXECUTIVO =================
+        function gerarPDFProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo, viewAtiva) {
             const { jsPDF } = window.jspdf;
-            const titulo = document.getElementById('titulo-pagina').innerText;
-            const dataStr = document.getElementById('dataBusca').value;
+            const doc = new jsPDF('l', 'pt', 'a4'); // Paisagem A4
+            const larguraPagina = doc.internal.pageSize.getWidth();
+            const alturaPagina = doc.internal.pageSize.getHeight();
+            const agora = new Date().toLocaleString('pt-BR');
 
-            const doc = new jsPDF('l', 'pt', 'a4');
-            doc.setFontSize(14);
-            doc.text(`${titulo} - Data: ${dataStr}`, 40, 30);
+            // Faixa superior escura institucional
+            doc.setFillColor(30, 41, 59); // #1e293b
+            doc.rect(0, 0, larguraPagina, 62, 'F');
+
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(15);
+            doc.setFont('helvetica', 'bold');
+            doc.text(`SUPERVISÓRIO INDUSTRIAL - ${titulo.toUpperCase()}`, 30, 26);
+
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(203, 213, 225);
+            doc.text(`Período analisado: ${periodo}   |   Registros listados: ${linhas.length}`, 30, 45);
+            doc.text(`Emitido em: ${agora}`, larguraPagina - 30, 45, { align: 'right' });
+
+            // Prepara o corpo da tabela convertendo números para formato PT-BR com vírgula
+            const corpoPDF = [];
+
+            if (linhaResumo) {
+                corpoPDF.push(linhaResumo.map((val, i) => i >= 2 && typeof val === 'number' ? formatarBR(val, 1) : val));
+            }
+
+            linhas.forEach(l => {
+                corpoPDF.push(l.map((val, i) => {
+                    if (val === null || val === undefined) return '--';
+                    if (i >= 2 && typeof val === 'number') return formatarBR(val, 1);
+                    return val;
+                }));
+            });
+
+            // Ajusta tamanho de fonte conforme quantidade de colunas (Temperaturas tem 31 colunas)
+            const qtdColunas = cabecalhos.length;
+            const tamanhoFonte = qtdColunas > 20 ? 5.5 : (qtdColunas > 12 ? 7 : 8.5);
+            const paddingCelula = qtdColunas > 20 ? 2 : 4;
 
             doc.autoTable({
-                html: table,
-                startY: 40,
-                styles: { fontSize: 7, cellPadding: 3, halign: 'center' },
-                headStyles: { fillColor: [59, 130, 246] },
-                theme: 'grid'
+                head: [cabecalhos],
+                body: corpoPDF,
+                startY: 75,
+                margin: { left: 20, right: 20, bottom: 35 },
+                theme: 'grid',
+                styles: {
+                    fontSize: tamanhoFonte,
+                    cellPadding: paddingCelula,
+                    halign: 'center',
+                    valign: 'middle',
+                    lineColor: [226, 232, 240],
+                    lineWidth: 0.5,
+                    textColor: [51, 65, 85]
+                },
+                headStyles: {
+                    fillColor: [30, 41, 59],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold',
+                    fontSize: tamanhoFonte
+                },
+                alternateRowStyles: {
+                    fillColor: [248, 250, 252]
+                },
+                didParseCell: function (data) {
+                    // Destaca a linha de Totalização se existir
+                    if (linhaResumo && data.section === 'body' && data.row.index === 0) {
+                        data.cell.styles.fillColor = [186, 230, 253]; // Azul claro destaque
+                        data.cell.styles.textColor = [3, 105, 161];
+                        data.cell.styles.fontStyle = 'bold';
+                    }
+                    // Alinha descrição de registros à esquerda
+                    if (viewAtiva === 'view-registros' && data.section === 'body' && data.column.index === 2) {
+                        data.cell.styles.halign = 'left';
+                    }
+                },
+                didDrawPage: function (data) {
+                    // Rodapé profissional em todas as páginas
+                    doc.setFontSize(8);
+                    doc.setTextColor(148, 163, 184);
+                    doc.text(
+                        `Supervisório Industrial Integrado - Produzido por Fernando Maciel`,
+                        20,
+                        alturaPagina - 15
+                    );
+                    doc.text(
+                        `Página ${doc.internal.getNumberOfPages()}`,
+                        larguraPagina - 20,
+                        alturaPagina - 15,
+                        { align: 'right' }
+                    );
+                }
             });
-            doc.save(`${titulo} - ${dataStr}.pdf`);
+
+            doc.save(`${nomeArquivo}.pdf`);
         }
     </script>
 </body>
