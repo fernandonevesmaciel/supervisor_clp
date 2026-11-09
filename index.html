@@ -1489,7 +1489,7 @@
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
 
-                const somaCardConsumoDia = totaisAgua.tanques_agua + totaisAgua.geral_adutora + totaisAgua.geral_abate;
+                const somaCardConsumoDia = totaisAgua.tanques_agua + totaisAgua.geral_adutora;
                 if (cardSomaGeral) cardSomaGeral.innerText = formatarBR(somaCardConsumoDia);
             } else {
                 if (cardSomaGeral) cardSomaGeral.innerText = '--';
