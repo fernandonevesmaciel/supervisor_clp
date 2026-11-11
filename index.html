@@ -1272,7 +1272,7 @@
 
                     document.getElementById('rt-total-agua-geral-adultora-abt').innerText = formatarBR(dados.agua_total_geral_adultora_abt);
                     document.getElementById('rt-total-agua-geral-abate').innerText = formatarBR(dados.agua_total_geral_abate);
-                    document.getElementById('rt-total-agua-escaldador-patas').innerText = formatarBR(dados.agua_total_escaldador_patas);
+                    document.getElementById('rt-total-agua-escaldador-patas').innerText = formatarBR(dados.agua_total_escaldador_patas, 2);
                     document.getElementById('rt-total-agua-saida-depenadeira').innerText = formatarBR(dados.agua_total_saida_depenadeira);
                     document.getElementById('rt-total-agua-trocador-placas').innerText = formatarBR(dados.agua_total_trocador_placas);
 
@@ -1454,7 +1454,7 @@
                         <td>${formatarBR(vMoela)}</td><td>${formatarBR(vCabeca)}</td><td>${formatarBR(vPe1)}</td>
                         <td>${formatarBR(vPe2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEscalda)}</td>
                         <td>${formatarBR(vTanques)}</td><td>${formatarBR(vAdutora)}</td><td>${formatarBR(vAbate)}</td>
-                        <td>${formatarBR(vEscPatas)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td>
+                        <td>${formatarBR(vEscPatas, 2)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td>
                     </tr>`;
                 }
 
@@ -1484,7 +1484,7 @@
                     <td>${formatarBR(totaisAgua.pe1)}</td><td>${formatarBR(totaisAgua.pe2)}</td>
                     <td>${formatarBR(totaisAgua.chuveiro)}</td><td>${formatarBR(totaisAgua.tanque_escalda)}</td>
                     <td>${formatarBR(totaisAgua.tanques_agua)}</td><td>${formatarBR(totaisAgua.geral_adutora)}</td>
-                    <td>${formatarBR(totaisAgua.geral_abate)}</td><td>${formatarBR(totaisAgua.escaldador_patas)}</td>
+                    <td>${formatarBR(totaisAgua.geral_abate)}</td><td>${formatarBR(totaisAgua.escaldador_patas, 2)}</td>
                     <td>${formatarBR(totaisAgua.saida_depenadeira)}</td><td>${formatarBR(totaisAgua.trocador_placas)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
@@ -1977,7 +1977,7 @@
 
                             const valoresLinha = [
                                 somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt, vEscPatas, vSaiDep, vTrocaP
-                            ].map(v => Number(v.toFixed(1)));
+                            ].map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)));
 
                             valoresLinha.forEach((val, idx) => acumulados[idx] += val);
 
@@ -1987,7 +1987,7 @@
                 });
 
                 if (linhas.length > 0) {
-                    resumo = ['TOTAL PERÍODO', 'SOMA (m³)', ...acumulados.map(v => Number(v.toFixed(1)))];
+                    resumo = ['TOTAL PERÍODO', 'SOMA (m³)', ...acumulados.map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)))];
                 }
             }
 
@@ -2057,7 +2057,7 @@
                     const cell = ws[addr];
                     if (cell && typeof cell.v === 'number') {
                         cell.t = 'n';
-                        cell.z = '#,##0.0';
+                        cell.z = (cabecalhos[C] === 'Escaldador Patas (m³)') ? '#,##0.00' : '#,##0.0';
                     }
                 }
             }
@@ -2105,13 +2105,22 @@
             const corpoPDF = [];
 
             if (linhaResumo) {
-                corpoPDF.push(linhaResumo.map((val, i) => i >= 2 && typeof val === 'number' ? formatarBR(val, 1) : val));
+                corpoPDF.push(linhaResumo.map((val, i) => {
+                    if (i >= 2 && typeof val === 'number') {
+                        const casas = (viewAtiva === 'view-agua' && i === 18) ? 2 : 1;
+                        return formatarBR(val, casas);
+                    }
+                    return val;
+                }));
             }
 
             linhas.forEach(l => {
                 corpoPDF.push(l.map((val, i) => {
                     if (val === null || val === undefined) return '--';
-                    if (i >= 2 && typeof val === 'number') return formatarBR(val, 1);
+                    if (i >= 2 && typeof val === 'number') {
+                        const casas = (viewAtiva === 'view-agua' && i === 18) ? 2 : 1;
+                        return formatarBR(val, casas);
+                    }
                     return val;
                 }));
             });
