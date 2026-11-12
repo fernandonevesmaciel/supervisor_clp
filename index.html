@@ -123,6 +123,77 @@
             font-size: 28px;
         }
 
+        /* ================= RELÓGIO SCADA PROFISSIONAL ================= */
+        .scada-clock-box {
+            display: inline-flex;
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-left: 4px solid var(--success);
+            border-radius: 8px;
+            padding: 5px 14px;
+            gap: 12px;
+            box-shadow: 0 2px 5px rgba(15, 23, 42, 0.05);
+            height: 40px;
+        }
+
+        .scada-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-right: 12px;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .scada-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            animation: pulsoScada 2s infinite;
+        }
+
+        .scada-status-text {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: #059669;
+            text-transform: uppercase;
+        }
+
+        .scada-datetime {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .scada-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: capitalize;
+        }
+
+        .scada-time {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pulsoScada {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            }
+            50% {
+                opacity: 0.5;
+                box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.1);
+            }
+        }
+
         .header-controls {
             display: flex;
             gap: 10px;
@@ -143,10 +214,12 @@
             font-size: 14px;
             outline: none;
             background: white;
+            height: 40px;
         }
 
         .btn-atualizar {
             padding: 8px 15px;
+            height: 40px;
             background: var(--primary);
             color: white;
             border: none;
@@ -623,6 +696,7 @@
             .header { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 15px; }
             .header h1 { font-size: 22px; }
             .header-controls { flex-direction: column; width: 100%; gap: 8px; }
+            .scada-clock-box { width: 100%; justify-content: space-between; }
             .date-picker, .btn-atualizar { width: 100%; font-size: 14px; justify-content: center; }
             .export-group { display: flex; width: 100%; gap: 10px; }
             .export-group button { flex: 1; padding: 8px; font-size: 13px; }
@@ -664,7 +738,20 @@
     <div class="main-content">
         <div class="header">
             <h1 id="titulo-pagina">Monitoramento de Temperaturas</h1>
+
             <div class="header-controls">
+                <!-- WIDGET RELÓGIO SCADA INTEGRADO -->
+                <div class="scada-clock-box" title="Data e Hora do Sistema em Tempo Real">
+                    <div class="scada-status">
+                        <span class="scada-status-dot"></span>
+                        <span class="scada-status-text">Online</span>
+                    </div>
+                    <div class="scada-datetime">
+                        <span class="scada-date" id="relogio-data">--/--/----</span>
+                        <span class="scada-time" id="relogio-hora">--:--:--</span>
+                    </div>
+                </div>
+
                 <input type="date" id="dataBusca" class="date-picker">
                 <button class="btn-atualizar" onclick="buscarHistorico()">🔄 Carregar Dia</button>
                 <div class="export-group">
@@ -1089,6 +1176,19 @@
             utilidades: 120
         };
 
+        function atualizarRelogio() {
+            const agora = new Date();
+            const diaSemana = agora.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+            const dataStr = agora.toLocaleDateString('pt-BR');
+            const horaStr = agora.toLocaleTimeString('pt-BR');
+
+            const elData = document.getElementById('relogio-data');
+            const elHora = document.getElementById('relogio-hora');
+
+            if (elData) elData.innerText = `${diaSemana}, ${dataStr}`;
+            if (elHora) elHora.innerText = horaStr;
+        }
+
         function extrairValor(obj, chaves, valorPadrao = '--') {
             if (!obj) return valorPadrao;
             for (const chave of chaves) {
@@ -1115,6 +1215,9 @@
         let listaRegistrosDia = [];
 
         window.onload = () => {
+            atualizarRelogio();
+            setInterval(atualizarRelogio, 1000);
+
             const hoje = new Date().toISOString().split('T')[0];
             document.getElementById('dataBusca').value = hoje;
             document.getElementById('exportDataInicio').value = hoje;
