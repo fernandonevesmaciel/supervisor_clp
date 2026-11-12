@@ -280,6 +280,182 @@
             transition: color 0.3s ease;
         }
 
+        /* ================= BANNER MODERNO DE FONTE DE ENERGIA ================= */
+        .power-source-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 26px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+            margin-bottom: 28px;
+            transition: all 0.4s ease;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .power-source-banner.copel {
+            background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
+            border-color: #a7f3d0;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
+        }
+
+        .power-source-banner.gerador {
+            background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
+            border-color: #fde68a;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.12);
+        }
+
+        .power-source-banner.alerta {
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
+            border-color: #fecaca;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
+        }
+
+        .power-source-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .power-icon-box {
+            width: 54px;
+            height: 54px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            background: #f1f5f9;
+            color: #64748b;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .power-source-banner.copel .power-icon-box {
+            background: #10b981;
+            color: #ffffff;
+            box-shadow: 0 6px 14px rgba(16, 185, 129, 0.28);
+        }
+
+        .power-source-banner.gerador .power-icon-box {
+            background: #f59e0b;
+            color: #ffffff;
+            box-shadow: 0 6px 14px rgba(245, 158, 11, 0.32);
+        }
+
+        .power-source-banner.alerta .power-icon-box {
+            background: #ef4444;
+            color: #ffffff;
+            box-shadow: 0 6px 14px rgba(239, 68, 68, 0.28);
+        }
+
+        .power-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .power-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.9px;
+            color: #64748b;
+        }
+
+        .power-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1e293b;
+            letter-spacing: -0.3px;
+        }
+
+        .power-source-banner.copel .power-title {
+            color: #065f46;
+        }
+
+        .power-source-banner.gerador .power-title {
+            color: #92400e;
+        }
+
+        .power-source-banner.alerta .power-title {
+            color: #991b1b;
+        }
+
+        .power-subtitle {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Indicadores visuais limpos na direita */
+        .power-modes-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .mode-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+
+        .mode-chip .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #cbd5e1;
+        }
+
+        .mode-chip.active-copel {
+            background: #ffffff;
+            color: #059669;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .mode-chip.active-copel .dot {
+            background: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+            animation: pulsoScada 2s infinite;
+        }
+
+        .mode-chip.active-gerador {
+            background: #ffffff;
+            color: #d97706;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .mode-chip.active-gerador .dot {
+            background: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
+            animation: pulsoAlerta 1.5s infinite;
+        }
+
+        @keyframes pulsoAlerta {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
+            }
+            50% {
+                opacity: 0.6;
+                box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15);
+            }
+        }
+
         .text-blue { color: var(--primary); }
         .text-water { color: var(--water); }
         .text-success { color: var(--success); }
@@ -483,6 +659,28 @@
             font-size: 12px;
             display: inline-block;
             border: 1px solid #86efac;
+        }
+
+        .badge-copel {
+            background-color: #dcfce7;
+            color: #059669;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            border: 1px solid #6ee7b7;
+        }
+
+        .badge-gerador {
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            border: 1px solid #fcd34d;
         }
 
         .footer {
@@ -705,6 +903,11 @@
             .card { padding: 12px; border-radius: 8px; }
             .card h3 { white-space: normal; font-size: 10px; line-height: 1.2; margin-bottom: 5px; }
             .card .value { font-size: 16px; word-break: break-word; overflow-wrap: break-word; }
+            .power-source-banner { padding: 14px 16px; }
+            .power-icon-box { width: 44px; height: 44px; font-size: 22px; }
+            .power-title { font-size: 18px; }
+            .power-modes-switch { width: 100%; justify-content: space-between; }
+            .mode-chip { flex: 1; justify-content: center; padding: 8px 10px; font-size: 12px; }
             .charts-container { padding: 12px; }
             .chart-header { flex-direction: column; gap: 10px; }
             .chart-controls { flex-direction: column; align-items: stretch; gap: 10px; width: 100%; }
@@ -875,6 +1078,29 @@
 
         <!-- ================= TELA DE ENERGIA ================= -->
         <div id="view-energia" class="view-section">
+            <!-- BANNER DE ALIMENTAÇÃO ELÉTRICA -->
+            <div class="power-source-banner" id="card-fonte-alimentacao">
+                <div class="power-source-left">
+                    <div class="power-icon-box" id="icone-fonte-alimentacao">⚡</div>
+                    <div class="power-text-group">
+                        <span class="power-eyebrow">Status de Alimentação da Planta</span>
+                        <div class="power-title" id="titulo-fonte-alimentacao">Verificando fonte de energia...</div>
+                        <span class="power-subtitle" id="subtitulo-fonte-alimentacao">Sincronizando leitura com o painel principal</span>
+                    </div>
+                </div>
+
+                <div class="power-modes-switch">
+                    <div class="mode-chip" id="chip-copel">
+                        <span class="dot"></span>
+                        <span>Rede Copel</span>
+                    </div>
+                    <div class="mode-chip" id="chip-gerador">
+                        <span class="dot"></span>
+                        <span>Rede Geradores</span>
+                    </div>
+                </div>
+            </div>
+
             <h2 class="section-title">Resumo Geral (Fábrica - Estimativa Copel 34.5kV)</h2>
             <div class="cards-grid">
                 <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-total">--</span> kW</div></div>
@@ -1099,7 +1325,7 @@
                                 <th style="min-width: 110px;">Data</th>
                                 <th style="min-width: 90px;">Hora</th>
                                 <th style="text-align: left; padding-left: 20px;">Descrição</th>
-                                <th style="min-width: 140px;">Modo de Operação</th>
+                                <th style="min-width: 140px;">Status / Modo</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-registros">
@@ -1167,7 +1393,7 @@
         const TARIFA_KWH = 0.50;
         const FATOR_PERDA_TRAFO = 1.02;
 
-        let formatoExportacaoAtual = 'excel'; // 'excel' ou 'pdf'
+        let formatoExportacaoAtual = 'excel';
 
         let janelasTempo = {
             temp: 120,
@@ -1305,6 +1531,47 @@
             }
         }
 
+        function atualizarIndicadorFonteEnergia(copelAtivo, geradorAtivo) {
+            const banner = document.getElementById('card-fonte-alimentacao');
+            const icone = document.getElementById('icone-fonte-alimentacao');
+            const titulo = document.getElementById('titulo-fonte-alimentacao');
+            const subtitulo = document.getElementById('subtitulo-fonte-alimentacao');
+            const chipCopel = document.getElementById('chip-copel');
+            const chipGerador = document.getElementById('chip-gerador');
+
+            if (!banner || !titulo) return;
+
+            banner.classList.remove('copel', 'gerador', 'alerta');
+            chipCopel.classList.remove('active-copel');
+            chipGerador.classList.remove('active-gerador');
+
+            if (copelAtivo && !geradorAtivo) {
+                banner.classList.add('copel');
+                icone.innerText = '⚡';
+                titulo.innerText = 'Alimentação pela Rede Copel';
+                subtitulo.innerText = 'Operação normal pela concessionária de energia elétrica';
+                chipCopel.classList.add('active-copel');
+            } else if (geradorAtivo && !copelAtivo) {
+                banner.classList.add('gerador');
+                icone.innerText = '🔋';
+                titulo.innerText = 'Alimentação pela Rede de Geradores';
+                subtitulo.innerText = 'Planta operando em regime de geração própria';
+                chipGerador.classList.add('active-gerador');
+            } else if (copelAtivo && geradorAtivo) {
+                banner.classList.add('alerta');
+                icone.innerText = '⚠️';
+                titulo.innerText = 'Transferência em Andamento / Paralelismo';
+                subtitulo.innerText = 'Sinal simultâneo identificado entre Copel e Geradores';
+                chipCopel.classList.add('active-copel');
+                chipGerador.classList.add('active-gerador');
+            } else {
+                banner.classList.add('alerta');
+                icone.innerText = '🔌';
+                titulo.innerText = 'Sem Confirmação de Rede';
+                subtitulo.innerText = 'Nenhuma fonte de alimentação ativa detectada no momento';
+            }
+        }
+
         // ================= TEMPO REAL =================
         async function buscarTempoReal() {
             try {
@@ -1317,6 +1584,8 @@
                 const dadosAcum = await resAcum.json();
 
                 if (dados) {
+                    atualizarIndicadorFonteEnergia(Boolean(dados.i4099_0_copel), Boolean(dados.i4099_1_gerador));
+
                     atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
                     atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
                     atualizarComSetpoint('rt-salaCortes1', dados.temp_salaCortes1, 12);
@@ -1682,6 +1951,24 @@
             } catch (e) { }
         }
 
+        function obterBadgeRegistro(r) {
+            const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
+
+            if (tipoTexto.includes('copel')) {
+                return '<span class="badge-copel">REDE COPEL</span>';
+            }
+            if (tipoTexto.includes('gerador')) {
+                return '<span class="badge-gerador">GERADORES</span>';
+            }
+            if (tipoTexto.includes('sem_rede') || tipoTexto.includes('sem confirmação')) {
+                return '<span class="badge-manual">SEM REDE</span>';
+            }
+            if (tipoTexto.includes('manual')) {
+                return '<span class="badge-manual">MANUAL</span>';
+            }
+            return '<span class="badge-auto">AUTOMÁTICO</span>';
+        }
+
         function renderizarLinhasRegistros(dados, dataFormatada) {
             const tbody = document.getElementById('tbody-registros');
             let html = '';
@@ -1689,12 +1976,7 @@
             dados.forEach(r => {
                 const hora = r.hora || r.horario || '--:--:--';
                 const descricao = r.mensagem || r.equipamento || "Cuba de Insensibilização";
-                const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
-                const isManual = tipoTexto.includes('manual');
-
-                const badge = isManual
-                    ? '<span class="badge-manual">MANUAL</span>'
-                    : '<span class="badge-auto">AUTOMÁTICO</span>';
+                const badge = obterBadgeRegistro(r);
 
                 html += `<tr>
                     <td>${dataFormatada}</td>
@@ -1895,7 +2177,7 @@
                 let linhaResumo = null;
 
                 if (viewAtiva === 'view-registros') {
-                    cabecalhos = ['Data', 'Hora', 'Descrição do Evento / Equipamento', 'Modo de Operação'];
+                    cabecalhos = ['Data', 'Hora', 'Descrição do Evento / Equipamento', 'Status / Modo'];
 
                     for (let i = 0; i < listaDatas.length; i++) {
                         const dt = listaDatas[i];
@@ -1912,7 +2194,12 @@
                             const hora = r.hora || r.horario || '--:--:--';
                             const desc = r.mensagem || r.equipamento || 'Cuba de Insensibilização';
                             const tipoTxt = (r.tipo || r.mensagem || '').toString().toLowerCase();
-                            const modo = tipoTxt.includes('manual') ? 'MANUAL' : 'AUTOMÁTICO';
+                            let modo = 'AUTOMÁTICO';
+                            if (tipoTxt.includes('copel')) modo = 'REDE COPEL';
+                            else if (tipoTxt.includes('gerador')) modo = 'GERADORES';
+                            else if (tipoTxt.includes('sem_rede') || tipoTxt.includes('sem confirmação')) modo = 'SEM REDE';
+                            else if (tipoTxt.includes('manual')) modo = 'MANUAL';
+
                             linhasDados.push([dataBR, hora, desc, modo]);
                         });
                     }
