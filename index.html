@@ -123,7 +123,6 @@
             font-size: 28px;
         }
 
-        /* ================= RELÓGIO SCADA PROFISSIONAL ================= */
         .scada-clock-box {
             display: inline-flex;
             align-items: center;
@@ -184,17 +183,8 @@
         }
 
         @keyframes pulsoScada {
-
-            0%,
-            100% {
-                opacity: 1;
-                box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
-            }
-
-            50% {
-                opacity: 0.5;
-                box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.1);
-            }
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25); }
+            50% { opacity: 0.5; box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.1); }
         }
 
         .header-controls {
@@ -283,7 +273,6 @@
             transition: color 0.3s ease;
         }
 
-        /* ================= BANNER MODERNO DE FONTE DE ENERGIA ================= */
         .power-source-banner {
             display: flex;
             align-items: center;
@@ -302,19 +291,16 @@
         .power-source-banner.copel {
             background: linear-gradient(135deg, #ecfdf5 0%, #ffffff 100%);
             border-color: #a7f3d0;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.08);
         }
 
         .power-source-banner.gerador {
             background: linear-gradient(135deg, #fffbeb 0%, #ffffff 100%);
             border-color: #fde68a;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.12);
         }
 
         .power-source-banner.alerta {
             background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
             border-color: #fecaca;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.1);
         }
 
         .power-source-left {
@@ -333,27 +319,11 @@
             font-size: 26px;
             background: #f1f5f9;
             color: #64748b;
-            flex-shrink: 0;
-            transition: all 0.3s ease;
         }
 
-        .power-source-banner.copel .power-icon-box {
-            background: #10b981;
-            color: #ffffff;
-            box-shadow: 0 6px 14px rgba(16, 185, 129, 0.28);
-        }
-
-        .power-source-banner.gerador .power-icon-box {
-            background: #f59e0b;
-            color: #ffffff;
-            box-shadow: 0 6px 14px rgba(245, 158, 11, 0.32);
-        }
-
-        .power-source-banner.alerta .power-icon-box {
-            background: #ef4444;
-            color: #ffffff;
-            box-shadow: 0 6px 14px rgba(239, 68, 68, 0.28);
-        }
+        .power-source-banner.copel .power-icon-box { background: #10b981; color: #ffffff; }
+        .power-source-banner.gerador .power-icon-box { background: #f59e0b; color: #ffffff; }
+        .power-source-banner.alerta .power-icon-box { background: #ef4444; color: #ffffff; }
 
         .power-text-group {
             display: flex;
@@ -373,19 +343,6 @@
             font-size: 22px;
             font-weight: 800;
             color: #1e293b;
-            letter-spacing: -0.3px;
-        }
-
-        .power-source-banner.copel .power-title {
-            color: #065f46;
-        }
-
-        .power-source-banner.gerador .power-title {
-            color: #92400e;
-        }
-
-        .power-source-banner.alerta .power-title {
-            color: #991b1b;
         }
 
         .power-subtitle {
@@ -394,7 +351,6 @@
             font-weight: 500;
         }
 
-        /* Indicadores visuais limpos na direita */
         .power-modes-switch {
             display: flex;
             align-items: center;
@@ -414,7 +370,6 @@
             font-size: 13px;
             font-weight: 600;
             color: #94a3b8;
-            transition: all 0.3s ease;
         }
 
         .mode-chip .dot {
@@ -424,71 +379,18 @@
             background: #cbd5e1;
         }
 
-        .mode-chip.active-copel {
-            background: #ffffff;
-            color: #059669;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-        }
+        .mode-chip.active-copel { background: #ffffff; color: #059669; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .mode-chip.active-copel .dot { background: #10b981; }
+        .mode-chip.active-gerador { background: #ffffff; color: #d97706; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+        .mode-chip.active-gerador .dot { background: #f59e0b; }
 
-        .mode-chip.active-copel .dot {
-            background: #10b981;
-            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
-            animation: pulsoScada 2s infinite;
-        }
-
-        .mode-chip.active-gerador {
-            background: #ffffff;
-            color: #d97706;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-        }
-
-        .mode-chip.active-gerador .dot {
-            background: #f59e0b;
-            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.25);
-            animation: pulsoAlerta 1.5s infinite;
-        }
-
-        @keyframes pulsoAlerta {
-
-            0%,
-            100% {
-                opacity: 1;
-                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.35);
-            }
-
-            50% {
-                opacity: 0.6;
-                box-shadow: 0 0 0 1px rgba(245, 158, 11, 0.15);
-            }
-        }
-
-        .text-blue {
-            color: var(--primary);
-        }
-
-        .text-water {
-            color: var(--water);
-        }
-
-        .text-success {
-            color: var(--success);
-        }
-
-        .text-orange {
-            color: var(--warning);
-        }
-
-        .text-red {
-            color: var(--danger);
-        }
-
-        .text-purple {
-            color: var(--purple);
-        }
-
-        .text-gray {
-            color: var(--gray);
-        }
+        .text-blue { color: var(--primary); }
+        .text-water { color: var(--water); }
+        .text-success { color: var(--success); }
+        .text-orange { color: var(--warning); }
+        .text-red { color: var(--danger); }
+        .text-purple { color: var(--purple); }
+        .text-gray { color: var(--gray); }
 
         .charts-container {
             background: var(--card-bg);
@@ -543,23 +445,11 @@
             margin-bottom: 10px;
         }
 
-        .view-section {
-            display: none;
-        }
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+        .chart-wrapper.hidden { display: none; }
 
-        .view-section.active {
-            display: block;
-        }
-
-        .chart-wrapper.hidden {
-            display: none;
-        }
-
-        .view-toggle-btns {
-            display: flex;
-            gap: 5px;
-        }
-
+        .view-toggle-btns { display: flex; gap: 5px; }
         .btn-toggle {
             padding: 6px 12px;
             background: #e2e8f0;
@@ -569,12 +459,7 @@
             font-size: 13px;
             color: #475569;
         }
-
-        .btn-toggle.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
+        .btn-toggle.active { background: var(--primary); color: white; border-color: var(--primary); }
 
         .table-wrapper {
             display: none;
@@ -587,127 +472,23 @@
             border-radius: 6px;
             width: 100%;
         }
+        .table-wrapper.active { display: block; }
 
-        .table-wrapper.active {
-            display: block;
-        }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+        th { background: #f1f5f9; position: sticky; top: 0; padding: 10px; text-align: center; border-bottom: 2px solid #cbd5e1; z-index: 10; }
+        td { padding: 8px 10px; text-align: center; border-bottom: 1px solid #e2e8f0; background-color: #ffffff; }
+        tr:hover td { background-color: #f8fafc; }
 
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            font-size: 14px;
-        }
+        .tabela-congelada th:nth-child(1), .tabela-congelada td:nth-child(1) { position: sticky; left: 0; min-width: 95px; z-index: 20; background-color: #ffffff; }
+        .tabela-congelada th:nth-child(2), .tabela-congelada td:nth-child(2) { position: sticky; left: 95px; min-width: 65px; z-index: 20; border-right: 2px solid #cbd5e1; background-color: #ffffff; }
+        .tabela-congelada th:nth-child(1), .tabela-congelada th:nth-child(2) { z-index: 30; background-color: #e2e8f0; }
 
-        th {
-            background: #f1f5f9;
-            position: sticky;
-            top: 0;
-            padding: 10px;
-            text-align: center;
-            border-bottom: 2px solid #cbd5e1;
-            color: #334155;
-            z-index: 10;
-        }
+        .linha-total-dia td { background-color: #e0f2fe !important; font-weight: bold; border-top: 2px solid #0284c7; border-bottom: 2px solid #0284c7; }
 
-        td {
-            padding: 8px 10px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            background-color: #ffffff;
-        }
-
-        tr:hover td {
-            background-color: #f8fafc;
-        }
-
-        .tabela-congelada th:nth-child(1),
-        .tabela-congelada td:nth-child(1) {
-            position: sticky;
-            left: 0;
-            min-width: 95px;
-            z-index: 20;
-            background-color: #ffffff;
-        }
-
-        .tabela-congelada th:nth-child(2),
-        .tabela-congelada td:nth-child(2) {
-            position: sticky;
-            left: 95px;
-            min-width: 65px;
-            z-index: 20;
-            border-right: 2px solid #cbd5e1;
-            background-color: #ffffff;
-        }
-
-        .tabela-congelada th:nth-child(1),
-        .tabela-congelada th:nth-child(2) {
-            z-index: 30;
-            background-color: #e2e8f0;
-        }
-
-        tr:hover td:nth-child(1),
-        tr:hover td:nth-child(2) {
-            background-color: #f1f5f9;
-        }
-
-        .linha-total-dia td {
-            background-color: #e0f2fe !important;
-            font-weight: bold;
-            border-top: 2px solid #0284c7;
-            border-bottom: 2px solid #0284c7;
-        }
-
-        .linha-total-dia td:nth-child(1),
-        .linha-total-dia td:nth-child(2) {
-            background-color: #bae6fd !important;
-            color: #0369a1;
-            z-index: 25 !important;
-        }
-
-        .badge-manual {
-            background-color: #fee2e2;
-            color: #ef4444;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 12px;
-            display: inline-block;
-            border: 1px solid #fca5a5;
-        }
-
-        .badge-auto {
-            background-color: #dcfce7;
-            color: #10b981;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 12px;
-            display: inline-block;
-            border: 1px solid #86efac;
-        }
-
-        .badge-copel {
-            background-color: #dcfce7;
-            color: #059669;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 12px;
-            display: inline-block;
-            border: 1px solid #6ee7b7;
-        }
-
-        .badge-gerador {
-            background-color: #fef3c7;
-            color: #d97706;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 12px;
-            display: inline-block;
-            border: 1px solid #fcd34d;
-        }
+        .badge-manual { background-color: #fee2e2; color: #ef4444; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; display: inline-block; border: 1px solid #fca5a5; }
+        .badge-auto { background-color: #dcfce7; color: #10b981; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; display: inline-block; border: 1px solid #86efac; }
+        .badge-copel { background-color: #dcfce7; color: #059669; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; display: inline-block; border: 1px solid #6ee7b7; }
+        .badge-gerador { background-color: #fef3c7; color: #d97706; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 12px; display: inline-block; border: 1px solid #fcd34d; }
 
         .footer {
             position: fixed;
@@ -719,388 +500,54 @@
             text-align: center;
             padding: 12px;
             font-size: 13px;
-            letter-spacing: 0.5px;
             z-index: 500;
             border-top: 1px solid #334155;
         }
+        .footer strong { color: #ffffff; }
 
-        .footer strong {
-            color: #ffffff;
-            font-weight: 600;
-        }
-
-        /* ================= ESTILOS DO MODAL DE EXPORTAÇÃO ================= */
+        /* MODAL EXPORTAÇÃO */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(3px);
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            justify-content: center; align-items: center;
             padding: 15px;
         }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
+        .modal-overlay.active { display: flex; }
         .modal-box {
-            background: #ffffff;
-            width: 100%;
-            max-width: 460px;
-            border-radius: 14px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            background: #ffffff; width: 100%; max-width: 460px;
+            border-radius: 14px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            animation: modalFadeIn 0.2s ease-out;
         }
-
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-header {
-            background: var(--sidebar-bg);
-            color: white;
-            padding: 18px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h3 {
-            font-size: 17px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: #cbd5e1;
-            font-size: 22px;
-            cursor: pointer;
-            line-height: 1;
-        }
-
-        .modal-close:hover {
-            color: white;
-        }
-
-        .modal-body {
-            padding: 24px;
-        }
-
-        .modal-info-aba {
-            background: #f1f5f9;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #475569;
-            margin-bottom: 18px;
-            border-left: 4px solid var(--primary);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 18px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 12px;
-            font-weight: 600;
-            color: #475569;
-            text-transform: uppercase;
-        }
-
-        .atalhos-periodo {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn-atalho {
-            flex: 1;
-            padding: 7px 10px;
-            font-size: 12px;
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #334155;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .btn-atalho:hover {
-            background: #e2e8f0;
-            border-color: #94a3b8;
-        }
-
-        .progress-status {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            border-radius: 8px;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1e40af;
-            font-size: 13px;
-            text-align: center;
-            font-weight: 500;
-        }
-
-        .modal-footer {
-            padding: 16px 24px;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px;
-        }
-
-        .btn-cancelar {
-            padding: 9px 16px;
-            background: #e2e8f0;
-            color: #475569;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .btn-confirmar-export {
-            padding: 9px 20px;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
+        .modal-header { background: var(--sidebar-bg); color: white; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header h3 { font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .modal-close { background: none; border: none; color: #cbd5e1; font-size: 22px; cursor: pointer; }
+        .modal-body { padding: 24px; }
+        .modal-info-aba { background: #f1f5f9; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #475569; margin-bottom: 18px; border-left: 4px solid var(--primary); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 18px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 12px; font-weight: 600; color: #475569; text-transform: uppercase; }
+        .atalhos-periodo { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn-atalho { flex: 1; padding: 7px 10px; font-size: 12px; background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; cursor: pointer; color: #334155; font-weight: 500; }
+        .btn-atalho:hover { background: #e2e8f0; }
+        .progress-status { display: none; margin-top: 15px; padding: 12px; border-radius: 8px; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; font-size: 13px; text-align: center; font-weight: 500; }
+        .modal-footer { padding: 16px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 10px; }
+        .btn-cancelar { padding: 9px 16px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-confirmar-export { padding: 9px 20px; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
         @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .sidebar-header {
-                justify-content: space-between;
-                padding: 15px 20px;
-            }
-
-            .hamburger {
-                display: block;
-            }
-
-            .nav-items {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--sidebar-bg);
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-                z-index: 1001;
-            }
-
-            .nav-items.open {
-                display: flex;
-            }
-
-            .menu-item {
-                border-left: 4px solid transparent;
-                border-bottom: 1px solid #334155;
-                padding: 15px 20px;
-            }
-
-            .main-content {
-                padding: 12px;
-                padding-bottom: 70px;
-            }
-
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 15px;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .header-controls {
-                flex-direction: column;
-                width: 100%;
-                gap: 8px;
-            }
-
-            .scada-clock-box {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .date-picker,
-            .btn-atualizar {
-                width: 100%;
-                font-size: 14px;
-                justify-content: center;
-            }
-
-            .export-group {
-                display: flex;
-                width: 100%;
-                gap: 10px;
-            }
-
-            .export-group button {
-                flex: 1;
-                padding: 8px;
-                font-size: 13px;
-            }
-
-            .section-title {
-                font-size: 14px;
-                margin: 15px 0 10px 0;
-            }
-
-            .cards-grid {
-                grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-                gap: 8px;
-                margin-bottom: 20px;
-            }
-
-            .card {
-                padding: 12px;
-                border-radius: 8px;
-            }
-
-            .card h3 {
-                white-space: normal;
-                font-size: 10px;
-                line-height: 1.2;
-                margin-bottom: 5px;
-            }
-
-            .card .value {
-                font-size: 16px;
-                word-break: break-word;
-                overflow-wrap: break-word;
-            }
-
-            .power-source-banner {
-                padding: 14px 16px;
-            }
-
-            .power-icon-box {
-                width: 44px;
-                height: 44px;
-                font-size: 22px;
-            }
-
-            .power-title {
-                font-size: 18px;
-            }
-
-            .power-modes-switch {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .mode-chip {
-                flex: 1;
-                justify-content: center;
-                padding: 8px 10px;
-                font-size: 12px;
-            }
-
-            .charts-container {
-                padding: 12px;
-            }
-
-            .chart-header {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .chart-controls {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-                width: 100%;
-            }
-
-            .select-filtro {
-                width: 100%;
-                margin: 0;
-                font-size: 13px;
-            }
-
-            .view-toggle-btns {
-                display: flex;
-                width: 100%;
-            }
-
-            .btn-toggle {
-                flex: 1;
-                text-align: center;
-                font-size: 12px;
-                padding: 8px;
-            }
-
-            table {
-                font-size: 11px;
-            }
-
-            td,
-            th {
-                padding: 6px;
-            }
-
-            .footer {
-                left: 0;
-                width: 100vw;
-                font-size: 11px;
-                padding: 10px;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; }
+            .sidebar-header { justify-content: space-between; padding: 15px 20px; }
+            .hamburger { display: block; }
+            .nav-items { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--sidebar-bg); z-index: 1001; }
+            .nav-items.open { display: flex; }
+            .main-content { padding: 12px; padding-bottom: 70px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .footer { left: 0; width: 100vw; }
         }
     </style>
 </head>
@@ -1124,10 +571,8 @@
     <div class="main-content">
         <div class="header">
             <h1 id="titulo-pagina">Monitoramento de Temperaturas</h1>
-
             <div class="header-controls">
-                <!-- WIDGET RELÓGIO SCADA INTEGRADO -->
-                <div class="scada-clock-box" title="Data e Hora do Sistema em Tempo Real">
+                <div class="scada-clock-box">
                     <div class="scada-status">
                         <span class="scada-status-dot"></span>
                         <span class="scada-status-text">Online</span>
@@ -1138,145 +583,57 @@
                     </div>
                 </div>
 
+                <!-- SELETOR DE DATA PARA PUXAR QUALQUER DIA (EX: MÊS PASSADO) -->
                 <input type="date" id="dataBusca" class="date-picker">
                 <button class="btn-atualizar" onclick="buscarHistorico()">🔄 Carregar Dia</button>
                 <div class="export-group">
-                    <button class="btn-atualizar" style="background: #10b981;"
-                        onclick="abrirModalExportacao('excel')">📊 Exportar Excel</button>
-                    <button class="btn-atualizar" style="background: #ef4444;" onclick="abrirModalExportacao('pdf')">📄
-                        Exportar PDF</button>
+                    <button class="btn-atualizar" style="background: #10b981;" onclick="abrirModalExportacao('excel')">📊 Exportar Excel</button>
+                    <button class="btn-atualizar" style="background: #ef4444;" onclick="abrirModalExportacao('pdf')">📄 Exportar PDF</button>
                 </div>
             </div>
         </div>
 
-        <!-- ================= TELA DE TEMPERATURAS ================= -->
+        <!-- TEMPERATURAS -->
         <div id="view-temperaturas" class="view-section active">
             <h2 class="section-title">Temperatura Ambiente</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>CMS (10ºC)</h3>
-                    <div class="value text-blue"><span id="rt-cms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>ENVASE CMS (10ºC)</h3>
-                    <div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 1 (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Sala Cortes 2 (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. IQF (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Emb. Prim. IQF (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Frango Inteiro (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Temperados (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-temperados">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chillers (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chillers">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Miúdos (13ºC)</h3>
-                    <div class="value text-blue"><span id="rt-miudos">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Padronização (12ºC)</h3>
-                    <div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Paletização (11ºC)</h3>
-                    <div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div>
-                </div>
+                <div class="card"><h3>CMS (10ºC)</h3><div class="value text-blue"><span id="rt-cms">--</span> °C</div></div>
+                <div class="card"><h3>ENVASE CMS (10ºC)</h3><div class="value text-blue"><span id="rt-envaseCms">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 1 (12ºC)</h3><div class="value text-blue"><span id="rt-salaCortes1">--</span> °C</div></div>
+                <div class="card"><h3>Sala Cortes 2 (12ºC)</h3><div class="value text-blue"><span id="rt-salaCortes2">--</span> °C</div></div>
+                <div class="card"><h3>Abast. IQF (12ºC)</h3><div class="value text-blue"><span id="rt-abastiqf">--</span> °C</div></div>
+                <div class="card"><h3>Emb. Prim. IQF (13ºC)</h3><div class="value text-blue"><span id="rt-embprimariaiqf">--</span> °C</div></div>
+                <div class="card"><h3>Frango Inteiro (12ºC)</h3><div class="value text-blue"><span id="rt-frangointeiro">--</span> °C</div></div>
+                <div class="card"><h3>Temperados (12ºC)</h3><div class="value text-blue"><span id="rt-temperados">--</span> °C</div></div>
+                <div class="card"><h3>Chillers (13ºC)</h3><div class="value text-blue"><span id="rt-chillers">--</span> °C</div></div>
+                <div class="card"><h3>Miúdos (13ºC)</h3><div class="value text-blue"><span id="rt-miudos">--</span> °C</div></div>
+                <div class="card"><h3>Padronização (12ºC)</h3><div class="value text-blue"><span id="rt-padronizacao">--</span> °C</div></div>
+                <div class="card"><h3>Paletização (11ºC)</h3><div class="value text-blue"><span id="rt-paletizacao">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Chillers</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Chil. Condicionais (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Ent. (16ºC)</h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pré-Chiller Saída (16ºC)</h3>
-                    <div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Ent. (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1 Saída (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Ent. (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2 Saída (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Coração (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Fígado (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Moela (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Cabeça (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 1 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller Pé 2 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Chil. Condicionais (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-condicionais">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Ent. (16ºC)</h3><div class="value text-blue"><span id="rt-pre-chiller-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Pré-Chiller Saída (16ºC)</h3><div class="value text-blue"><span id="rt-pre-chiller-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Ent. (4ºC)</h3><div class="value text-blue"><span id="rt-chiller1-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 1 Saída (4ºC)</h3><div class="value text-blue"><span id="rt-chiller1-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Ent. (4ºC)</h3><div class="value text-blue"><span id="rt-chiller2-entrada">--</span> °C</div></div>
+                <div class="card"><h3>Chiller 2 Saída (4ºC)</h3><div class="value text-blue"><span id="rt-chiller2-saida">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Coração (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-coracao">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Fígado (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-figado">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Moela (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-moela">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Cabeça (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-cabeca">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 1 (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-pe1">--</span> °C</div></div>
+                <div class="card"><h3>Chiller Pé 2 (4ºC)</h3><div class="value text-blue"><span id="rt-chiller-pe2">--</span> °C</div></div>
             </div>
 
             <h2 class="section-title">Abastecimento</h2>
             <div class="cards-grid" style="margin-bottom: 30px;">
-                <div class="card">
-                    <h3>Abast. Pré-Chiller (2ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Pré-Chiller</h3>
-                    <div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Abast. Chiller 2 (2ºC)</h3>
-                    <div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Retmac Chiller 2 (4ºC)</h3>
-                    <div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div>
-                </div>
+                <div class="card"><h3>Abast. Pré-Chiller (2ºC)</h3><div class="value text-blue"><span id="rt-abast-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Pré-Chiller</h3><div class="value text-blue"><span id="rt-retmac-pre-chiller">--</span> °C</div></div>
+                <div class="card"><h3>Abast. Chiller 2 (2ºC)</h3><div class="value text-blue"><span id="rt-abast-chiller2">--</span> °C</div></div>
+                <div class="card"><h3>Retmac Chiller 2 (4ºC)</h3><div class="value text-blue"><span id="rt-retmac-chiller2">--</span> °C</div></div>
             </div>
 
             <div class="charts-container">
@@ -1316,16 +673,12 @@
                             <option value="retmac_chiller2">Retmac Chiller 2</option>
                         </select>
                         <div class="chart-range-btns">
-                            <button class="btn-range active" id="btn-janela-2h-temp"
-                                onclick="mudarJanelaTempo('temp', 120)">🔍 Últimas 2h</button>
-                            <button class="btn-range" id="btn-janela-dia-temp"
-                                onclick="mudarJanelaTempo('temp', 'tudo')">📈 Dia Todo</button>
+                            <button class="btn-range active" id="btn-janela-2h-temp" onclick="mudarJanelaTempo('temp', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-temp" onclick="mudarJanelaTempo('temp', 'tudo')">📈 Dia Todo</button>
                         </div>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-temp"
-                                onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋
-                                Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-temp" onclick="alternarVisao('temp', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-temp" onclick="alternarVisao('temp', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1334,37 +687,13 @@
                     <table class="tabela-congelada">
                         <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Hora</th>
-                                <th>CMS</th>
-                                <th>Env. CMS</th>
-                                <th>Cortes 1</th>
-                                <th>Cortes 2</th>
-                                <th>Abast. IQF</th>
-                                <th>Emb. IQF</th>
-                                <th>F. Inteiro</th>
-                                <th>Temp.</th>
-                                <th>Chillers</th>
-                                <th>Miúdos</th>
-                                <th>Padron.</th>
-                                <th>Paletiz.</th>
-                                <th>Chil. Condic.</th>
-                                <th>Pré-Chil. Ent.</th>
-                                <th>Pré-Chil. Sai.</th>
-                                <th>Chil. 1 Ent.</th>
-                                <th>Chil. 1 Sai.</th>
-                                <th>Chil. 2 Ent.</th>
-                                <th>Chil. 2 Sai.</th>
-                                <th>Chil. Coração</th>
-                                <th>Chil. Fígado</th>
-                                <th>Chil. Moela</th>
-                                <th>Chil. Cabeça</th>
-                                <th>Chil. Pé 1</th>
-                                <th>Chil. Pé 2</th>
-                                <th>Abast. Pré-Chil.</th>
-                                <th>Retmac Pré-Chil.</th>
-                                <th>Abast. Chil. 2</th>
-                                <th>Retmac Chil. 2</th>
+                                <th>Data</th><th>Hora</th><th>CMS</th><th>Env. CMS</th><th>Cortes 1</th><th>Cortes 2</th>
+                                <th>Abast. IQF</th><th>Emb. IQF</th><th>F. Inteiro</th><th>Temp.</th><th>Chillers</th>
+                                <th>Miúdos</th><th>Padron.</th><th>Paletiz.</th><th>Chil. Condic.</th><th>Pré-Chil. Ent.</th>
+                                <th>Pré-Chil. Sai.</th><th>Chil. 1 Ent.</th><th>Chil. 1 Sai.</th><th>Chil. 2 Ent.</th>
+                                <th>Chil. 2 Sai.</th><th>Chil. Coração</th><th>Chil. Fígado</th><th>Chil. Moela</th>
+                                <th>Chil. Cabeça</th><th>Chil. Pé 1</th><th>Chil. Pé 2</th><th>Abast. Pré-Chil.</th>
+                                <th>Retmac Pré-Chil.</th><th>Abast. Chil. 2</th><th>Retmac Chil. 2</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-temp"></tbody>
@@ -1373,98 +702,47 @@
             </div>
         </div>
 
-        <!-- ================= TELA DE ENERGIA ================= -->
+        <!-- ENERGIA -->
         <div id="view-energia" class="view-section">
-            <!-- BANNER DE ALIMENTAÇÃO ELÉTRICA -->
             <div class="power-source-banner" id="card-fonte-alimentacao">
                 <div class="power-source-left">
                     <div class="power-icon-box" id="icone-fonte-alimentacao">⚡</div>
                     <div class="power-text-group">
                         <span class="power-eyebrow">Status de Alimentação da Planta</span>
                         <div class="power-title" id="titulo-fonte-alimentacao">Verificando fonte de energia...</div>
-                        <span class="power-subtitle" id="subtitulo-fonte-alimentacao">Sincronizando leitura com o painel
-                            principal</span>
+                        <span class="power-subtitle" id="subtitulo-fonte-alimentacao">Sincronizando leitura com o painel principal</span>
                     </div>
                 </div>
-
                 <div class="power-modes-switch">
-                    <div class="mode-chip" id="chip-copel">
-                        <span class="dot"></span>
-                        <span>Rede Copel</span>
-                    </div>
-                    <div class="mode-chip" id="chip-gerador">
-                        <span class="dot"></span>
-                        <span>Rede Geradores</span>
-                    </div>
+                    <div class="mode-chip" id="chip-copel"><span class="dot"></span><span>Rede Copel</span></div>
+                    <div class="mode-chip" id="chip-gerador"><span class="dot"></span><span>Rede Geradores</span></div>
                 </div>
             </div>
 
-            <h2 class="section-title">Resumo Geral (Fábrica - Estimativa Copel 34.5kV)</h2>
+            <h2 class="section-title">Resumo Geral (Fábrica)</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-total">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Acumulado Mensal</h3>
-                    <div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-total">--</span></div>
-                </div>
-                <div class="card">
-                    <h3>Custo Acumulado mês</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-total">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-total">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-total">--</span> kWh/h</div></div>
+                <div class="card"><h3>Acumulado Mensal</h3><div class="value text-purple"><span id="rt-mensal-total">--</span> kWh</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-total">--</span></div></div>
+                <div class="card"><h3>Custo Acumulado mês</h3><div class="value text-red">R$ <span id="rt-custo-mensal-total">--</span></div></div>
             </div>
 
-            <h2 class="section-title">Abatedouro (CCM1 + CCM2 - S/ Perdas)</h2>
+            <h2 class="section-title">Abatedouro</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-abatedouro">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-abatedouro">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-abatedouro">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-abatedouro">--</span></div></div>
             </div>
 
-            <h2 class="section-title">Sala de Máquinas (QGBT1 + QGBT2 - S/ Perdas)</h2>
+            <h2 class="section-title">Sala de Máquinas</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Consumo Real</h3>
-                    <div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div>
-                </div>
-                <div class="card">
-                    <h3>Consumo Hoje</h3>
-                    <div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div>
-                </div>
-                <div class="card">
-                    <h3>Média por Hora</h3>
-                    <div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div>
-                </div>
-                <div class="card">
-                    <h3>Custo Hoje</h3>
-                    <div class="value text-red">R$ <span id="rt-custo-sala">--</span></div>
-                </div>
+                <div class="card"><h3>Consumo Real</h3><div class="value text-orange"><span id="rt-pot-sala">--</span> kW</div></div>
+                <div class="card"><h3>Consumo Hoje</h3><div class="value text-success"><span id="rt-kwh-sala">--</span> kWh</div></div>
+                <div class="card"><h3>Média por Hora</h3><div class="value text-blue"><span id="rt-media-sala">--</span> kWh/h</div></div>
+                <div class="card"><h3>Custo Hoje</h3><div class="value text-red">R$ <span id="rt-custo-sala">--</span></div></div>
             </div>
 
             <div class="charts-container">
@@ -1478,16 +756,12 @@
                             <option value="qgbt2">QGBT2 (Sala de Máquinas)</option>
                         </select>
                         <div class="chart-range-btns">
-                            <button class="btn-range active" id="btn-janela-2h-energia"
-                                onclick="mudarJanelaTempo('energia', 120)">🔍 Últimas 2h</button>
-                            <button class="btn-range" id="btn-janela-dia-energia"
-                                onclick="mudarJanelaTempo('energia', 'tudo')">📈 Dia Todo</button>
+                            <button class="btn-range active" id="btn-janela-2h-energia" onclick="mudarJanelaTempo('energia', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-energia" onclick="mudarJanelaTempo('energia', 'tudo')">📈 Dia Todo</button>
                         </div>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-energia"
-                                onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-energia"
-                                onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-energia" onclick="alternarVisao('energia', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-energia" onclick="alternarVisao('energia', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1496,16 +770,9 @@
                     <table class="tabela-congelada">
                         <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Hora</th>
-                                <th>CCM1 Tensão (V)</th>
-                                <th>CCM1 Potência (kW)</th>
-                                <th>CCM2 Tensão (V)</th>
-                                <th>CCM2 Potência (kW)</th>
-                                <th>QGBT1 Tensão (V)</th>
-                                <th>QGBT1 Potência (kW)</th>
-                                <th>QGBT2 Tensão (V)</th>
-                                <th>QGBT2 Potência (kW)</th>
+                                <th>Data</th><th>Hora</th><th>CCM1 Tensão (V)</th><th>CCM1 Potência (kW)</th>
+                                <th>CCM2 Tensão (V)</th><th>CCM2 Potência (kW)</th><th>QGBT1 Tensão (V)</th>
+                                <th>QGBT1 Potência (kW)</th><th>QGBT2 Tensão (V)</th><th>QGBT2 Potência (kW)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-energia"></tbody>
@@ -1514,7 +781,7 @@
             </div>
         </div>
 
-        <!-- ================= TELA DE ÁGUA ================= -->
+        <!-- ÁGUA -->
         <div id="view-agua" class="view-section">
             <h2 class="section-title">Consumo de Água</h2>
             <div class="cards-grid">
@@ -1522,91 +789,31 @@
                     <h3 style="color: #0284c7; font-weight: bold;">Total Consumo Dia</h3>
                     <div class="value text-water"><span id="rt-total-agua-geral-soma">--</span> m³</div>
                 </div>
-                <div class="card">
-                    <h3>Pré-Chiller</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 1</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chiller 2</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Condicionais</h3>
-                    <div class="value text-water"><span id="rt-total-agua-condicionais">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Coração</h3>
-                    <div class="value text-water"><span id="rt-total-agua-coracao">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Fígado</h3>
-                    <div class="value text-water"><span id="rt-total-agua-figado">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Moela</h3>
-                    <div class="value text-water"><span id="rt-total-agua-moela">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Cabeça</h3>
-                    <div class="value text-water"><span id="rt-total-agua-cabeca">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Pé 1</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pe1">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Pé 2</h3>
-                    <div class="value text-water"><span id="rt-total-agua-pe2">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Chuveiro Final</h3>
-                    <div class="value text-water"><span id="rt-total-agua-chuveiro-final">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Tanque Escalda</h3>
-                    <div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Tanques Água</h3>
-                    <div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Geral Adutora / Abt</h3>
-                    <div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Geral Abatedouro</h3>
-                    <div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Escaldador Patas</h3>
-                    <div class="value text-water"><span id="rt-total-agua-escaldador-patas">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Água 65ºC (depenadeira)</h3>
-                    <div class="value text-water"><span id="rt-total-agua-saida-depenadeira">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Bomba Trocador das Placas</h3>
-                    <div class="value text-water"><span id="rt-total-agua-trocador-placas">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Hidrômetro Cozinha</h3>
-                    <div class="value text-water"><span id="rt-total-agua-cozinha">--</span> m³</div>
-                </div>
-                <div class="card">
-                    <h3>Administrativo</h3>
-                    <div class="value text-water"><span id="rt-total-agua-adm">--</span> m³</div>
-                </div>
-
+                <div class="card"><h3>Pré-Chiller</h3><div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div></div>
+                <div class="card"><h3>Chiller 1</h3><div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div></div>
+                <div class="card"><h3>Chiller 2</h3><div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div></div>
+                <div class="card"><h3>Condicionais</h3><div class="value text-water"><span id="rt-total-agua-condicionais">--</span> m³</div></div>
+                <div class="card"><h3>Coração</h3><div class="value text-water"><span id="rt-total-agua-coracao">--</span> m³</div></div>
+                <div class="card"><h3>Fígado</h3><div class="value text-water"><span id="rt-total-agua-figado">--</span> m³</div></div>
+                <div class="card"><h3>Moela</h3><div class="value text-water"><span id="rt-total-agua-moela">--</span> m³</div></div>
+                <div class="card"><h3>Cabeça</h3><div class="value text-water"><span id="rt-total-agua-cabeca">--</span> m³</div></div>
+                <div class="card"><h3>Pé 1</h3><div class="value text-water"><span id="rt-total-agua-pe1">--</span> m³</div></div>
+                <div class="card"><h3>Pé 2</h3><div class="value text-water"><span id="rt-total-agua-pe2">--</span> m³</div></div>
+                <div class="card"><h3>Chuveiro Final</h3><div class="value text-water"><span id="rt-total-agua-chuveiro-final">--</span> m³</div></div>
+                <div class="card"><h3>Tanque Escalda</h3><div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div></div>
+                <div class="card"><h3>Tanques Água</h3><div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div></div>
+                <div class="card"><h3>Geral Adutora / Abt</h3><div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div></div>
+                <div class="card"><h3>Geral Abatedouro</h3><div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div></div>
+                <div class="card"><h3>Escaldador Patas</h3><div class="value text-water"><span id="rt-total-agua-escaldador-patas">--</span> m³</div></div>
+                <div class="card"><h3>Água 65ºC (depenadeira)</h3><div class="value text-water"><span id="rt-total-agua-saida-depenadeira">--</span> m³</div></div>
+                <div class="card"><h3>Bomba Trocador das Placas</h3><div class="value text-water"><span id="rt-total-agua-trocador-placas">--</span> m³</div></div>
+                <div class="card"><h3>Cozinha</h3><div class="value text-water"><span id="rt-total-agua-cozinha">--</span> m³</div></div>
+                <div class="card"><h3>Administrativo</h3><div class="value text-water"><span id="rt-total-agua-adm">--</span> m³</div></div>
             </div>
+
             <div class="charts-container">
                 <div class="chart-header">
-                    <h3>Histórico de Água (Atualização por Minuto - DB21)</h3>
+                    <h3>Histórico de Água</h3>
                     <div class="chart-controls">
                         <select id="filtroAgua" class="select-filtro" onchange="desenharGraficos()">
                             <option value="pre_chiller">Pré-Chiller</option>
@@ -1631,16 +838,12 @@
                             <option value="adm">Administrativo</option>
                         </select>
                         <div class="chart-range-btns">
-                            <button class="btn-range active" id="btn-janela-2h-agua"
-                                onclick="mudarJanelaTempo('agua', 120)">🔍 Últimas 2h</button>
-                            <button class="btn-range" id="btn-janela-dia-agua"
-                                onclick="mudarJanelaTempo('agua', 'tudo')">📈 Dia Todo</button>
+                            <button class="btn-range active" id="btn-janela-2h-agua" onclick="mudarJanelaTempo('agua', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-agua" onclick="mudarJanelaTempo('agua', 'tudo')">📈 Dia Todo</button>
                         </div>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-agua"
-                                onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋
-                                Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-agua" onclick="alternarVisao('agua', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-agua" onclick="alternarVisao('agua', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1649,29 +852,13 @@
                     <table class="tabela-congelada">
                         <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Hora</th>
-                                <th style="background-color: #bae6fd; color: #0369a1;">Total Setores (m³)</th>
-                                <th>Pré-Chiller (m³)</th>
-                                <th>Chil. 1 (m³)</th>
-                                <th>Chil. 2 (m³)</th>
-                                <th>Condicionais (m³)</th>
-                                <th>Coração (m³)</th>
-                                <th>Fígado (m³)</th>
-                                <th>Moela (m³)</th>
-                                <th>Cabeça (m³)</th>
-                                <th>Pé 1 (m³)</th>
-                                <th>Pé 2 (m³)</th>
-                                <th>Chuveiro (m³)</th>
-                                <th>Tanq. Escalda (m³)</th>
-                                <th>Tanques Água (m³)</th>
-                                <th>Ger. Adut. Abt (m³)</th>
-                                <th>Ger. Abate (m³)</th>
-                                <th>Escaldador Patas (m³)</th>
-                                <th>Saída Depenadeira (m³)</th>
-                                <th>Trocador Placas (m³)</th>
-                                <th>Cozinha (m³)</th>
-                                <th>Adiministrativo (m³)</th>
+                                <th>Data</th><th>Hora</th><th style="background-color: #bae6fd; color: #0369a1;">Total Setores (m³)</th>
+                                <th>Pré-Chiller (m³)</th><th>Chil. 1 (m³)</th><th>Chil. 2 (m³)</th><th>Condicionais (m³)</th>
+                                <th>Coração (m³)</th><th>Fígado (m³)</th><th>Moela (m³)</th><th>Cabeça (m³)</th>
+                                <th>Pé 1 (m³)</th><th>Pé 2 (m³)</th><th>Chuveiro (m³)</th><th>Tanq. Escalda (m³)</th>
+                                <th>Tanques Água (m³)</th><th>Ger. Adut. Abt (m³)</th><th>Ger. Abate (m³)</th>
+                                <th>Escaldador Patas (m³)</th><th>Saída Depenadeira (m³)</th><th>Trocador Placas (m³)</th>
+                                <th>Cozinha (m³)</th><th>Administrativo (m³)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-agua"></tbody>
@@ -1680,54 +867,21 @@
             </div>
         </div>
 
-        <!-- ================= TELA DE UTILIDADES ================= -->
+        <!-- UTILIDADES -->
         <div id="view-utilidades" class="view-section">
-            <h2 class="section-title">Pressões e Utilidades (DB 29 e DB 23)</h2>
+            <h2 class="section-title">Pressões e Utilidades</h2>
             <div class="cards-grid">
-                <div class="card">
-                    <h3>Pressão de Ar</h3>
-                    <div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Rede Água Quente</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Potável</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Higienização</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Pressurizada</h3>
-                    <div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Água Hiperclorada</h3>
-                    <div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div>
-                </div>
-                <div class="card">
-                    <h3>Temperatura Glicol</h3>
-                    <div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão chuveiro Final</h3>
-                    <div class="value text-blue"><span id="rt-chuv_final">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão lav. final PL26</h3>
-                    <div class="value text-blue"><span id="rt-lav_final">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão rede lav. MEYN</h3>
-                    <div class="value text-blue"><span id="rt-lav_meyn">--</span> bar</div>
-                </div>
-                <div class="card">
-                    <h3>Pressão pós Evisc PL24</h3>
-                    <div class="value text-blue"><span id="rt-pos_evisc">--</span> bar</div>
-                </div>
+                <div class="card"><h3>Pressão de Ar</h3><div class="value text-gray"><span id="rt-pressao-ar">--</span> bar</div></div>
+                <div class="card"><h3>Rede Água Quente</h3><div class="value text-water"><span id="rt-pressao-agua-quente">--</span> bar</div></div>
+                <div class="card"><h3>Água Potável</h3><div class="value text-water"><span id="rt-pressao-agua-potavel">--</span> bar</div></div>
+                <div class="card"><h3>Água Higienização</h3><div class="value text-water"><span id="rt-pressao-agua-higienizacao">--</span> bar</div></div>
+                <div class="card"><h3>Água Pressurizada</h3><div class="value text-water"><span id="rt-pressao-agua-pressurizada">--</span> bar</div></div>
+                <div class="card"><h3>Água Hiperclorada</h3><div class="value text-water"><span id="rt-agua-hiperclorada">--</span> PPM</div></div>
+                <div class="card"><h3>Temperatura Glicol</h3><div class="value text-blue"><span id="rt-temp_glicol">--</span> °C</div></div>
+                <div class="card"><h3>Pressão chuveiro Final</h3><div class="value text-blue"><span id="rt-chuv_final">--</span> bar</div></div>
+                <div class="card"><h3>Pressão lav. final PL26</h3><div class="value text-blue"><span id="rt-lav_final">--</span> bar</div></div>
+                <div class="card"><h3>Pressão rede lav. MEYN</h3><div class="value text-blue"><span id="rt-lav_meyn">--</span> bar</div></div>
+                <div class="card"><h3>Pressão pós Evisc PL24</h3><div class="value text-blue"><span id="rt-pos_evisc">--</span> bar</div></div>
             </div>
 
             <div class="charts-container">
@@ -1748,16 +902,12 @@
                             <option value="pressao_pos_evisc">Pressão pós evisc.</option>
                         </select>
                         <div class="chart-range-btns">
-                            <button class="btn-range active" id="btn-janela-2h-utilidades"
-                                onclick="mudarJanelaTempo('utilidades', 120)">🔍 Últimas 2h</button>
-                            <button class="btn-range" id="btn-janela-dia-utilidades"
-                                onclick="mudarJanelaTempo('utilidades', 'tudo')">📈 Dia Todo</button>
+                            <button class="btn-range active" id="btn-janela-2h-utilidades" onclick="mudarJanelaTempo('utilidades', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-utilidades" onclick="mudarJanelaTempo('utilidades', 'tudo')">📈 Dia Todo</button>
                         </div>
                         <div class="view-toggle-btns">
-                            <button class="btn-toggle active" id="btn-graf-utilidades"
-                                onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
-                            <button class="btn-toggle" id="btn-tab-utilidades"
-                                onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
+                            <button class="btn-toggle active" id="btn-graf-utilidades" onclick="alternarVisao('utilidades', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-utilidades" onclick="alternarVisao('utilidades', 'tabela')">📋 Tabela</button>
                         </div>
                     </div>
                 </div>
@@ -1766,19 +916,10 @@
                     <table class="tabela-congelada">
                         <thead>
                             <tr>
-                                <th>Data</th>
-                                <th>Hora</th>
-                                <th>Pr. Ar (bar)</th>
-                                <th>Água Quente (bar)</th>
-                                <th>Água Potável (bar)</th>
-                                <th>Higienização (bar)</th>
-                                <th>Pressurizada (bar)</th>
-                                <th>Hiperclorada (PPM)</th>
-                                <th>Temperatura glicol</th>
-                                <th>Pressão chuv final</th>
-                                <th>Pressão lav. final</th>
-                                <th>Pressão lav. MEYN</th>
-                                <th>Pressão pós evisc.</th>
+                                <th>Data</th><th>Hora</th><th>Pr. Ar (bar)</th><th>Água Quente (bar)</th>
+                                <th>Água Potável (bar)</th><th>Higienização (bar)</th><th>Pressurizada (bar)</th>
+                                <th>Hiperclorada (PPM)</th><th>Temperatura glicol</th><th>Pressão chuv final</th>
+                                <th>Pressão lav. final</th><th>Pressão lav. MEYN</th><th>Pressão pós evisc.</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-utilidades"></tbody>
@@ -1787,31 +928,25 @@
             </div>
         </div>
 
-        <!-- ================= TELA DE REGISTROS (EVENTOS) ================= -->
+        <!-- REGISTROS -->
         <div id="view-registros" class="view-section">
             <div class="charts-container">
                 <div class="chart-header">
                     <h3>Histórico de Acionamentos e Alterações de Modo</h3>
                     <div class="chart-controls">
-                        <input type="text" id="filtroTextoRegistros" class="select-filtro"
-                            placeholder="Filtrar eventos..." oninput="filtrarTabelaRegistros()">
+                        <input type="text" id="filtroTextoRegistros" class="select-filtro" placeholder="Filtrar eventos..." oninput="filtrarTabelaRegistros()">
                     </div>
                 </div>
                 <div class="table-wrapper active" style="max-height: 550px;">
                     <table id="tabela-registros">
                         <thead>
                             <tr>
-                                <th style="min-width: 110px;">Data</th>
-                                <th style="min-width: 90px;">Hora</th>
-                                <th style="text-align: left; padding-left: 20px;">Descrição</th>
-                                <th style="min-width: 140px;">Status / Modo</th>
+                                <th style="min-width: 110px;">Data</th><th style="min-width: 90px;">Hora</th>
+                                <th style="text-align: left; padding-left: 20px;">Descrição</th><th style="min-width: 140px;">Status / Modo</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-registros">
-                            <tr>
-                                <td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">
-                                    Selecione o dia e clique em carregar.</td>
-                            </tr>
+                            <tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Selecione o dia e clique em carregar.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -1820,7 +955,7 @@
 
     </div>
 
-    <!-- ================= MODAL DE EXPORTAÇÃO POR PERÍODO ================= -->
+    <!-- MODAL DE EXPORTAÇÃO POR PERÍODO -->
     <div class="modal-overlay" id="modalExportacao">
         <div class="modal-box">
             <div class="modal-header">
@@ -1828,17 +963,13 @@
                 <button class="modal-close" onclick="fecharModalExportacao()">×</button>
             </div>
             <div class="modal-body">
-                <div class="modal-info-aba" id="modalSubtituloSetor">
-                    Módulo selecionado: <strong>Monitoramento de Temperaturas</strong>
-                </div>
-
+                <div class="modal-info-aba" id="modalSubtituloSetor">Módulo selecionado</div>
                 <div class="atalhos-periodo">
                     <button class="btn-atalho" onclick="definirAtalhoPeriodo(0)">Hoje</button>
                     <button class="btn-atalho" onclick="definirAtalhoPeriodo(7)">Últimos 7 dias</button>
                     <button class="btn-atalho" onclick="definirAtalhoPeriodo(15)">Últimos 15 dias</button>
                     <button class="btn-atalho" onclick="definirAtalhoMesAtual()">Mês Atual</button>
                 </div>
-
                 <div class="form-row">
                     <div class="form-group">
                         <label for="exportDataInicio">Data Inicial</label>
@@ -1849,23 +980,16 @@
                         <input type="date" id="exportDataFim" class="date-picker">
                     </div>
                 </div>
-
-                <div class="progress-status" id="statusExportacao">
-                    ⏳ Buscando dados no servidor... aguarde.
-                </div>
+                <div class="progress-status" id="statusExportacao">⏳ Buscando dados no servidor... aguarde.</div>
             </div>
             <div class="modal-footer">
                 <button class="btn-cancelar" onclick="fecharModalExportacao()">Cancelar</button>
-                <button class="btn-confirmar-export" id="btnConfirmarExportacao" onclick="processarExportacaoPeriodo()">
-                    Gerar Arquivo
-                </button>
+                <button class="btn-confirmar-export" id="btnConfirmarExportacao" onclick="processarExportacaoPeriodo()">Gerar Arquivo</button>
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        produzido por <strong>FERNANDO MACIEL</strong>
-    </div>
+    <div class="footer">produzido por <strong>FERNANDO MACIEL</strong></div>
 
     <script>
         const FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com';
@@ -1874,64 +998,8 @@
         const FATOR_PERDA_TRAFO = 1.02;
 
         let formatoExportacaoAtual = 'excel';
-
-        let janelasTempo = {
-            temp: 120,
-            energia: 120,
-            agua: 120,
-            utilidades: 120
-        };
-
-        function atualizarRelogio() {
-            const agora = new Date();
-            const diaSemana = agora.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
-            const dataStr = agora.toLocaleDateString('pt-BR');
-            const horaStr = agora.toLocaleTimeString('pt-BR');
-
-            const elData = document.getElementById('relogio-data');
-            const elHora = document.getElementById('relogio-hora');
-
-            if (elData) elData.innerText = `${diaSemana}, ${dataStr}`;
-            if (elHora) elHora.innerText = horaStr;
-        }
-
-        function extrairValor(obj, chaves, valorPadrao = '--') {
-            if (!obj) return valorPadrao;
-            for (const chave of chaves) {
-                if (obj[chave] !== undefined && obj[chave] !== null) {
-                    const num = Number(obj[chave]);
-                    if (!isNaN(num) && isFinite(num)) return num;
-                }
-            }
-            return valorPadrao;
-        }
-
-        function formatarBR(valor, casas = 1) {
-            if (valor === undefined || valor === null || valor === '--') return '--';
-            const num = Number(valor);
-            if (isNaN(num) || !isFinite(num)) return '--';
-            return num.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
-        }
-
-        // Atualiza o card APENAS se vier um número válido, mantendo o último valor na tela em caso de falha
-        function atualizarCardNumerico(id, valor, casas = 1) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (valor !== undefined && valor !== null && valor !== '--') {
-                const num = Number(valor);
-                if (!isNaN(num) && isFinite(num)) {
-                    el.innerText = num.toLocaleString('pt-BR', {
-                        minimumFractionDigits: casas,
-                        maximumFractionDigits: casas
-                    });
-                }
-            }
-        }
-
-        let graficoTempObj = null;
-        let graficoEnergiaObj = null;
-        let graficoAguaObj = null;
-        let graficoUtilidadesObj = null;
+        let janelasTempo = { temp: 120, energia: 120, agua: 120, utilidades: 120 };
+        let graficoTempObj = null, graficoEnergiaObj = null, graficoAguaObj = null, graficoUtilidadesObj = null;
         let dadosAcumulados = {};
         let listaRegistrosDia = [];
 
@@ -1949,17 +1017,22 @@
 
             setInterval(() => {
                 buscarTempoReal();
-                const dataAtualInput = document.getElementById('dataBusca').value;
-                const hojeStr = new Date().toISOString().split('T')[0];
-                if (dataAtualInput === hojeStr) {
+                if (document.getElementById('dataBusca').value === new Date().toISOString().split('T')[0]) {
                     buscarHistoricoSilencioso();
                 }
             }, 30000);
         };
 
-        function toggleMenu() {
-            document.getElementById('navItems').classList.toggle('open');
+        function atualizarRelogio() {
+            const agora = new Date();
+            const diaSemana = agora.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '');
+            const dataStr = agora.toLocaleDateString('pt-BR');
+            const horaStr = agora.toLocaleTimeString('pt-BR');
+            document.getElementById('relogio-data').innerText = `${diaSemana}, ${dataStr}`;
+            document.getElementById('relogio-hora').innerText = horaStr;
         }
+
+        function toggleMenu() { document.getElementById('navItems').classList.toggle('open'); }
 
         function trocarAba(aba, elemento) {
             document.getElementById('navItems').classList.remove('open');
@@ -1968,14 +1041,15 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(`view-${aba}`).classList.add('active');
 
-            if (aba === 'temperaturas') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Temperaturas';
-            if (aba === 'energia') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Energia (Quadros)';
-            if (aba === 'agua') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Água (Hidrômetros)';
-            if (aba === 'utilidades') document.getElementById('titulo-pagina').innerText = 'Monitoramento de Utilidades (Pressões)';
-            if (aba === 'registros') {
-                document.getElementById('titulo-pagina').innerText = 'Histórico de Registros de Acionamento';
-                buscarRegistrosDia();
-            }
+            const titulos = {
+                temperaturas: 'Monitoramento de Temperaturas',
+                energia: 'Monitoramento de Energia (Quadros)',
+                agua: 'Monitoramento de Água (Hidrômetros)',
+                utilidades: 'Monitoramento de Utilidades (Pressões)',
+                registros: 'Histórico de Registros de Acionamento'
+            };
+            document.getElementById('titulo-pagina').innerText = titulos[aba];
+            if (aba === 'registros') buscarRegistrosDia();
         }
 
         function alternarVisao(aba, tipo) {
@@ -1994,32 +1068,51 @@
 
         function mudarJanelaTempo(aba, valor) {
             janelasTempo[aba] = valor;
-
             document.getElementById(`btn-janela-2h-${aba}`).classList.remove('active');
             document.getElementById(`btn-janela-dia-${aba}`).classList.remove('active');
-
-            if (valor === 120) {
-                document.getElementById(`btn-janela-2h-${aba}`).classList.add('active');
-            } else {
-                document.getElementById(`btn-janela-dia-${aba}`).classList.add('active');
-            }
-
+            if (valor === 120) document.getElementById(`btn-janela-2h-${aba}`).classList.add('active');
+            else document.getElementById(`btn-janela-dia-${aba}`).classList.add('active');
             desenharGraficos();
+        }
+
+        function extrairValor(obj, chaves, padrao = '--') {
+            if (!obj) return padrao;
+            for (const chave of chaves) {
+                if (obj[chave] !== undefined && obj[chave] !== null) {
+                    const num = Number(obj[chave]);
+                    if (!isNaN(num) && isFinite(num)) return num;
+                }
+            }
+            return padrao;
+        }
+
+        function formatarBR(valor, casas = 1) {
+            if (valor === undefined || valor === null || valor === '--') return '--';
+            const num = Number(valor);
+            if (isNaN(num) || !isFinite(num)) return '--';
+            return num.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
+        }
+
+        function atualizarCardNumerico(id, valor, casas = 1) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (valor !== undefined && valor !== null && valor !== '--') {
+                const num = Number(valor);
+                if (!isNaN(num) && isFinite(num)) {
+                    el.innerText = num.toLocaleString('pt-BR', { minimumFractionDigits: casas, maximumFractionDigits: casas });
+                }
+            }
         }
 
         function atualizarComSetpoint(id, valor, setpoint) {
             const span = document.getElementById(id);
             if (!span) return;
             const divPai = span.parentElement;
-
             if (valor !== undefined && valor !== null && valor !== '--' && !isNaN(valor) && isFinite(valor)) {
                 span.innerText = formatarBR(valor, 1);
                 divPai.classList.remove('text-blue', 'text-success', 'text-danger', 'text-orange', 'text-red', 'text-purple');
-                if (Number(valor) <= setpoint) {
-                    divPai.classList.add('text-success');
-                } else {
-                    divPai.classList.add('text-red');
-                }
+                if (Number(valor) <= setpoint) divPai.classList.add('text-success');
+                else divPai.classList.add('text-red');
             }
         }
 
@@ -2032,7 +1125,6 @@
             const chipGerador = document.getElementById('chip-gerador');
 
             if (!banner || !titulo) return;
-
             banner.classList.remove('copel', 'gerador', 'alerta');
             chipCopel.classList.remove('active-copel');
             chipGerador.classList.remove('active-gerador');
@@ -2041,43 +1133,40 @@
                 banner.classList.add('copel');
                 icone.innerText = '⚡';
                 titulo.innerText = 'Alimentação pela Rede Copel';
-                subtitulo.innerText = 'Operação normal pela concessionária de energia elétrica';
+                subtitulo.innerText = 'Operação normal pela concessionária';
                 chipCopel.classList.add('active-copel');
             } else if (geradorAtivo && !copelAtivo) {
                 banner.classList.add('gerador');
                 icone.innerText = '🔋';
                 titulo.innerText = 'Alimentação pela Rede de Geradores';
-                subtitulo.innerText = 'Planta operando em regime de geração própria';
+                subtitulo.innerText = 'Planta operando em geração própria';
                 chipGerador.classList.add('active-gerador');
             } else if (copelAtivo && geradorAtivo) {
                 banner.classList.add('alerta');
                 icone.innerText = '⚠️';
-                titulo.innerText = 'Transferência em Andamento / Paralelismo';
-                subtitulo.innerText = 'Sinal simultâneo identificado entre Copel e Geradores';
+                titulo.innerText = 'Transferência / Paralelismo';
+                subtitulo.innerText = 'Sinal simultâneo Copel e Geradores';
                 chipCopel.classList.add('active-copel');
                 chipGerador.classList.add('active-gerador');
             } else {
                 banner.classList.add('alerta');
                 icone.innerText = '🔌';
                 titulo.innerText = 'Sem Confirmação de Rede';
-                subtitulo.innerText = 'Nenhuma fonte de alimentação ativa detectada no momento';
+                subtitulo.innerText = 'Nenhuma fonte ativa detectada';
             }
         }
 
-        // ================= TEMPO REAL =================
         async function buscarTempoReal() {
             try {
                 const [resTR, resAcum] = await Promise.all([
                     fetch(`${FIREBASE_URL}/tempo_real.json?auth=${FIREBASE_SECRET}`),
                     fetch(`${FIREBASE_URL}/acumulados_mes.json?auth=${FIREBASE_SECRET}`)
                 ]);
-
                 const dados = await resTR.json();
                 const dadosAcum = await resAcum.json();
 
                 if (dados) {
                     atualizarIndicadorFonteEnergia(Boolean(dados.i4099_0_copel), Boolean(dados.i4099_1_gerador));
-
                     atualizarComSetpoint('rt-cms', dados.temp_cms, 10);
                     atualizarComSetpoint('rt-envaseCms', dados.temp_envaseCms, 10);
                     atualizarComSetpoint('rt-salaCortes1', dados.temp_salaCortes1, 12);
@@ -2090,7 +1179,6 @@
                     atualizarComSetpoint('rt-miudos', dados.temp_miudos, 13);
                     atualizarComSetpoint('rt-padronizacao', dados.temp_padronizacao, 12);
                     atualizarComSetpoint('rt-paletizacao', dados.temp_paletizacao, 11);
-
                     atualizarComSetpoint('rt-chiller-condicionais', dados.temp_chiller_condicionais, 4);
                     atualizarComSetpoint('rt-pre-chiller-entrada', dados.temp_pre_chiller_entrada, 16);
                     atualizarComSetpoint('rt-pre-chiller-saida', dados.temp_pre_chiller_saida, 16);
@@ -2104,7 +1192,6 @@
                     atualizarComSetpoint('rt-chiller-cabeca', dados.temp_chiller_cabeca, 4);
                     atualizarComSetpoint('rt-chiller-pe1', dados.temp_chiller_pe1, 4);
                     atualizarComSetpoint('rt-chiller-pe2', dados.temp_chiller_pe2, 4);
-
                     atualizarComSetpoint('rt-abast-pre-chiller', dados.temp_abast_pre_chiller, 2);
                     atualizarComSetpoint('rt-retmac-pre-chiller', dados.temp_retmac_pre_chiller, 16);
                     atualizarComSetpoint('rt-abast-chiller2', dados.temp_abast_chiller2, 2);
@@ -2131,13 +1218,9 @@
                     atualizarCardNumerico('rt-total-agua-chuveiro-final', dados.agua_total_chuveiro_final);
                     atualizarCardNumerico('rt-total-agua-tanque-escalda', dados.agua_total_tanque_escalda);
 
-                    const valCozinhaTR = extrairValor(dados, ['agua_total_cozinha', 'agua_cozinha', 'agua_cons_cozinha']);
-                    atualizarCardNumerico('rt-total-agua-cozinha', valCozinhaTR);
-                    const valAdmTR = extrairValor(dados, ['agua_total_adm', 'agua_adm', 'agua_cons_adm']);
-                    atualizarCardNumerico('rt-total-agua-adm', valAdmTR);
-
-                    const valTanquesTR = extrairValor(dados, ['agua_total_tanques_agua', 'agua_total_tanque_agua', 'agua_total_tanques', 'agua_total_tanque']);
-                    atualizarCardNumerico('rt-total-agua-tanques-agua', valTanquesTR);
+                    atualizarCardNumerico('rt-total-agua-cozinha', extrairValor(dados, ['agua_total_cozinha', 'agua_cozinha']));
+                    atualizarCardNumerico('rt-total-agua-adm', extrairValor(dados, ['agua_total_adm', 'agua_adm']));
+                    atualizarCardNumerico('rt-total-agua-tanques-agua', extrairValor(dados, ['agua_total_tanques_agua', 'agua_tanques_agua'], 0));
 
                     atualizarCardNumerico('rt-total-agua-geral-adultora-abt', dados.agua_total_geral_adultora_abt);
                     atualizarCardNumerico('rt-total-agua-geral-abate', dados.agua_total_geral_abate);
@@ -2159,81 +1242,65 @@
                 }
 
                 if (dadosAcum) {
-                    let kwhAbatMes = dadosAcum.abatedouro || 0;
-                    let kwhSalaMes = dadosAcum.sala || 0;
-                    let kwhTotalMesLV = kwhAbatMes + kwhSalaMes;
-                    let kwhTotalMesHV = kwhTotalMesLV * FATOR_PERDA_TRAFO;
-
+                    let kwhTotalMesHV = ((dadosAcum.abatedouro || 0) + (dadosAcum.sala || 0)) * FATOR_PERDA_TRAFO;
                     atualizarCardNumerico('rt-mensal-total', kwhTotalMesHV, 1);
                     atualizarCardNumerico('rt-custo-mensal-total', kwhTotalMesHV * TARIFA_KWH, 2);
                 }
-            } catch (e) { }
+            } catch (e) {}
         }
 
-        // ================= HISTÓRICO DO DIA (VISUALIZAÇÃO TELA) =================
+        // BUSCAR HISTÓRICO DE QUALQUER DATA SELECIONADA NO CALENDÁRIO
         async function buscarHistorico() {
             const data = document.getElementById('dataBusca').value;
             dadosAcumulados = {};
-
             let url = `${FIREBASE_URL}/historico/${data}.json?auth=${FIREBASE_SECRET}`;
 
             try {
                 const res = await fetch(url);
                 const dadosDia = await res.json();
-
                 if (dadosDia && Object.keys(dadosDia).length > 0) {
                     dadosAcumulados = dadosDia;
                 } else {
-                    alert(`Não há registros salvos para o dia ${data.split('-').reverse().join('/')}.`);
+                    alert(`Não há registros salvos no Firebase para o dia ${data.split('-').reverse().join('/')}.`);
                 }
-
                 desenharGraficos();
                 preencherTabelas(data);
                 buscarRegistrosDia();
-
             } catch (e) {
-                console.error("Erro no histórico:", e);
+                console.error("Erro ao buscar histórico:", e);
             }
         }
 
         async function buscarHistoricoSilencioso() {
             const data = document.getElementById('dataBusca').value;
-            let url = `${FIREBASE_URL}/historico/${data}.json?auth=${FIREBASE_SECRET}`;
-
             try {
-                const res = await fetch(url);
+                const res = await fetch(`${FIREBASE_URL}/historico/${data}.json?auth=${FIREBASE_SECRET}`);
                 const dadosDia = await res.json();
-
                 if (dadosDia && Object.keys(dadosDia).length > 0) {
                     dadosAcumulados = dadosDia;
                     desenharGraficos();
                     preencherTabelas(data);
                     buscarRegistrosDia();
                 }
-            } catch (e) { }
+            } catch (e) {}
         }
 
         function preencherTabelas(data) {
             const horas = Object.keys(dadosAcumulados).sort((a, b) => b.localeCompare(a));
             let htmlTemp = '', htmlEnergia = '', htmlAgua = '', htmlUtilidades = '';
-
-            let kwhAbatedouro = 0, kwhSala = 0;
-            let totalLeituras = horas.length;
+            let kwhAbatedouro = 0, kwhSala = 0, totalLeituras = horas.length;
             const dataFormatada = data.split('-').reverse().join('/');
 
             let totaisAgua = {
-                total_geral_setores: 0,
-                pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
-                coracao: 0, figado: 0, moela: 0, cabeca: 0,
-                pe1: 0, pe2: 0, chuveiro: 0, tanque_escalda: 0,
-                tanques_agua: 0, geral_adutora: 0, geral_abate: 0,
-                escaldador_patas: 0, saida_depenadeira: 0, trocador_placas: 0, cozinha: 0, adm:0
+                total_geral_setores: 0, pre_chiller: 0, chiller1: 0, chiller2: 0, condicionais: 0,
+                coracao: 0, figado: 0, moela: 0, cabeca: 0, pe1: 0, pe2: 0, chuveiro: 0,
+                tanque_escalda: 0, tanques_agua: 0, geral_adutora: 0, geral_abate: 0,
+                escaldador_patas: 0, saida_depenadeira: 0, trocador_placas: 0, cozinha: 0, adm: 0
             };
             let qtdLinhasAgua = 0;
 
             horas.forEach(h => {
                 const d = dadosAcumulados[h];
-
                 kwhAbatedouro += ((d.ccm1_potencia || 0) + (d.ccm2_potencia || 0)) / 60;
                 kwhSala += ((d.qgbt1_potencia || 0) + (d.qgbt2_potencia || 0)) / 60;
 
@@ -2266,67 +1333,48 @@
 
                 if (d.agua_pre_chiller !== undefined || d.agua_chiller1 !== undefined) {
                     qtdLinhasAgua++;
-
-                    const vPreChiller = Number(d.agua_pre_chiller) || 0;
-                    const vChil1 = Number(d.agua_chiller1) || 0;
-                    const vChil2 = Number(d.agua_chiller2) || 0;
+                    const vPre = Number(d.agua_pre_chiller) || 0;
+                    const vC1 = Number(d.agua_chiller1) || 0;
+                    const vC2 = Number(d.agua_chiller2) || 0;
                     const vCond = Number(d.agua_condicionais) || 0;
-                    const vCoracao = Number(d.agua_coracao) || 0;
-                    const vFigado = Number(d.agua_figado) || 0;
-                    const vMoela = Number(d.agua_moela) || 0;
-                    const vCabeca = Number(d.agua_cabeca) || 0;
-                    const vPe1 = Number(d.agua_pe1) || 0;
-                    const vPe2 = Number(d.agua_pe2) || 0;
+                    const vCor = Number(d.agua_coracao) || 0;
+                    const vFig = Number(d.agua_figado) || 0;
+                    const vMoe = Number(d.agua_moela) || 0;
+                    const vCab = Number(d.agua_cabeca) || 0;
+                    const vP1 = Number(d.agua_pe1) || 0;
+                    const vP2 = Number(d.agua_pe2) || 0;
                     const vChuv = Number(d.agua_chuveiro_final) || 0;
-                    const vEscalda = Number(d.agua_tanque_escalda) || 0;
-
-                    const rawTanques = extrairValor(d, [
-                        'agua_tanques_agua', 'agua_tanque_agua'
-                    ], 0);
-                    const vTanques = Number(rawTanques) || 0;
-                    const vAdutora = Number(d.agua_geral_adultora_abt) || 0;
-                    const vAbate = Number(d.agua_geral_abate) || 0;
+                    const vEsc = Number(d.agua_tanque_escalda) || 0;
+                    const vTanq = Number(extrairValor(d, ['agua_tanques_agua', 'agua_tanque_agua'], 0)) || 0;
+                    const vAdut = Number(d.agua_geral_adultora_abt) || 0;
+                    const vAbt = Number(d.agua_geral_abate) || 0;
                     const vEscPatas = Number(d.agua_escaldador_patas) || 0;
                     const vSaiDep = Number(d.agua_saida_depenadeira) || 0;
                     const vTrocaP = Number(d.agua_trocador_placas) || 0;
-                    const vCozinha = Number(d.agua_cozinha) || 0;
+                    const vCoz = Number(d.agua_cozinha) || 0;
                     const vAdm = Number(d.agua_adm) || 0;
 
-                    const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond +
-                        vCoracao + vFigado + vMoela + vCabeca +
-                        vPe1 + vPe2 + vChuv + vEscalda + vEscPatas + vSaiDep + vTrocaP + vCozinha + vAdm;
+                    const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc + vEscPatas + vSaiDep + vTrocaP + vCoz + vAdm;
 
-                    totaisAgua.total_geral_setores += somaLinhaSetores;
-                    totaisAgua.pre_chiller += vPreChiller;
-                    totaisAgua.chiller1 += vChil1;
-                    totaisAgua.chiller2 += vChil2;
-                    totaisAgua.condicionais += vCond;
-                    totaisAgua.coracao += vCoracao;
-                    totaisAgua.figado += vFigado;
-                    totaisAgua.moela += vMoela;
-                    totaisAgua.cabeca += vCabeca;
-                    totaisAgua.pe1 += vPe1;
-                    totaisAgua.pe2 += vPe2;
-                    totaisAgua.chuveiro += vChuv;
-                    totaisAgua.tanque_escalda += vEscalda;
-                    totaisAgua.tanques_agua += vTanques;
-                    totaisAgua.geral_adutora += vAdutora;
-                    totaisAgua.geral_abate += vAbate;
-                    totaisAgua.escaldador_patas += vEscPatas;
-                    totaisAgua.saida_depenadeira += vSaiDep;
-                    totaisAgua.trocador_placas += vTrocaP;
-                    totaisAgua.cozinha += vCozinha;
-                    totaisAgua.adm += vAdm;
+                    totaisAgua.total_geral_setores += somaSetores;
+                    totaisAgua.pre_chiller += vPre; totaisAgua.chiller1 += vC1; totaisAgua.chiller2 += vC2;
+                    totaisAgua.condicionais += vCond; totaisAgua.coracao += vCor; totaisAgua.figado += vFig;
+                    totaisAgua.moela += vMoe; totaisAgua.cabeca += vCab; totaisAgua.pe1 += vP1;
+                    totaisAgua.pe2 += vP2; totaisAgua.chuveiro += vChuv; totaisAgua.tanque_escalda += vEsc;
+                    totaisAgua.tanques_agua += vTanq; totaisAgua.geral_adutora += vAdut; totaisAgua.geral_abate += vAbt;
+                    totaisAgua.escaldador_patas += vEscPatas; totaisAgua.saida_depenadeira += vSaiDep;
+                    totaisAgua.trocador_placas += vTrocaP; totaisAgua.cozinha += vCoz; totaisAgua.adm += vAdm;
 
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
-                        <td style="font-weight: bold; background-color: #f0f9ff; color: #0284c7;">${formatarBR(somaLinhaSetores)}</td>
-                        <td>${formatarBR(vPreChiller)}</td><td>${formatarBR(vChil1)}</td><td>${formatarBR(vChil2)}</td>
-                        <td>${formatarBR(vCond)}</td><td>${formatarBR(vCoracao)}</td><td>${formatarBR(vFigado)}</td>
-                        <td>${formatarBR(vMoela)}</td><td>${formatarBR(vCabeca)}</td><td>${formatarBR(vPe1)}</td>
-                        <td>${formatarBR(vPe2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEscalda)}</td>
-                        <td>${formatarBR(vTanques)}</td><td>${formatarBR(vAdutora)}</td><td>${formatarBR(vAbate)}</td>
-                        <td>${formatarBR(vEscPatas, 2)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td><td>${formatarBR(vCozinha)}</td>,<td>${formatarBR(vAdm)}</td>
+                        <td style="font-weight: bold; background-color: #f0f9ff; color: #0284c7;">${formatarBR(somaSetores)}</td>
+                        <td>${formatarBR(vPre)}</td><td>${formatarBR(vC1)}</td><td>${formatarBR(vC2)}</td>
+                        <td>${formatarBR(vCond)}</td><td>${formatarBR(vCor)}</td><td>${formatarBR(vFig)}</td>
+                        <td>${formatarBR(vMoe)}</td><td>${formatarBR(vCab)}</td><td>${formatarBR(vP1)}</td>
+                        <td>${formatarBR(vP2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEsc)}</td>
+                        <td>${formatarBR(vTanq)}</td><td>${formatarBR(vAdut)}</td><td>${formatarBR(vAbt)}</td>
+                        <td>${formatarBR(vEscPatas, 2)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td>
+                        <td>${formatarBR(vCoz)}</td><td>${formatarBR(vAdm)}</td>
                     </tr>`;
                 }
 
@@ -2343,12 +1391,10 @@
                 }
             });
 
-            const cardSomaGeral = document.getElementById('rt-total-agua-geral-soma');
-
             if (qtdLinhasAgua > 0) {
                 const linhaTotal = `<tr class="linha-total-dia">
                     <td>TOTAL DIA</td><td>SOMA</td>
-                    <td style="background-color: #0284c7 !important; color: #ffffff !important; font-size: 15px;">${formatarBR(totaisAgua.total_geral_setores)}</td>
+                    <td style="background-color: #0284c7 !important; color: #ffffff !important;">${formatarBR(totaisAgua.total_geral_setores)}</td>
                     <td>${formatarBR(totaisAgua.pre_chiller)}</td><td>${formatarBR(totaisAgua.chiller1)}</td>
                     <td>${formatarBR(totaisAgua.chiller2)}</td><td>${formatarBR(totaisAgua.condicionais)}</td>
                     <td>${formatarBR(totaisAgua.coracao)}</td><td>${formatarBR(totaisAgua.figado)}</td>
@@ -2361,17 +1407,13 @@
                     <td>${formatarBR(totaisAgua.cozinha)}</td><td>${formatarBR(totaisAgua.adm)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
-
-                const somaCardConsumoDia = totaisAgua.tanques_agua + totaisAgua.geral_adutora;
-                if (cardSomaGeral) cardSomaGeral.innerText = formatarBR(somaCardConsumoDia);
+                document.getElementById('rt-total-agua-geral-soma').innerText = formatarBR(totaisAgua.tanques_agua + totaisAgua.geral_adutora);
             } else {
-                if (cardSomaGeral) cardSomaGeral.innerText = '--';
+                document.getElementById('rt-total-agua-geral-soma').innerText = '--';
             }
 
-            let kwhTotalBaixa = kwhAbatedouro + kwhSala;
-            let kwhTotalAlta = kwhTotalBaixa * FATOR_PERDA_TRAFO;
-            let horasPassadas = totalLeituras / 60;
-            if (horasPassadas === 0) horasPassadas = 1;
+            let kwhTotalAlta = (kwhAbatedouro + kwhSala) * FATOR_PERDA_TRAFO;
+            let horasPassadas = (totalLeituras / 60) || 1;
 
             document.getElementById('rt-kwh-total').innerText = formatarBR(kwhTotalAlta, 1);
             document.getElementById('rt-media-total').innerText = formatarBR(kwhTotalAlta / horasPassadas, 1);
@@ -2387,130 +1429,68 @@
 
             document.getElementById('tbody-temp').innerHTML = htmlTemp;
             document.getElementById('tbody-energia').innerHTML = htmlEnergia;
-            document.getElementById('tbody-agua').innerHTML = htmlAgua !== '' ? htmlAgua : `<tr><td colspan="22" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro de 2 horas encontrado para o dia.</td></tr>`;
+            document.getElementById('tbody-agua').innerHTML = htmlAgua || `<tr><td colspan="23" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro encontrado.</td></tr>`;
             document.getElementById('tbody-utilidades').innerHTML = htmlUtilidades;
         }
 
-        // ================= REGISTROS E EVENTOS =================
         async function buscarRegistrosDia() {
             const data = document.getElementById('dataBusca').value;
-            const url = `${FIREBASE_URL}/registros/${data}.json?auth=${FIREBASE_SECRET}`;
-
             try {
-                const res = await fetch(url);
+                const res = await fetch(`${FIREBASE_URL}/registros/${data}.json?auth=${FIREBASE_SECRET}`);
                 const logs = await res.json();
                 const dataFormatada = data.split('-').reverse().join('/');
-
                 listaRegistrosDia = [];
 
                 if (logs) {
-                    if (Array.isArray(logs)) {
-                        listaRegistrosDia = logs.filter(item => item !== null);
-                    } else if (typeof logs === 'object') {
-                        listaRegistrosDia = Object.keys(logs).map(k => logs[k]);
-                    }
+                    listaRegistrosDia = Array.isArray(logs) ? logs.filter(i => i !== null) : Object.values(logs);
                 }
-
-                if (listaRegistrosDia.length === 0) {
-                    const dataObj = new Date(data + 'T12:00:00');
-                    dataObj.setDate(dataObj.getDate() - 1);
-                    const diaAnterior = dataObj.toISOString().split('T')[0];
-
-                    try {
-                        const resAnt = await fetch(`${FIREBASE_URL}/registros/${diaAnterior}.json?auth=${FIREBASE_SECRET}`);
-                        const logsAnt = await resAnt.json();
-
-                        if (logsAnt) {
-                            let listaAnt = Array.isArray(logsAnt) ? logsAnt.filter(i => i !== null) : Object.values(logsAnt);
-                            listaAnt.sort((a, b) => (b.hora || b.horario || '').localeCompare(a.hora || a.horario || ''));
-
-                            if (listaAnt.length > 0) {
-                                const ultimoDoDiaAnterior = listaAnt[0];
-                                listaRegistrosDia.push({
-                                    hora: '00:00:00',
-                                    equipamento: `${ultimoDoDiaAnterior.equipamento || 'Cuba de Insensibilização'} (Herdado do dia anterior)`,
-                                    tipo: ultimoDoDiaAnterior.tipo || ultimoDoDiaAnterior.mensagem,
-                                    mensagem: ultimoDoDiaAnterior.mensagem || ''
-                                });
-                            }
-                        }
-                    } catch (errAnt) { }
-                }
-
-                listaRegistrosDia.sort((a, b) => {
-                    const horaA = a.hora || a.horario || '';
-                    const horaB = b.hora || b.horario || '';
-                    return horaB.localeCompare(horaA);
-                });
+                listaRegistrosDia.sort((a, b) => (b.hora || b.horario || '').localeCompare(a.hora || a.horario || ''));
 
                 if (listaRegistrosDia.length > 0) {
                     renderizarLinhasRegistros(listaRegistrosDia, dataFormatada);
                 } else {
-                    document.getElementById('tbody-registros').innerHTML =
-                        `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros de acionamento cadastrados para este dia (${dataFormatada}).</td></tr>`;
+                    document.getElementById('tbody-registros').innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-light); padding: 25px;">Sem registros para esta data.</td></tr>`;
                 }
-            } catch (e) { }
+            } catch (e) {}
         }
 
         function obterBadgeRegistro(r) {
             const tipoTexto = (r.tipo || r.mensagem || '').toString().toLowerCase();
-
-            if (tipoTexto.includes('copel')) {
-                return '<span class="badge-copel">REDE COPEL</span>';
-            }
-            if (tipoTexto.includes('gerador')) {
-                return '<span class="badge-gerador">GERADORES</span>';
-            }
-            if (tipoTexto.includes('sem_rede') || tipoTexto.includes('sem confirmação')) {
-                return '<span class="badge-manual">SEM REDE</span>';
-            }
-            if (tipoTexto.includes('manual')) {
-                return '<span class="badge-manual">MANUAL</span>';
-            }
+            if (tipoTexto.includes('copel')) return '<span class="badge-copel">REDE COPEL</span>';
+            if (tipoTexto.includes('gerador')) return '<span class="badge-gerador">GERADORES</span>';
+            if (tipoTexto.includes('sem_rede') || tipoTexto.includes('sem confirmação')) return '<span class="badge-manual">SEM REDE</span>';
+            if (tipoTexto.includes('manual')) return '<span class="badge-manual">MANUAL</span>';
             return '<span class="badge-auto">AUTOMÁTICO</span>';
         }
 
         function renderizarLinhasRegistros(dados, dataFormatada) {
-            const tbody = document.getElementById('tbody-registros');
             let html = '';
-
             dados.forEach(r => {
-                const hora = r.hora || r.horario || '--:--:--';
-                const descricao = r.mensagem || r.equipamento || "Cuba de Insensibilização";
-                const badge = obterBadgeRegistro(r);
-
                 html += `<tr>
                     <td>${dataFormatada}</td>
-                    <td><strong>${hora}</strong></td>
-                    <td style="text-align: left; padding-left: 20px; font-weight: 500;">${descricao}</td>
-                    <td>${badge}</td>
+                    <td><strong>${r.hora || r.horario || '--:--:--'}</strong></td>
+                    <td style="text-align: left; padding-left: 20px; font-weight: 500;">${r.mensagem || r.equipamento || "Cuba"}</td>
+                    <td>${obterBadgeRegistro(r)}</td>
                 </tr>`;
             });
-
-            tbody.innerHTML = html;
+            document.getElementById('tbody-registros').innerHTML = html;
         }
 
         function filtrarTabelaRegistros() {
             const termo = document.getElementById('filtroTextoRegistros').value.toLowerCase();
             const dataFormatada = document.getElementById('dataBusca').value.split('-').reverse().join('/');
-
             const filtrados = listaRegistrosDia.filter(item => {
                 const hora = (item.hora || item.horario || '').toLowerCase();
-                const msg = (item.mensagem || item.equipamento || 'cuba de insensibilização').toLowerCase();
-                const tipo = (item.tipo || '').toLowerCase();
-                return hora.includes(termo) || msg.includes(termo) || tipo.includes(termo);
+                const msg = (item.mensagem || item.equipamento || '').toLowerCase();
+                return hora.includes(termo) || msg.includes(termo);
             });
             renderizarLinhasRegistros(filtrados, dataFormatada);
         }
 
-        // ================= GRÁFICOS =================
         function prepararDadosJanela(horas, dadosArray, aba) {
             let limite = janelasTempo[aba];
             if (limite !== 'tudo' && horas.length > limite) {
-                return {
-                    labels: horas.slice(horas.length - limite),
-                    data: dadosArray.slice(dadosArray.length - limite)
-                };
+                return { labels: horas.slice(horas.length - limite), data: dadosArray.slice(dadosArray.length - limite) };
             }
             return { labels: horas, data: dadosArray };
         }
@@ -2519,76 +1499,44 @@
             const horas = Object.keys(dadosAcumulados).sort();
             const configPadrao = { responsive: true, maintainAspectRatio: false, spanGaps: true };
 
-            // 1. TEMPERATURAS
+            // Temperaturas
             const filtroTemp = document.getElementById('filtroSetor').value;
-            const ctxTemp = document.getElementById('graficoTemp').getContext('2d');
             if (graficoTempObj) graficoTempObj.destroy();
-            let rawDataTemp = [], labelTemp = 'Temperatura (°C)';
-            if (filtroTemp !== 'todos') {
-                labelTemp = document.querySelector(`#filtroSetor option[value="${filtroTemp}"]`).innerText;
-                rawDataTemp = horas.map(h => dadosAcumulados[h]?.[`temp_${filtroTemp}`] ?? null);
-            } else {
-                labelTemp = "CMS (Referência)";
-                rawDataTemp = horas.map(h => dadosAcumulados[h]?.temp_cms ?? null);
-            }
+            let rawDataTemp = horas.map(h => dadosAcumulados[h]?.[filtroTemp !== 'todos' ? `temp_${filtroTemp}` : 'temp_cms'] ?? null);
             let resTemp = prepararDadosJanela(horas, rawDataTemp, 'temp');
-            graficoTempObj = new Chart(ctxTemp, { type: 'line', data: { labels: resTemp.labels, datasets: [{ label: labelTemp, data: resTemp.data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+            graficoTempObj = new Chart(document.getElementById('graficoTemp').getContext('2d'), {
+                type: 'line', data: { labels: resTemp.labels, datasets: [{ label: 'Temperatura (°C)', data: resTemp.data, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.1)', fill: true }] }, options: configPadrao
+            });
 
-            // 2. ENERGIA
+            // Energia
             const filtroEnergia = document.getElementById('filtroQuadro').value;
-            const ctxEnergia = document.getElementById('graficoEnergia').getContext('2d');
             if (graficoEnergiaObj) graficoEnergiaObj.destroy();
-            const labelEnergia = document.querySelector(`#filtroQuadro option[value="${filtroEnergia}"]`).innerText;
             let rawDataEnergia = horas.map(h => dadosAcumulados[h]?.[`${filtroEnergia}_potencia`] ?? null);
             let resEnergia = prepararDadosJanela(horas, rawDataEnergia, 'energia');
-            graficoEnergiaObj = new Chart(ctxEnergia, { type: 'line', data: { labels: resEnergia.labels, datasets: [{ label: `${labelEnergia} Potência (kW)`, data: resEnergia.data, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
+            graficoEnergiaObj = new Chart(document.getElementById('graficoEnergia').getContext('2d'), {
+                type: 'line', data: { labels: resEnergia.labels, datasets: [{ label: 'Potência (kW)', data: resEnergia.data, borderColor: '#ef4444', backgroundColor: 'rgba(239, 68, 68, 0.1)', fill: true }] }, options: configPadrao
+            });
 
-            // 3. ÁGUA
+            // Água
             const filtroAgua = document.getElementById('filtroAgua').value;
-            const ctxAgua = document.getElementById('graficoAgua').getContext('2d');
             if (graficoAguaObj) graficoAguaObj.destroy();
-            const chaveAgua = `agua_cons_${filtroAgua}`;
-            const labelAgua = document.querySelector(`#filtroAgua option[value="${filtroAgua}"]`).innerText;
-            let rawDataAgua = horas.map(h => {
-                const d = dadosAcumulados[h];
-                if (!d) return null;
-                if (filtroAgua === 'tanques_agua') {
-                    const v = extrairValor(d, ['agua_cons_tanques_agua', 'agua_cons_tanque_agua', 'agua_tanques_agua', 'agua_tanque_agua'], null);
-                    return v !== null && v !== '--' ? v : null;
-                }
-                if (filtroAgua === 'cozinha') {
-                    const v = extrairValor(d, ['agua_cons_cozinha', 'agua_cozinha', 'agua_total_cozinha'], null);
-                    return v !== null && v !== '--' ? v : null;
-                }
-                return d[chaveAgua] !== undefined && d[chaveAgua] !== null ? Number(d[chaveAgua]) : null;
-            });
+            let rawDataAgua = horas.map(h => dadosAcumulados[h]?.[`agua_cons_${filtroAgua}`] ?? null);
             let resAgua = prepararDadosJanela(horas, rawDataAgua, 'agua');
-            graficoAguaObj = new Chart(ctxAgua, { type: 'line', data: { labels: resAgua.labels, datasets: [{ label: `${labelAgua} (m³)`, data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true, tension: 0.2 }] }, options: configPadrao });
-
-            // 4. UTILIDADES
-            const filtroUtilidades = document.getElementById('filtroUtilidades').value;
-            const ctxUtilidades = document.getElementById('graficoUtilidades').getContext('2d');
-            if (graficoUtilidadesObj) graficoUtilidadesObj.destroy();
-            const labelUtilidades = document.querySelector(`#filtroUtilidades option[value="${filtroUtilidades}"]`).innerText;
-            let rawDataUtil = horas.map(h => {
-                const d = dadosAcumulados[h];
-                return d?.[filtroUtilidades] !== undefined && d[filtroUtilidades] !== null ? Number(d[filtroUtilidades]) : null;
+            graficoAguaObj = new Chart(document.getElementById('graficoAgua').getContext('2d'), {
+                type: 'line', data: { labels: resAgua.labels, datasets: [{ label: 'Consumo (m³)', data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true }] }, options: configPadrao
             });
+
+            // Utilidades
+            const filtroUtilidades = document.getElementById('filtroUtilidades').value;
+            if (graficoUtilidadesObj) graficoUtilidadesObj.destroy();
+            let rawDataUtil = horas.map(h => dadosAcumulados[h]?.[filtroUtilidades] ?? null);
             let resUtil = prepararDadosJanela(horas, rawDataUtil, 'utilidades');
-            graficoUtilidadesObj = new Chart(ctxUtilidades, {
-                type: 'line',
-                data: {
-                    labels: resUtil.labels,
-                    datasets: [{ label: `${labelUtilidades}`, data: resUtil.data, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true, tension: 0.2 }]
-                },
-                options: configPadrao
+            graficoUtilidadesObj = new Chart(document.getElementById('graficoUtilidades').getContext('2d'), {
+                type: 'line', data: { labels: resUtil.labels, datasets: [{ label: filtroUtilidades, data: resUtil.data, borderColor: '#64748b', backgroundColor: 'rgba(100, 116, 139, 0.1)', fill: true }] }, options: configPadrao
             });
         }
 
-        // =========================================================================
-        // SISTEMA DE EXPORTAÇÃO POR PERÍODO (EXCEL E PDF PROFISSIONAIS)
-        // =========================================================================
-
+        // EXPORTAÇÃO POR PERÍODO (EXCEL / PDF)
         function abrirModalExportacao(formato) {
             formatoExportacaoAtual = formato;
             const tituloAba = document.getElementById('titulo-pagina').innerText;
@@ -2615,15 +1563,12 @@
             document.getElementById('modalExportacao').classList.add('active');
         }
 
-        function fecharModalExportacao() {
-            document.getElementById('modalExportacao').classList.remove('active');
-        }
+        function fecharModalExportacao() { document.getElementById('modalExportacao').classList.remove('active'); }
 
         function definirAtalhoPeriodo(diasAtras) {
             const fim = new Date();
             const inicio = new Date();
             inicio.setDate(fim.getDate() - diasAtras);
-
             document.getElementById('exportDataInicio').value = inicio.toISOString().split('T')[0];
             document.getElementById('exportDataFim').value = fim.toISOString().split('T')[0];
         }
@@ -2639,7 +1584,6 @@
             const datas = [];
             let atual = new Date(dataInicioStr + 'T12:00:00');
             const fim = new Date(dataFimStr + 'T12:00:00');
-
             while (atual <= fim) {
                 datas.push(atual.toISOString().split('T')[0]);
                 atual.setDate(atual.getDate() + 1);
@@ -2656,18 +1600,10 @@
             const dataInicio = document.getElementById('exportDataInicio').value;
             const dataFim = document.getElementById('exportDataFim').value;
 
-            if (!dataInicio || !dataFim) {
-                return alert('Por favor, selecione a Data Inicial e a Data Final.');
-            }
-            if (dataInicio > dataFim) {
-                return alert('A Data Inicial não pode ser maior que a Data Final.');
-            }
+            if (!dataInicio || !dataFim) return alert('Selecione a Data Inicial e Final.');
+            if (dataInicio > dataFim) return alert('Data inicial maior que a final.');
 
             const listaDatas = gerarListaDatas(dataInicio, dataFim);
-            if (listaDatas.length > 62) {
-                if (!confirm(`Você selecionou um período de ${listaDatas.length} dias. Isso pode levar alguns segundos. Deseja continuar?`)) return;
-            }
-
             const statusBox = document.getElementById('statusExportacao');
             const btnConfirmar = document.getElementById('btnConfirmarExportacao');
             statusBox.style.display = 'block';
@@ -2677,53 +1613,34 @@
             const tituloRelatorio = document.getElementById('titulo-pagina').innerText;
 
             try {
-                let cabecalhos = [];
-                let linhasDados = [];
-                let linhaResumo = null;
+                let cabecalhos = [], linhasDados = [], linhaResumo = null;
 
                 if (viewAtiva === 'view-registros') {
-                    cabecalhos = ['Data', 'Hora', 'Descrição do Evento / Equipamento', 'Status / Modo'];
-
+                    cabecalhos = ['Data', 'Hora', 'Descrição', 'Status / Modo'];
                     for (let i = 0; i < listaDatas.length; i++) {
                         const dt = listaDatas[i];
-                        statusBox.innerText = `⏳ Carregando dia ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
+                        statusBox.innerText = `⏳ Carregando ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
                         const res = await fetch(`${FIREBASE_URL}/registros/${dt}.json?auth=${FIREBASE_SECRET}`);
                         const logs = await res.json();
                         if (!logs) continue;
-
                         let arrLogs = Array.isArray(logs) ? logs.filter(x => x !== null) : Object.values(logs);
-                        arrLogs.sort((a, b) => (a.hora || a.horario || '').localeCompare(b.hora || b.horario || ''));
-
-                        const dataBR = dt.split('-').reverse().join('/');
                         arrLogs.forEach(r => {
-                            const hora = r.hora || r.horario || '--:--:--';
-                            const desc = r.mensagem || r.equipamento || 'Cuba de Insensibilização';
-                            const tipoTxt = (r.tipo || r.mensagem || '').toString().toLowerCase();
-                            let modo = 'AUTOMÁTICO';
-                            if (tipoTxt.includes('copel')) modo = 'REDE COPEL';
-                            else if (tipoTxt.includes('gerador')) modo = 'GERADORES';
-                            else if (tipoTxt.includes('sem_rede') || tipoTxt.includes('sem confirmação')) modo = 'SEM REDE';
-                            else if (tipoTxt.includes('manual')) modo = 'MANUAL';
-
-                            linhasDados.push([dataBR, hora, desc, modo]);
+                            linhasDados.push([dt.split('-').reverse().join('/'), r.hora || '--', r.mensagem || r.equipamento || '', r.tipo || '']);
                         });
                     }
                 } else {
                     const mapaPorData = {};
                     for (let i = 0; i < listaDatas.length; i++) {
                         const dt = listaDatas[i];
-                        statusBox.innerText = `⏳ Carregando dia ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
+                        statusBox.innerText = `⏳ Puxando histórico de ${dt.split('-').reverse().join('/')} (${i + 1}/${listaDatas.length})...`;
                         const res = await fetch(`${FIREBASE_URL}/historico/${dt}.json?auth=${FIREBASE_SECRET}`);
                         const dadosDia = await res.json();
-                        if (dadosDia && Object.keys(dadosDia).length > 0) {
-                            mapaPorData[dt] = dadosDia;
-                        }
+                        if (dadosDia) mapaPorData[dt] = dadosDia;
                     }
-
-                    const resultadoMontagem = montarMatrizSetor(viewAtiva, mapaPorData);
-                    cabecalhos = resultadoMontagem.cabecalhos;
-                    linhasDados = resultadoMontagem.linhas;
-                    linhaResumo = resultadoMontagem.resumo;
+                    const resMontagem = montarMatrizSetor(viewAtiva, mapaPorData);
+                    cabecalhos = resMontagem.cabecalhos;
+                    linhasDados = resMontagem.linhas;
+                    linhaResumo = resMontagem.resumo;
                 }
 
                 if (linhasDados.length === 0) {
@@ -2731,8 +1648,6 @@
                     btnConfirmar.disabled = false;
                     return alert('Nenhum dado encontrado para o período selecionado.');
                 }
-
-                statusBox.innerText = '✨ Formatando documento...';
 
                 const periodoTexto = `${dataInicio.split('-').reverse().join('/')} a ${dataFim.split('-').reverse().join('/')}`;
                 const nomeArquivoBase = `${tituloRelatorio} (${dataInicio}_a_${dataFim})`;
@@ -2742,11 +1657,10 @@
                 } else {
                     gerarPDFProfissional(tituloRelatorio, periodoTexto, cabecalhos, linhasDados, linhaResumo, nomeArquivoBase, viewAtiva);
                 }
-
                 fecharModalExportacao();
             } catch (erro) {
-                console.error('Erro na exportação por período:', erro);
-                alert('Ocorreu um erro ao buscar ou gerar o relatório.');
+                console.error(erro);
+                alert('Erro ao processar exportação.');
             } finally {
                 statusBox.style.display = 'none';
                 btnConfirmar.disabled = false;
@@ -2754,331 +1668,80 @@
         }
 
         function montarMatrizSetor(viewAtiva, mapaPorData) {
-            let cabecalhos = [];
-            let linhas = [];
-            let resumo = null;
-
+            let cabecalhos = [], linhas = [], resumo = null;
             const datasOrdenadas = Object.keys(mapaPorData).sort();
 
             if (viewAtiva === 'view-temperaturas') {
-                cabecalhos = [
-                    'Data', 'Hora', 'CMS', 'Env. CMS', 'Cortes 1', 'Cortes 2',
-                    'Abast. IQF', 'Emb. IQF', 'F. Inteiro', 'Temperados',
-                    'Chillers', 'Miúdos', 'Padron.', 'Paletiz.',
-                    'Chil. Condic.', 'Pré-Chil. Ent.', 'Pré-Chil. Sai.',
-                    'Chil. 1 Ent.', 'Chil. 1 Sai.', 'Chil. 2 Ent.',
-                    'Chil. 2 Sai.', 'Chil. Coração', 'Chil. Fígado',
-                    'Chil. Moela', 'Chil. Cabeça', 'Chil. Pé 1',
-                    'Chil. Pé 2', 'Abast. Pré-Chil.', 'Retmac Pré-Chil.',
-                    'Abast. Chil. 2', 'Retmac Chil. 2'
-                ];
-
+                cabecalhos = ['Data', 'Hora', 'CMS', 'Env. CMS', 'Cortes 1', 'Cortes 2', 'Abast. IQF', 'Emb. IQF', 'F. Inteiro', 'Temperados', 'Chillers', 'Miúdos', 'Padron.', 'Paletiz.', 'Chil. Condic.', 'Pré-Chil. Ent.', 'Pré-Chil. Sai.', 'Chil. 1 Ent.', 'Chil. 1 Sai.', 'Chil. 2 Ent.', 'Chil. 2 Sai.', 'Chil. Coração', 'Chil. Fígado', 'Chil. Moela', 'Chil. Cabeça', 'Chil. Pé 1', 'Chil. Pé 2', 'Abast. Pré-Chil.', 'Retmac Pré-Chil.', 'Abast. Chil. 2', 'Retmac Chil. 2'];
                 datasOrdenadas.forEach(dt => {
                     const dataBR = dt.split('-').reverse().join('/');
-                    const horas = Object.keys(mapaPorData[dt]).sort();
-                    horas.forEach(h => {
+                    Object.keys(mapaPorData[dt]).sort().forEach(h => {
                         const d = mapaPorData[dt][h];
-                        linhas.push([
-                            dataBR, h,
-                            numOuVazio(d.temp_cms), numOuVazio(d.temp_envaseCms),
-                            numOuVazio(d.temp_salaCortes1), numOuVazio(d.temp_salaCortes2),
-                            numOuVazio(d.temp_abastiqf), numOuVazio(d.temp_embprimariaiqf),
-                            numOuVazio(d.temp_frangointeiro), numOuVazio(d.temp_temperados),
-                            numOuVazio(d.temp_chillers), numOuVazio(d.temp_miudos),
-                            numOuVazio(d.temp_padronizacao), numOuVazio(d.temp_paletizacao),
-                            numOuVazio(d.temp_chiller_condicionais), numOuVazio(d.temp_pre_chiller_entrada),
-                            numOuVazio(d.temp_pre_chiller_saida), numOuVazio(d.temp_chiller1_entrada),
-                            numOuVazio(d.temp_chiller1_saida), numOuVazio(d.temp_chiller2_entrada),
-                            numOuVazio(d.temp_chiller2_saida), numOuVazio(d.temp_chiller_coracao),
-                            numOuVazio(d.temp_chiller_figado), numOuVazio(d.temp_chiller_moela),
-                            numOuVazio(d.temp_chiller_cabeca), numOuVazio(d.temp_chiller_pe1),
-                            numOuVazio(d.temp_chiller_pe2), numOuVazio(d.temp_abast_pre_chiller),
-                            numOuVazio(d.temp_retmac_pre_chiller), numOuVazio(d.temp_abast_chiller2),
-                            numOuVazio(d.temp_retmac_chiller2)
-                        ]);
+                        linhas.push([dataBR, h, numOuVazio(d.temp_cms), numOuVazio(d.temp_envaseCms), numOuVazio(d.temp_salaCortes1), numOuVazio(d.temp_salaCortes2), numOuVazio(d.temp_abastiqf), numOuVazio(d.temp_embprimariaiqf), numOuVazio(d.temp_frangointeiro), numOuVazio(d.temp_temperados), numOuVazio(d.temp_chillers), numOuVazio(d.temp_miudos), numOuVazio(d.temp_padronizacao), numOuVazio(d.temp_paletizacao), numOuVazio(d.temp_chiller_condicionais), numOuVazio(d.temp_pre_chiller_entrada), numOuVazio(d.temp_pre_chiller_saida), numOuVazio(d.temp_chiller1_entrada), numOuVazio(d.temp_chiller1_saida), numOuVazio(d.temp_chiller2_entrada), numOuVazio(d.temp_chiller2_saida), numOuVazio(d.temp_chiller_coracao), numOuVazio(d.temp_chiller_figado), numOuVazio(d.temp_chiller_moela), numOuVazio(d.temp_chiller_cabeca), numOuVazio(d.temp_chiller_pe1), numOuVazio(d.temp_chiller_pe2), numOuVazio(d.temp_abast_pre_chiller), numOuVazio(d.temp_retmac_pre_chiller), numOuVazio(d.temp_abast_chiller2), numOuVazio(d.temp_retmac_chiller2)]);
                     });
                 });
-            }
-
-            else if (viewAtiva === 'view-energia') {
-                cabecalhos = [
-                    'Data', 'Hora',
-                    'CCM1 Tensão (V)', 'CCM1 Potência (kW)',
-                    'CCM2 Tensão (V)', 'CCM2 Potência (kW)',
-                    'QGBT1 Tensão (V)', 'QGBT1 Potência (kW)',
-                    'QGBT2 Tensão (V)', 'QGBT2 Potência (kW)'
-                ];
-
+            } else if (viewAtiva === 'view-energia') {
+                cabecalhos = ['Data', 'Hora', 'CCM1 Tensão (V)', 'CCM1 Potência (kW)', 'CCM2 Tensão (V)', 'CCM2 Potência (kW)', 'QGBT1 Tensão (V)', 'QGBT1 Potência (kW)', 'QGBT2 Tensão (V)', 'QGBT2 Potência (kW)'];
                 datasOrdenadas.forEach(dt => {
                     const dataBR = dt.split('-').reverse().join('/');
-                    const horas = Object.keys(mapaPorData[dt]).sort();
-                    horas.forEach(h => {
+                    Object.keys(mapaPorData[dt]).sort().forEach(h => {
                         const d = mapaPorData[dt][h];
-                        linhas.push([
-                            dataBR, h,
-                            numOuVazio(d.ccm1_tensao), numOuVazio(d.ccm1_potencia),
-                            numOuVazio(d.ccm2_tensao), numOuVazio(d.ccm2_potencia),
-                            numOuVazio(d.qgbt1_tensao), numOuVazio(d.qgbt1_potencia),
-                            numOuVazio(d.qgbt2_tensao), numOuVazio(d.qgbt2_potencia)
-                        ]);
+                        linhas.push([dataBR, h, numOuVazio(d.ccm1_tensao), numOuVazio(d.ccm1_potencia), numOuVazio(d.ccm2_tensao), numOuVazio(d.ccm2_potencia), numOuVazio(d.qgbt1_tensao), numOuVazio(d.qgbt1_potencia), numOuVazio(d.qgbt2_tensao), numOuVazio(d.qgbt2_potencia)]);
                     });
                 });
-            }
-
-            else if (viewAtiva === 'view-agua') {
-                cabecalhos = [
-                    'Data', 'Hora', 'Total Setores (m³)',
-                    'Pré-Chiller (m³)', 'Chil. 1 (m³)', 'Chil. 2 (m³)',
-                    'Condicionais (m³)', 'Coração (m³)', 'Fígado (m³)',
-                    'Moela (m³)', 'Cabeça (m³)', 'Pé 1 (m³)',
-                    'Pé 2 (m³)', 'Chuveiro (m³)', 'Tanq. Escalda (m³)',
-                    'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)',
-                    'Escaldador Patas (m³)', 'Saída Depenadeira (m³)', 'Trocador Placas (m³)',
-                    'Cozinha (m³)','adm (m³)'
-                ];
-
-                let acumulados = new Array(20).fill(0);
-
+            } else if (viewAtiva === 'view-agua') {
+                cabecalhos = ['Data', 'Hora', 'Total Setores (m³)', 'Pré-Chiller (m³)', 'Chil. 1 (m³)', 'Chil. 2 (m³)', 'Condicionais (m³)', 'Coração (m³)', 'Fígado (m³)', 'Moela (m³)', 'Cabeça (m³)', 'Pé 1 (m³)', 'Pé 2 (m³)', 'Chuveiro (m³)', 'Tanq. Escalda (m³)', 'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)', 'Escaldador Patas (m³)', 'Saída Depenadeira (m³)', 'Trocador Placas (m³)', 'Cozinha (m³)', 'Adm (m³)'];
+                let acumulados = new Array(21).fill(0);
                 datasOrdenadas.forEach(dt => {
                     const dataBR = dt.split('-').reverse().join('/');
-                    const horas = Object.keys(mapaPorData[dt]).sort();
-                    horas.forEach(h => {
+                    Object.keys(mapaPorData[dt]).sort().forEach(h => {
                         const d = mapaPorData[dt][h];
-                        if (d.agua_pre_chiller !== undefined || d.agua_chiller1 !== undefined) {
-                            const vPre = Number(d.agua_pre_chiller) || 0;
-                            const vC1 = Number(d.agua_chiller1) || 0;
-                            const vC2 = Number(d.agua_chiller2) || 0;
-                            const vCond = Number(d.agua_condicionais) || 0;
-                            const vCor = Number(d.agua_coracao) || 0;
-                            const vFig = Number(d.agua_figado) || 0;
-                            const vMoe = Number(d.agua_moela) || 0;
-                            const vCab = Number(d.agua_cabeca) || 0;
-                            const vP1 = Number(d.agua_pe1) || 0;
-                            const vP2 = Number(d.agua_pe2) || 0;
-                            const vChuv = Number(d.agua_chuveiro_final) || 0;
-                            const vEsc = Number(d.agua_tanque_escalda) || 0;
-                            const vCoz = Number(d.agua_cozinha) || 0;
-                            const vAdm = Number(d.agua_adm) || 0;
-
-                            const rawTanq = extrairValor(d, [
-                                'agua_tanques_agua', 'agua_tanque_agua'
-                            ], 0);
-                            const vTanq = Number(rawTanq) || 0;
-                            const vAdut = Number(d.agua_geral_adultora_abt) || 0;
-                            const vAbt = Number(d.agua_geral_abate) || 0;
-                            const vEscPatas = Number(d.agua_escaldador_patas) || 0;
-                            const vSaiDep = Number(d.agua_saida_depenadeira) || 0;
-                            const vTrocaP = Number(d.agua_trocador_placas) || 0;
-
-                            const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc + vEscPatas + vSaiDep + vTrocaP + vCoz;
-
-                            const valoresLinha = [
-                                somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt, vEscPatas, vSaiDep, vTrocaP, vCoz
-                            ].map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)));
-
+                        if (d.agua_pre_chiller !== undefined) {
+                            const vPre = Number(d.agua_pre_chiller) || 0, vC1 = Number(d.agua_chiller1) || 0, vC2 = Number(d.agua_chiller2) || 0, vCond = Number(d.agua_condicionais) || 0, vCor = Number(d.agua_coracao) || 0, vFig = Number(d.agua_figado) || 0, vMoe = Number(d.agua_moela) || 0, vCab = Number(d.agua_cabeca) || 0, vP1 = Number(d.agua_pe1) || 0, vP2 = Number(d.agua_pe2) || 0, vChuv = Number(d.agua_chuveiro_final) || 0, vEsc = Number(d.agua_tanque_escalda) || 0, vTanq = Number(extrairValor(d, ['agua_tanques_agua', 'agua_tanque_agua'], 0)) || 0, vAdut = Number(d.agua_geral_adultora_abt) || 0, vAbt = Number(d.agua_geral_abate) || 0, vEscPatas = Number(d.agua_escaldador_patas) || 0, vSaiDep = Number(d.agua_saida_depenadeira) || 0, vTrocaP = Number(d.agua_trocador_placas) || 0, vCoz = Number(d.agua_cozinha) || 0, vAdm = Number(d.agua_adm) || 0;
+                            const somaSetores = vPre + vC1 + vC2 + vCond + vCor + vFig + vMoe + vCab + vP1 + vP2 + vChuv + vEsc + vEscPatas + vSaiDep + vTrocaP + vCoz + vAdm;
+                            const valoresLinha = [somaSetores, vPre, vC1, vC2, vCond, vCor, vFig, vMoe, vCab, vP1, vP2, vChuv, vEsc, vTanq, vAdut, vAbt, vEscPatas, vSaiDep, vTrocaP, vCoz, vAdm].map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)));
                             valoresLinha.forEach((val, idx) => acumulados[idx] += val);
-
                             linhas.push([dataBR, h, ...valoresLinha]);
                         }
                     });
                 });
-
-                if (linhas.length > 0) {
-                    resumo = ['TOTAL PERÍODO', 'SOMA (m³)', ...acumulados.map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)))];
-                }
-            }
-
-            else if (viewAtiva === 'view-utilidades') {
-                cabecalhos = [
-                    'Data', 'Hora',
-                    'Pr. Ar (bar)', 'Água Quente (bar)', 'Água Potável (bar)',
-                    'Higienização (bar)', 'Pressurizada (bar)', 'Hiperclorada (PPM)',
-                    'Temp. Glicol (°C)', 'Pr. Chuv. Final (bar)', 'Pr. Lav. Final (bar)',
-                    'Pr. Lav. MEYN (bar)', 'Pr. Pós Evisc. (bar)'
-                ];
-
+                if (linhas.length > 0) resumo = ['TOTAL PERÍODO', 'SOMA', ...acumulados.map((v, idx) => Number(v.toFixed(idx === 16 ? 2 : 1)))];
+            } else if (viewAtiva === 'view-utilidades') {
+                cabecalhos = ['Data', 'Hora', 'Pr. Ar (bar)', 'Água Quente (bar)', 'Água Potável (bar)', 'Higienização (bar)', 'Pressurizada (bar)', 'Hiperclorada (PPM)', 'Temp. Glicol (°C)', 'Pr. Chuv. Final (bar)', 'Pr. Lav. Final (bar)', 'Pr. Lav. MEYN (bar)', 'Pr. Pós Evisc. (bar)'];
                 datasOrdenadas.forEach(dt => {
                     const dataBR = dt.split('-').reverse().join('/');
-                    const horas = Object.keys(mapaPorData[dt]).sort();
-                    horas.forEach(h => {
+                    Object.keys(mapaPorData[dt]).sort().forEach(h => {
                         const d = mapaPorData[dt][h];
                         if (d.pressao_ar !== undefined) {
-                            linhas.push([
-                                dataBR, h,
-                                numOuVazio(d.pressao_ar), numOuVazio(d.pressao_agua_quente),
-                                numOuVazio(d.pressao_agua_potavel), numOuVazio(d.pressao_agua_higienizacao),
-                                numOuVazio(d.pressao_agua_pressurizada), numOuVazio(d.agua_hiperclorada),
-                                numOuVazio(d.temp_glicol), numOuVazio(d.pressao_chuv_final),
-                                numOuVazio(d.pressao_lav_final), numOuVazio(d.pressao_lav_meyn),
-                                numOuVazio(d.pressao_pos_evisc)
-                            ]);
+                            linhas.push([dataBR, h, numOuVazio(d.pressao_ar), numOuVazio(d.pressao_agua_quente), numOuVazio(d.pressao_agua_potavel), numOuVazio(d.pressao_agua_higienizacao), numOuVazio(d.pressao_agua_pressurizada), numOuVazio(d.agua_hiperclorada), numOuVazio(d.temp_glicol), numOuVazio(d.pressao_chuv_final), numOuVazio(d.pressao_lav_final), numOuVazio(d.pressao_lav_meyn), numOuVazio(d.pressao_pos_evisc)]);
                         }
                     });
                 });
             }
-
             return { cabecalhos, linhas, resumo };
         }
 
-        // ================= GERAÇÃO DE EXCEL BEM FORMATADO =================
-        function gerarExcelProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo) {
-            const agora = new Date().toLocaleString('pt-BR');
-
-            const matrizPlanilha = [
-                [`SUPERVISÓRIO INDUSTRIAL INTEGRADO - ${titulo.toUpperCase()}`],
-                [`Período Filtrado: ${periodo}   |   Emitido em: ${agora}   |   Total de Registros: ${linhas.length}`],
-                [],
-                cabecalhos
-            ];
-
-            if (linhaResumo) {
-                matrizPlanilha.push(linhaResumo);
+        function gerenciarExportacaoGenerica(ext, titulo, periodo, cabecalhos, linhas, resumo, nomeArquivo) {
+            if (ext === 'excel') {
+                const matriz = [[`SUPERVISÓRIO - ${titulo}`], [`Período: ${periodo}`], [], cabecalhos];
+                if (resumo) matriz.push(resumo);
+                linhas.forEach(l => matriz.push(l));
+                const ws = XLSX.utils.aoa_to_sheet(matriz);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Relatório");
+                XLSX.writeFile(wb, `${nomeArquivo}.xlsx`);
+            } else {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('l', 'pt', 'a4');
+                doc.text(`Relatório: ${titulo} (${periodo})`, 30, 30);
+                const corpo = resumo ? [resumo, ...linhas] : linhas;
+                doc.autoTable({ head: [cabecalhos], body: corpo, startY: 50, styles: { fontSize: 7 } });
+                doc.save(`${nomeArquivo}.pdf`);
             }
-
-            linhas.forEach(l => {
-                const linhaFormatada = l.map((val, idx) => (val === null ? '--' : val));
-                matrizPlanilha.push(linhaFormatada);
-            });
-
-            const ws = XLSX.utils.aoa_to_sheet(matrizPlanilha);
-
-            ws['!merges'] = [
-                { s: { r: 0, c: 0 }, e: { r: 0, c: Math.min(cabecalhos.length - 1, 10) } },
-                { s: { r: 1, c: 0 }, e: { r: 1, c: Math.min(cabecalhos.length - 1, 10) } }
-            ];
-
-            const range = XLSX.utils.decode_range(ws['!ref']);
-            for (let R = 4; R <= range.e.r; ++R) {
-                for (let C = 2; C <= range.e.c; ++C) {
-                    const addr = XLSX.utils.encode_cell({ r: R, c: C });
-                    const cell = ws[addr];
-                    if (cell && typeof cell.v === 'number') {
-                        cell.t = 'n';
-                        cell.z = (cabecalhos[C] === 'Escaldador Patas (m³)') ? '#,##0.00' : '#,##0.0';
-                    }
-                }
-            }
-
-            const colWidths = cabecalhos.map((cab, colIdx) => {
-                let maxLen = cab ? cab.toString().length : 10;
-                for (let r = 4; r < Math.min(matrizPlanilha.length, 200); r++) {
-                    const val = matrizPlanilha[r][colIdx];
-                    if (val !== undefined && val !== null) {
-                        const len = val.toString().length;
-                        if (len > maxLen) maxLen = len;
-                    }
-                }
-                return { wch: Math.max(maxLen + 4, 11) };
-            });
-            ws['!cols'] = colWidths;
-
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, "Relatório");
-            XLSX.writeFile(wb, `${nomeArquivo}.xlsx`);
         }
-
-        // ================= GERAÇÃO DE PDF EXECUTIVO =================
-        function gerarPDFProfissional(titulo, periodo, cabecalhos, linhas, linhaResumo, nomeArquivo, viewAtiva) {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('l', 'pt', 'a4');
-            const larguraPagina = doc.internal.pageSize.getWidth();
-            const alturaPagina = doc.internal.pageSize.getHeight();
-            const agora = new Date().toLocaleString('pt-BR');
-
-            doc.setFillColor(30, 41, 59);
-            doc.rect(0, 0, larguraPagina, 62, 'F');
-
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(15);
-            doc.setFont('helvetica', 'bold');
-            doc.text(`SUPERVISÓRIO INDUSTRIAL - ${titulo.toUpperCase()}`, 30, 26);
-
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            doc.setTextColor(203, 213, 225);
-            doc.text(`Período analisado: ${periodo}   |   Registros listados: ${linhas.length}`, 30, 45);
-            doc.text(`Emitido em: ${agora}`, larguraPagina - 30, 45, { align: 'right' });
-
-            const corpoPDF = [];
-
-            if (linhaResumo) {
-                corpoPDF.push(linhaResumo.map((val, i) => {
-                    if (i >= 2 && typeof val === 'number') {
-                        const casas = (viewAtiva === 'view-agua' && i === 18) ? 2 : 1;
-                        return formatarBR(val, casas);
-                    }
-                    return val;
-                }));
-            }
-
-            linhas.forEach(l => {
-                corpoPDF.push(l.map((val, i) => {
-                    if (val === null || val === undefined) return '--';
-                    if (i >= 2 && typeof val === 'number') {
-                        const casas = (viewAtiva === 'view-agua' && i === 18) ? 2 : 1;
-                        return formatarBR(val, casas);
-                    }
-                    return val;
-                }));
-            });
-
-            const qtdColunas = cabecalhos.length;
-            const tamanhoFonte = qtdColunas > 20 ? 5.5 : (qtdColunas > 12 ? 7 : 8.5);
-            const paddingCelula = qtdColunas > 20 ? 2 : 4;
-
-            doc.autoTable({
-                head: [cabecalhos],
-                body: corpoPDF,
-                startY: 75,
-                margin: { left: 20, right: 20, bottom: 35 },
-                theme: 'grid',
-                styles: {
-                    fontSize: tamanhoFonte,
-                    cellPadding: paddingCelula,
-                    halign: 'center',
-                    valign: 'middle',
-                    lineColor: [226, 232, 240],
-                    lineWidth: 0.5,
-                    textColor: [51, 65, 85]
-                },
-                headStyles: {
-                    fillColor: [30, 41, 59],
-                    textColor: [255, 255, 255],
-                    fontStyle: 'bold',
-                    fontSize: tamanhoFonte
-                },
-                alternateRowStyles: {
-                    fillColor: [248, 250, 252]
-                },
-                didParseCell: function (data) {
-                    if (linhaResumo && data.section === 'body' && data.row.index === 0) {
-                        data.cell.styles.fillColor = [186, 230, 253];
-                        data.cell.styles.textColor = [3, 105, 161];
-                        data.cell.styles.fontStyle = 'bold';
-                    }
-                    if (viewAtiva === 'view-registros' && data.section === 'body' && data.column.index === 2) {
-                        data.cell.styles.halign = 'left';
-                    }
-                },
-                didDrawPage: function (data) {
-                    doc.setFontSize(8);
-                    doc.setTextColor(148, 163, 184);
-                    doc.text(
-                        `Supervisório Industrial Integrado - Produzido por Fernando Maciel`,
-                        20,
-                        alturaPagina - 15
-                    );
-                    doc.text(
-                        `Página ${doc.internal.getNumberOfPages()}`,
-                        larguraPagina - 20,
-                        alturaPagina - 15,
-                        { align: 'right' }
-                    );
-                }
-            });
-
-            doc.save(`${nomeArquivo}.pdf`);
-        }
+        
+        function gerarExcelProfissional(t, p, c, l, r, n) { gerenciarExportacaoGenerica('excel', t, p, c, l, r, n); }
+        function gerarPDFProfissional(t, p, c, l, r, n, v) { gerenciarExportacaoGenerica('pdf', t, p, c, l, r, n); }
     </script>
 </body>
 
