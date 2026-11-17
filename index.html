@@ -1598,6 +1598,10 @@
                     <h3>Hidrômetro Cozinha</h3>
                     <div class="value text-water"><span id="rt-total-agua-cozinha">--</span> m³</div>
                 </div>
+                <div class="card">
+                    <h3>Administrativo</h3>
+                    <div class="value text-water"><span id="rt-total-agua-adm">--</span> m³</div>
+                </div>
 
             </div>
             <div class="charts-container">
@@ -1624,6 +1628,7 @@
                             <option value="saida_depenadeira">Saída Depenadeira</option>
                             <option value="trocador_placas">Trocador Placas</option>
                             <option value="cozinha">Cozinha</option>
+                            <option value="adm">Administrativo</option>
                         </select>
                         <div class="chart-range-btns">
                             <button class="btn-range active" id="btn-janela-2h-agua"
@@ -1666,6 +1671,7 @@
                                 <th>Saída Depenadeira (m³)</th>
                                 <th>Trocador Placas (m³)</th>
                                 <th>Cozinha (m³)</th>
+                                <th>Adiministrativo (m³)</th>
                             </tr>
                         </thead>
                         <tbody id="tbody-agua"></tbody>
@@ -1861,7 +1867,7 @@
         produzido por <strong>FERNANDO MACIEL</strong>
     </div>
 
-<script>
+    <script>
         const FIREBASE_URL = 'https://planta-supervisorio-default-rtdb.firebaseio.com';
         const FIREBASE_SECRET = 'CR79C5ymIpFJyFnNeLXDkMrBDMkrKYP7afhQ0LUF';
         const TARIFA_KWH = 0.50;
@@ -2127,6 +2133,8 @@
 
                     const valCozinhaTR = extrairValor(dados, ['agua_total_cozinha', 'agua_cozinha', 'agua_cons_cozinha']);
                     atualizarCardNumerico('rt-total-agua-cozinha', valCozinhaTR);
+                    const valAdmTR = extrairValor(dados, ['agua_total_adm', 'agua_adm', 'agua_cons_adm']);
+                    atualizarCardNumerico('rt-total-agua-adm', valAdmTR);
 
                     const valTanquesTR = extrairValor(dados, ['agua_total_tanques_agua', 'agua_total_tanque_agua', 'agua_total_tanques', 'agua_total_tanque']);
                     atualizarCardNumerico('rt-total-agua-tanques-agua', valTanquesTR);
@@ -2219,7 +2227,7 @@
                 coracao: 0, figado: 0, moela: 0, cabeca: 0,
                 pe1: 0, pe2: 0, chuveiro: 0, tanque_escalda: 0,
                 tanques_agua: 0, geral_adutora: 0, geral_abate: 0,
-                escaldador_patas: 0, saida_depenadeira: 0, trocador_placas: 0, cozinha: 0
+                escaldador_patas: 0, saida_depenadeira: 0, trocador_placas: 0, cozinha: 0, adm:0
             };
             let qtdLinhasAgua = 0;
 
@@ -2282,10 +2290,11 @@
                     const vSaiDep = Number(d.agua_saida_depenadeira) || 0;
                     const vTrocaP = Number(d.agua_trocador_placas) || 0;
                     const vCozinha = Number(d.agua_cozinha) || 0;
+                    const vAdm = Number(d.agua_adm) || 0;
 
                     const somaLinhaSetores = vPreChiller + vChil1 + vChil2 + vCond +
                         vCoracao + vFigado + vMoela + vCabeca +
-                        vPe1 + vPe2 + vChuv + vEscalda + vEscPatas + vSaiDep + vTrocaP + vCozinha;
+                        vPe1 + vPe2 + vChuv + vEscalda + vEscPatas + vSaiDep + vTrocaP + vCozinha + vAdm;
 
                     totaisAgua.total_geral_setores += somaLinhaSetores;
                     totaisAgua.pre_chiller += vPreChiller;
@@ -2307,6 +2316,7 @@
                     totaisAgua.saida_depenadeira += vSaiDep;
                     totaisAgua.trocador_placas += vTrocaP;
                     totaisAgua.cozinha += vCozinha;
+                    totaisAgua.adm += vAdm;
 
                     htmlAgua += `<tr>
                         <td>${dataFormatada}</td><td>${h}</td>
@@ -2316,7 +2326,7 @@
                         <td>${formatarBR(vMoela)}</td><td>${formatarBR(vCabeca)}</td><td>${formatarBR(vPe1)}</td>
                         <td>${formatarBR(vPe2)}</td><td>${formatarBR(vChuv)}</td><td>${formatarBR(vEscalda)}</td>
                         <td>${formatarBR(vTanques)}</td><td>${formatarBR(vAdutora)}</td><td>${formatarBR(vAbate)}</td>
-                        <td>${formatarBR(vEscPatas, 2)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td><td>${formatarBR(vCozinha)}</td>
+                        <td>${formatarBR(vEscPatas, 2)}</td><td>${formatarBR(vSaiDep)}</td><td>${formatarBR(vTrocaP)}</td><td>${formatarBR(vCozinha)}</td>,<td>${formatarBR(vAdm)}</td>
                     </tr>`;
                 }
 
@@ -2348,7 +2358,7 @@
                     <td>${formatarBR(totaisAgua.tanques_agua)}</td><td>${formatarBR(totaisAgua.geral_adutora)}</td>
                     <td>${formatarBR(totaisAgua.geral_abate)}</td><td>${formatarBR(totaisAgua.escaldador_patas, 2)}</td>
                     <td>${formatarBR(totaisAgua.saida_depenadeira)}</td><td>${formatarBR(totaisAgua.trocador_placas)}</td>
-                    <td>${formatarBR(totaisAgua.cozinha)}</td>
+                    <td>${formatarBR(totaisAgua.cozinha)}</td><td>${formatarBR(totaisAgua.adm)}</td>
                 </tr>`;
                 htmlAgua = linhaTotal + htmlAgua;
 
@@ -2824,7 +2834,7 @@
                     'Pé 2 (m³)', 'Chuveiro (m³)', 'Tanq. Escalda (m³)',
                     'Tanques Água (m³)', 'Ger. Adut. Abt (m³)', 'Ger. Abate (m³)',
                     'Escaldador Patas (m³)', 'Saída Depenadeira (m³)', 'Trocador Placas (m³)',
-                    'Cozinha (m³)'
+                    'Cozinha (m³)','adm (m³)'
                 ];
 
                 let acumulados = new Array(20).fill(0);
@@ -2848,6 +2858,7 @@
                             const vChuv = Number(d.agua_chuveiro_final) || 0;
                             const vEsc = Number(d.agua_tanque_escalda) || 0;
                             const vCoz = Number(d.agua_cozinha) || 0;
+                            const vAdm = Number(d.agua_adm) || 0;
 
                             const rawTanq = extrairValor(d, [
                                 'agua_tanques_agua', 'agua_tanque_agua'
