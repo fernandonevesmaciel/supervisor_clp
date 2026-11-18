@@ -900,10 +900,10 @@
                     <h3 style="color: #0284c7; font-weight: bold;">Total Consumo Dia</h3>
                     <div class="value text-water"><span id="rt-total-agua-geral-soma">--</span> m³</div>
                 </div>
-                <!-- NOVO CARD DE VAZÃO MOMENTÂNEA -->
-                <div class="card" style="border-left: 4px solid #0284c7;">
-                    <h3>Vazão Momentânea Adutora</h3>
-                    <div class="value text-water"><span id="rt-vazao-momentanea-adutora">--</span> m³/min</div>
+                
+                <div class="card" style="border-left: 4px solid #0284c7; background: #f8fafc;">
+                    <h3 style="color: #0369a1;">Média (adultora + tanques)</h3>
+                    <div class="value text-water"><span id="rt-vazao-momentanea-adutora">--</span> m³/h</div>
                 </div>
                 <div class="card"><h3>Pré-Chiller</h3><div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div></div>
                 <div class="card"><h3>Chiller 1</h3><div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div></div>
@@ -919,7 +919,7 @@
                 <div class="card"><h3>Tanque Escalda</h3><div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div></div>
                 <div class="card"><h3>Tanques Água</h3><div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div></div>
                 <div class="card"><h3>Geral Adutora / Abt</h3><div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div></div>
-                
+
                 <div class="card"><h3>Geral Abatedouro</h3><div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div></div>
                 <div class="card"><h3>Escaldador Patas</h3><div class="value text-water"><span id="rt-total-agua-escaldador-patas">--</span> m³</div></div>
                 <div class="card"><h3>Água 65ºC (depenadeira)</h3><div class="value text-water"><span id="rt-total-agua-saida-depenadeira">--</span> m³</div></div>
@@ -983,19 +983,35 @@
                 </div>
             </div>
 
-            <!-- NOVO GRÁFICO EXCLUSIVO PARA CONSUMO MOMENTÂNEO DA GERAL ADUTORA ABT -->
+            <!-- GRÁFICO EXCLUSIVO PARA VAZÃO PROJETADA POR HORA (ADUTORA + TANQUES DE ÁGUA) -->
             <div class="charts-container" style="margin-top: 25px;">
                 <div class="chart-header">
-                    <h3>Consumo Momentâneo - Geral Adutora Abt (m³/min)</h3>
+                    <h3>Gráfico Vazão Instantânea - Adutora + Tanques de Água (m³/h)</h3>
                     <div class="chart-controls">
                         <div class="chart-range-btns">
                             <button class="btn-range active" id="btn-janela-2h-agua-mom" onclick="mudarJanelaTempo('agua_mom', 120)">🔍 Últimas 2h</button>
                             <button class="btn-range" id="btn-janela-dia-agua-mom" onclick="mudarJanelaTempo('agua_mom', 'tudo')">📈 Dia Todo</button>
                         </div>
+                        <div class="view-toggle-btns">
+                            <button class="btn-toggle active" id="btn-graf-agua_mom" onclick="alternarVisao('agua_mom', 'grafico')">📊 Gráfico</button>
+                            <button class="btn-toggle" id="btn-tab-agua_mom" onclick="alternarVisao('agua_mom', 'tabela')">📋 Tabela</button>
+                        </div>
                     </div>
                 </div>
                 <div id="wrapper-graf-agua-mom" class="chart-wrapper">
                     <canvas id="graficoAguaMomentaneo"></canvas>
+                </div>
+                <div id="wrapper-tab-agua_mom" class="table-wrapper">
+                    <table class="tabela-congelada">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Hora</th>
+                                <th style="background-color: #bae6fd; color: #0369a1;">Vazão Média Horária (m³/h)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-agua-mom"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -1658,54 +1674,78 @@
                 type: 'line', data: { labels: resAgua.labels, datasets: [{ label: 'Consumo (m³)', data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true }] }, options: configPadrao
             });
 
-            // Consumo Momentâneo Geral Adutora Abt (m³/min)
+            // Vazão Média Horária Instantânea: (Δ Adutora + Δ Tanques Água) * 60
             if (graficoAguaMomObj) graficoAguaMomObj.destroy();
-            let rawDataAdutora = horas.map(h => dadosAcumulados[h]?.['agua_cons_geral_adultora_abt'] ?? null);
-            let dadosMomentaneosAdutora = [];
-            let ultimoValorValido = null;
+            let dadosVazaoHoraCombinada = [];
+            let ultimoAdutora = null;
+            let ultimoTanques = null;
 
-            for (let i = 0; i < rawDataAdutora.length; i++) {
-                let valAtual = rawDataAdutora[i];
+            for (let i = 0; i < horas.length; i++) {
+                let reg = dadosAcumulados[horas[i]];
+                let valAdut = reg?.['agua_cons_geral_adultora_abt'];
+                let valTanq = reg?.['agua_cons_tanques_agua'] ?? reg?.['agua_cons_tanque_agua'];
 
-                if (valAtual === null || valAtual === undefined) {
-                    dadosMomentaneosAdutora.push(null);
+                if ((valAdut === null || valAdut === undefined) && (valTanq === null || valTanq === undefined)) {
+                    dadosVazaoHoraCombinada.push(null);
                     continue;
                 }
 
-                valAtual = Number(valAtual);
-
-                if (ultimoValorValido === null) {
-                    dadosMomentaneosAdutora.push(0);
-                } else if (valAtual >= ultimoValorValido) {
-                    dadosMomentaneosAdutora.push(Number((valAtual - ultimoValorValido).toFixed(2)));
-                } else {
-                    dadosMomentaneosAdutora.push(Number(valAtual.toFixed(2)));
+                let deltaAdut = 0;
+                if (valAdut !== null && valAdut !== undefined) {
+                    valAdut = Number(valAdut);
+                    if (ultimoAdutora === null) {
+                        deltaAdut = 0;
+                    } else if (valAdut >= ultimoAdutora) {
+                        deltaAdut = valAdut - ultimoAdutora;
+                    } else {
+                        deltaAdut = valAdut; // Virada de hora (reset do acumulador)
+                    }
+                    ultimoAdutora = valAdut;
                 }
 
-                ultimoValorValido = valAtual;
+                let deltaTanq = 0;
+                if (valTanq !== null && valTanq !== undefined) {
+                    valTanq = Number(valTanq);
+                    if (ultimoTanques === null) {
+                        deltaTanq = 0;
+                    } else if (valTanq >= ultimoTanques) {
+                        deltaTanq = valTanq - ultimoTanques;
+                    } else {
+                        deltaTanq = valTanq; // Virada de hora (reset do acumulador)
+                    }
+                    ultimoTanques = valTanq;
+                }
+
+                // Soma os dois consumos do minuto e multiplica por 60 para obter a projeção/média em m³/h
+                let somaMinuto = deltaAdut + deltaTanq;
+                let vazaoHoraria = Number((somaMinuto * 60).toFixed(1));
+                dadosVazaoHoraCombinada.push(vazaoHoraria);
             }
 
-            const valoresReaisMom = dadosMomentaneosAdutora.filter(v => v !== null);
+            const valoresReaisMom = dadosVazaoHoraCombinada.filter(v => v !== null);
             if (valoresReaisMom.length > 0) {
-                const ultimoConsumoMinuto = valoresReaisMom[valoresReaisMom.length - 1];
-                atualizarCardNumerico('rt-vazao-momentanea-adutora', ultimoConsumoMinuto, 2);
+                const ultimaVazaoHora = valoresReaisMom[valoresReaisMom.length - 1];
+                atualizarCardNumerico('rt-vazao-momentanea-adutora', ultimaVazaoHora, 1);
             } else {
                 const elMom = document.getElementById('rt-vazao-momentanea-adutora');
                 if (elMom) elMom.innerText = '--';
             }
 
-            let resAguaMom = prepararDadosJanela(horas, dadosMomentaneosAdutora, 'agua_mom');
+            let resAguaMom = prepararDadosJanela(horas, dadosVazaoHoraCombinada, 'agua_mom');
             graficoAguaMomObj = new Chart(document.getElementById('graficoAguaMomentaneo').getContext('2d'), {
-                type: 'bar',
+                type: 'line',
                 data: {
                     labels: resAguaMom.labels,
                     datasets: [{
-                        label: 'Vazão Momentânea (m³/min)',
+                        label: 'Vazão Projetada (m³/h)',
                         data: resAguaMom.data,
                         borderColor: '#0284c7',
-                        backgroundColor: 'rgba(2, 132, 199, 0.7)',
-                        borderWidth: 1,
-                        borderRadius: 3
+                        backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.1,
+                        pointRadius: 2,
+                        pointHoverRadius: 5
                     }]
                 },
                 options: {
@@ -1713,11 +1753,29 @@
                     scales: {
                         y: {
                             beginAtZero: true,
-                            title: { display: true, text: 'm³ / minuto' }
+                            title: { display: true, text: 'm³ / hora' }
                         }
                     }
                 }
             });
+
+            // Preencher tabela de Vazão Média Horária
+            let htmlAguaMomTab = '';
+            const dataFormatadaTab = document.getElementById('dataBusca').value.split('-').reverse().join('/');
+            for (let i = horas.length - 1; i >= 0; i--) {
+                let val = dadosVazaoHoraCombinada[i];
+                if (val !== null && val !== undefined) {
+                    htmlAguaMomTab += `<tr>
+                        <td>${dataFormatadaTab}</td>
+                        <td>${horas[i]}</td>
+                        <td style="font-weight: bold; background-color: #f0f9ff; color: #0284c7;">${formatarBR(val, 1)}</td>
+                    </tr>`;
+                }
+            }
+            const tbodyAguaMomEl = document.getElementById('tbody-agua-mom');
+            if (tbodyAguaMomEl) {
+                tbodyAguaMomEl.innerHTML = htmlAguaMomTab || `<tr><td colspan="3" style="text-align: center; color: var(--text-light); padding: 20px;">Nenhum registro encontrado.</td></tr>`;
+            }
 
             // Utilidades
             const filtroUtilidades = document.getElementById('filtroUtilidades').value;
