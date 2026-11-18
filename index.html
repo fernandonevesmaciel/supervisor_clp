@@ -38,11 +38,11 @@
 
         body {
             display: flex;
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
             background-color: var(--bg-color);
             color: var(--text-main);
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .sidebar {
@@ -53,6 +53,11 @@
             flex-direction: column;
             flex-shrink: 0;
             z-index: 1000;
+            position: fixed;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            transition: transform 0.3s ease;
         }
 
         .sidebar-header {
@@ -80,6 +85,7 @@
             display: flex;
             flex-direction: column;
             width: 100%;
+            overflow-y: auto;
         }
 
         .menu-item {
@@ -102,10 +108,9 @@
 
         .main-content {
             flex: 1;
+            margin-left: 250px;
             padding: 30px;
-            padding-bottom: 70px;
-            overflow-y: auto;
-            overflow-x: hidden;
+            padding-bottom: 90px;
             min-width: 0;
             position: relative;
         }
@@ -197,6 +202,7 @@
         .export-group {
             display: flex;
             gap: 8px;
+            flex-wrap: wrap;
         }
 
         .date-picker,
@@ -538,16 +544,121 @@
         .btn-cancelar { padding: 9px 16px; background: #e2e8f0; color: #475569; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
         .btn-confirmar-export { padding: 9px 20px; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
+        /* RESPONSIVIDADE / MEDIA QUERIES PARA CELULAR */
         @media (max-width: 768px) {
-            body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; position: relative; }
-            .sidebar-header { justify-content: space-between; padding: 15px 20px; }
-            .hamburger { display: block; }
-            .nav-items { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--sidebar-bg); z-index: 1001; }
-            .nav-items.open { display: flex; }
-            .main-content { padding: 12px; padding-bottom: 70px; }
-            .header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .footer { left: 0; width: 100vw; }
+            body {
+                flex-direction: column;
+                overflow-x: hidden;
+            }
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: auto;
+                left: auto;
+            }
+            .sidebar-header {
+                justify-content: space-between;
+                padding: 15px 20px;
+            }
+            .hamburger {
+                display: block;
+            }
+            .nav-items {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--sidebar-bg);
+                z-index: 1001;
+                max-height: 300px;
+                overflow-y: auto;
+            }
+            .nav-items.open {
+                display: flex;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 15px;
+                padding-bottom: 90px;
+                width: 100%;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 15px;
+            }
+            .header h1 {
+                font-size: 22px;
+                text-align: center;
+            }
+            .header-controls {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+            }
+            .scada-clock-box {
+                width: 100%;
+                justify-content: center;
+            }
+            .date-picker, .select-filtro, .btn-atualizar {
+                width: 100%;
+            }
+            .export-group {
+                flex-direction: column;
+                width: 100%;
+            }
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .card {
+                padding: 14px 10px;
+                min-width: 0;
+            }
+            .card h3 {
+                font-size: 11px;
+                white-space: normal;
+                line-height: 1.2;
+                margin-bottom: 6px;
+            }
+            .card .value {
+                font-size: 19px;
+            }
+            .power-source-banner {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .power-modes-switch {
+                justify-content: center;
+            }
+            .chart-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .chart-controls {
+                flex-direction: column;
+                align-items: stretch;
+                width: 100%;
+            }
+            .chart-range-btns, .view-toggle-btns {
+                width: 100%;
+                display: flex;
+            }
+            .btn-range, .btn-toggle {
+                flex: 1;
+                text-align: center;
+            }
+            .chart-wrapper {
+                height: 280px;
+            }
+            .footer {
+                left: 0;
+                width: 100vw;
+                font-size: 11px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -1249,7 +1360,6 @@
             } catch (e) {}
         }
 
-        // BUSCAR HISTÓRICO DE QUALQUER DATA SELECIONADA NO CALENDÁRIO
         async function buscarHistorico() {
             const data = document.getElementById('dataBusca').value;
             dadosAcumulados = {};
@@ -1536,7 +1646,6 @@
             });
         }
 
-        // EXPORTAÇÃO POR PERÍODO (EXCEL / PDF)
         function abrirModalExportacao(formato) {
             formatoExportacaoAtual = formato;
             const tituloAba = document.getElementById('titulo-pagina').innerText;
