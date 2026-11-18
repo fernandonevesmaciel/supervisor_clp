@@ -900,6 +900,11 @@
                     <h3 style="color: #0284c7; font-weight: bold;">Total Consumo Dia</h3>
                     <div class="value text-water"><span id="rt-total-agua-geral-soma">--</span> m³</div>
                 </div>
+                <!-- NOVO CARD DE VAZÃO MOMENTÂNEA -->
+                <div class="card" style="border-left: 4px solid #0284c7;">
+                    <h3>Vazão Momentânea Adutora</h3>
+                    <div class="value text-water"><span id="rt-vazao-momentanea-adutora">--</span> m³/min</div>
+                </div>
                 <div class="card"><h3>Pré-Chiller</h3><div class="value text-water"><span id="rt-total-agua-pre-chiller">--</span> m³</div></div>
                 <div class="card"><h3>Chiller 1</h3><div class="value text-water"><span id="rt-total-agua-chiller1">--</span> m³</div></div>
                 <div class="card"><h3>Chiller 2</h3><div class="value text-water"><span id="rt-total-agua-chiller2">--</span> m³</div></div>
@@ -914,6 +919,7 @@
                 <div class="card"><h3>Tanque Escalda</h3><div class="value text-water"><span id="rt-total-agua-tanque-escalda">--</span> m³</div></div>
                 <div class="card"><h3>Tanques Água</h3><div class="value text-water"><span id="rt-total-agua-tanques-agua">--</span> m³</div></div>
                 <div class="card"><h3>Geral Adutora / Abt</h3><div class="value text-water"><span id="rt-total-agua-geral-adultora-abt">--</span> m³</div></div>
+                
                 <div class="card"><h3>Geral Abatedouro</h3><div class="value text-water"><span id="rt-total-agua-geral-abate">--</span> m³</div></div>
                 <div class="card"><h3>Escaldador Patas</h3><div class="value text-water"><span id="rt-total-agua-escaldador-patas">--</span> m³</div></div>
                 <div class="card"><h3>Água 65ºC (depenadeira)</h3><div class="value text-water"><span id="rt-total-agua-saida-depenadeira">--</span> m³</div></div>
@@ -974,6 +980,22 @@
                         </thead>
                         <tbody id="tbody-agua"></tbody>
                     </table>
+                </div>
+            </div>
+
+            <!-- NOVO GRÁFICO EXCLUSIVO PARA CONSUMO MOMENTÂNEO DA GERAL ADUTORA ABT -->
+            <div class="charts-container" style="margin-top: 25px;">
+                <div class="chart-header">
+                    <h3>Consumo Momentâneo - Geral Adutora Abt (m³/min)</h3>
+                    <div class="chart-controls">
+                        <div class="chart-range-btns">
+                            <button class="btn-range active" id="btn-janela-2h-agua-mom" onclick="mudarJanelaTempo('agua_mom', 120)">🔍 Últimas 2h</button>
+                            <button class="btn-range" id="btn-janela-dia-agua-mom" onclick="mudarJanelaTempo('agua_mom', 'tudo')">📈 Dia Todo</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="wrapper-graf-agua-mom" class="chart-wrapper">
+                    <canvas id="graficoAguaMomentaneo"></canvas>
                 </div>
             </div>
         </div>
@@ -1109,8 +1131,8 @@
         const FATOR_PERDA_TRAFO = 1.02;
 
         let formatoExportacaoAtual = 'excel';
-        let janelasTempo = { temp: 120, energia: 120, agua: 120, utilidades: 120 };
-        let graficoTempObj = null, graficoEnergiaObj = null, graficoAguaObj = null, graficoUtilidadesObj = null;
+        let janelasTempo = { temp: 120, energia: 120, agua: 120, agua_mom: 120, utilidades: 120 };
+        let graficoTempObj = null, graficoEnergiaObj = null, graficoAguaObj = null, graficoAguaMomObj = null, graficoUtilidadesObj = null;
         let dadosAcumulados = {};
         let listaRegistrosDia = [];
 
@@ -1634,6 +1656,67 @@
             let resAgua = prepararDadosJanela(horas, rawDataAgua, 'agua');
             graficoAguaObj = new Chart(document.getElementById('graficoAgua').getContext('2d'), {
                 type: 'line', data: { labels: resAgua.labels, datasets: [{ label: 'Consumo (m³)', data: resAgua.data, borderColor: '#0ea5e9', backgroundColor: 'rgba(14, 165, 233, 0.1)', fill: true }] }, options: configPadrao
+            });
+
+            // Consumo Momentâneo Geral Adutora Abt (m³/min)
+            if (graficoAguaMomObj) graficoAguaMomObj.destroy();
+            let rawDataAdutora = horas.map(h => dadosAcumulados[h]?.['agua_cons_geral_adultora_abt'] ?? null);
+            let dadosMomentaneosAdutora = [];
+            let ultimoValorValido = null;
+
+            for (let i = 0; i < rawDataAdutora.length; i++) {
+                let valAtual = rawDataAdutora[i];
+
+                if (valAtual === null || valAtual === undefined) {
+                    dadosMomentaneosAdutora.push(null);
+                    continue;
+                }
+
+                valAtual = Number(valAtual);
+
+                if (ultimoValorValido === null) {
+                    dadosMomentaneosAdutora.push(0);
+                } else if (valAtual >= ultimoValorValido) {
+                    dadosMomentaneosAdutora.push(Number((valAtual - ultimoValorValido).toFixed(2)));
+                } else {
+                    dadosMomentaneosAdutora.push(Number(valAtual.toFixed(2)));
+                }
+
+                ultimoValorValido = valAtual;
+            }
+
+            const valoresReaisMom = dadosMomentaneosAdutora.filter(v => v !== null);
+            if (valoresReaisMom.length > 0) {
+                const ultimoConsumoMinuto = valoresReaisMom[valoresReaisMom.length - 1];
+                atualizarCardNumerico('rt-vazao-momentanea-adutora', ultimoConsumoMinuto, 2);
+            } else {
+                const elMom = document.getElementById('rt-vazao-momentanea-adutora');
+                if (elMom) elMom.innerText = '--';
+            }
+
+            let resAguaMom = prepararDadosJanela(horas, dadosMomentaneosAdutora, 'agua_mom');
+            graficoAguaMomObj = new Chart(document.getElementById('graficoAguaMomentaneo').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: resAguaMom.labels,
+                    datasets: [{
+                        label: 'Vazão Momentânea (m³/min)',
+                        data: resAguaMom.data,
+                        borderColor: '#0284c7',
+                        backgroundColor: 'rgba(2, 132, 199, 0.7)',
+                        borderWidth: 1,
+                        borderRadius: 3
+                    }]
+                },
+                options: {
+                    ...configPadrao,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: 'm³ / minuto' }
+                        }
+                    }
+                }
             });
 
             // Utilidades
